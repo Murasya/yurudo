@@ -197,7 +197,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor:
-            MaterialStateProperty.all(Theme.of(context).errorColor),
+            MaterialStateProperty.all(Theme.of(context).colorScheme.error),
       ),
       onPressed: () {
         showDialog(
