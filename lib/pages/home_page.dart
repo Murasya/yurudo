@@ -54,15 +54,17 @@ class _HomePageState extends ConsumerState<HomePage> {
         todoList.where((todo) => isSameDay(todo.date, pageDay)).toList();
     List<Todo> pastTask = todoList
         .where((todo) =>
-            !isSameDay(todo.date, pageDay) &&
-            todo.date.isBefore(pageDay) &&
+            !isSameDay(todo.date, _today) &&
+            todo.date.isBefore(_today) &&
             !todo.isCompleted)
         .toList();
 
     return SingleChildScrollView(
       child: Column(
         children: [
-          Text('〜今日のタスク〜$pageDay'),
+          Text((index == 0)
+              ? '〜今日のタスク〜'
+              : '〜${pageDay.month}/${pageDay.day}のタスク〜'),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 20.0,
@@ -77,21 +79,23 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
           ),
-          const Text('〜実施日すぎたタスク〜'),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20.0,
+          if (index == 0) ...[
+            const Text('〜実施日すぎたタスク〜'),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+              ),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: pastTask.length,
+                itemBuilder: (context, index) {
+                  var todo = pastTask[index];
+                  return _taskItem(todo);
+                },
+              ),
             ),
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: pastTask.length,
-              itemBuilder: (context, index) {
-                var todo = pastTask[index];
-                return _taskItem(todo);
-              },
-            ),
-          ),
+          ]
         ],
       ),
     );
