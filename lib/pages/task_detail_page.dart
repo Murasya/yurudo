@@ -92,7 +92,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                   onConfirm: (picker, value) {
                     var ans = picker.getSelectedValues();
                     _spanController.text = '${ans[0]}${ans[1]}に一回';
-                    switch (ans[1]) {
+                    switch (value[1]) {
                       case 1:
                         _span = ans[0] * 7;
                         break;

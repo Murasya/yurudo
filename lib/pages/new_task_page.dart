@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routine_app/design/app_text_field.dart';
 import 'package:routine_app/model/category.dart';
@@ -7,8 +8,6 @@ import 'package:routine_app/pages/widget/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
-import 'package:flutter_picker/flutter_picker.dart';
-import 'package:routine_app/viewModel/category_provider.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import 'widget/category_dialog.dart';
@@ -141,7 +140,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                   onConfirm: (picker, value) {
                     var ans = picker.getSelectedValues();
                     _spanController.text = '${ans[0]}${ans[1]}に一回';
-                    switch (ans[1]) {
+                    switch (value[1]) {
                       case 1:
                         _span = ans[0] * 7;
                         break;
