@@ -116,7 +116,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             Checkbox(
               value: todo.isCompleted,
               onChanged: (isCheck) {
-                ref.read(todoProvider.notifier).complete(todo);
+                if (isCheck != null && isCheck) {
+                  ref.read(todoProvider.notifier).complete(todo);
+                }
               },
             ),
             Expanded(child: Text(todo.name)),
