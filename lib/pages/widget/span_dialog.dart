@@ -11,7 +11,7 @@ class SpanDialog {
   void showDialog(BuildContext context) {
     Picker(
       adapter: PickerDataAdapter(
-        pickerdata: [
+        pickerData: [
           [1, 2, 3, 4, 5, 6, 7],
           ['日', '週'],
         ],

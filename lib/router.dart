@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:routine_app/model/todo.dart';
 import 'package:routine_app/pages/home_page.dart';
-import 'package:routine_app/pages/interstitial_ad.dart';
+import 'package:routine_app/pages/interstitial_ad_page.dart';
 import 'package:routine_app/pages/search_page.dart';
 import 'package:routine_app/pages/task_detail_page.dart';
 
@@ -29,7 +29,7 @@ class AppRouter {
       case interstitialAd:
         return MaterialPageRoute(
           settings: settings,
-          builder: (context) => const InterstitialAd(),
+          builder: (context) => const InterstitialAdPage(),
         );
       case search:
         return MaterialPageRoute(

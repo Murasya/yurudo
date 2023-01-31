@@ -11,7 +11,7 @@ class TimeDialog {
   void showDialog(BuildContext context) {
     Picker(
       adapter: PickerDataAdapter(
-        pickerdata: [
+        pickerData: [
           List.generate(60, (index) => index + 1),
           ['分', '時間'],
         ],
