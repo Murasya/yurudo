@@ -8,6 +8,7 @@ import 'package:routine_app/pages/widget/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
+import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import 'widget/category_dialog.dart';
@@ -69,6 +70,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   late TextEditingController _categoryController;
   late TextEditingController _dateController;
   DateTime startDate = DateTime.now();
+  NotificationService ns = NotificationService();
 
   @override
   void initState() {
@@ -77,6 +79,8 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
     _timeController = TextEditingController();
     _categoryController = TextEditingController();
     _dateController = TextEditingController();
+
+    ns.initializeNotification();
   }
 
   @override
@@ -112,6 +116,11 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                 beginDate: startDate,
               );
               ref.read(todoProvider.notifier).add(newTodo);
+              if (_remind) {
+                ns.requestPermissions();
+                ns.registerMessage(
+                    day: startDate, message: '$_taskTitleをやりましょう！');
+              }
               Navigator.pushNamed(context, AppRouter.interstitialAd);
             },
             child: const Text(

@@ -6,6 +6,7 @@ import 'package:timezone/timezone.dart' as tz;
 class NotificationService {
   final FlutterLocalNotificationsPlugin _flnp =
       FlutterLocalNotificationsPlugin();
+  final int notificationTime = 9;
 
   Future<void> initializeNotification() async {
     // android/app/src/main/res/drawable をフォルダーに追加する必要あり
@@ -26,7 +27,7 @@ class NotificationService {
     tz.setLocalLocation(tz.getLocation('Asia/Tokyo'));
   }
 
-  Future<void> _requestPermissions() async {
+  Future<void> requestPermissions() async {
     await _flnp
         .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin>()
@@ -37,17 +38,16 @@ class NotificationService {
         );
   }
 
-  Future<void> _registerMessage({
-    required int hour,
+  Future<void> registerMessage({
+    required DateTime day,
     required message,
   }) async {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate = tz.TZDateTime(
       tz.local,
-      now.year,
-      now.month,
-      now.day,
-      hour,
+      day.year,
+      day.month,
+      day.day,
+      notificationTime,
     );
 
     _flnp.zonedSchedule(
