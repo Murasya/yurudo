@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_text_field.dart';
 import 'package:routine_app/model/category.dart';
@@ -12,45 +13,6 @@ import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../widget/category_dialog.dart';
-
-// final categoryStringProvider =
-// Provider.autoDispose<TextEditingController>((ref) {
-//   List<bool> selectCategory = ref.watch(selectCategoryProvider);
-//   List<Category> categoryList = ref.watch(categoryProvider);
-//   String str = '';
-//   for (int i = 0; i < categoryList.length; i++) {
-//     if (selectCategory[i]) str += categoryList[i].name;
-//   }
-//   return TextEditingController(text: str);
-// });
-//
-// final selectCategoryIdsProvider =
-// Provider.autoDispose<List<Color>>((ref) {
-//   List<bool> selectCategory = ref.watch(selectCategoryProvider);
-//   List<Category> categoryList = ref.watch(categoryProvider);
-//   List<Color> selectIds = [];
-//   for (int i = 0; i < categoryList.length; i++) {
-//     if (selectCategory[i]) selectIds.add(categoryList[i].categoryId);
-//   }
-//   return selectIds;
-// });
-//
-// final selectCategoryProvider =
-// StateNotifierProvider<SelectCategoryNotifier, List<bool>>((ref) {
-//   return SelectCategoryNotifier();
-// });
-//
-// class SelectCategoryNotifier extends StateNotifier<List<bool>> {
-//   SelectCategoryNotifier() : super(List.generate(5, (index) => false));
-//
-//   void toggleStatus(int index) {
-//     state = [
-//       for (int i = 0; i < state.length; i++)
-//         if (i == index) !state[i] else
-//           state[i]
-//     ];
-//   }
-// }
 
 class NewTaskPage extends ConsumerStatefulWidget {
   const NewTaskPage({Key? key}) : super(key: key);
@@ -68,11 +30,13 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   NotificationService ns = NotificationService();
   final provider = newTaskPageStateProvider;
   final dateFormat = DateFormat('y年M月d日');
+  InterstitialAd? _interstitialAd;
 
   @override
   void initState() {
     super.initState();
     ns.initializeNotification();
+    adLoad();
   }
 
   @override
@@ -107,7 +71,11 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                     day: state.todo.date,
                     message: '${state.todo.name}をやりましょう！');
               }
-              Navigator.pushNamed(context, AppRouter.interstitialAd);
+              _interstitialAd?.show();
+              Navigator.popUntil(
+                context,
+                (route) => route.settings.name == AppRouter.home,
+              );
             },
             child: const Text(
               '作成終了',
@@ -220,6 +188,38 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void adLoad() {
+    InterstitialAd.load(
+      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdShowedFullScreenContent: (InterstitialAd ad) =>
+                debugPrint('$ad onAdShowedFullScreenContent.'),
+            onAdDismissedFullScreenContent: (InterstitialAd ad) {
+              debugPrint('$ad onAdDismissedFullScreenContent.');
+              ad.dispose();
+              Navigator.popUntil(
+                context,
+                (route) => route.settings.name == AppRouter.home,
+              );
+            },
+            onAdFailedToShowFullScreenContent:
+                (InterstitialAd ad, AdError error) {
+              debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
+              ad.dispose();
+            },
+            onAdImpression: (InterstitialAd ad) =>
+                debugPrint('$ad impression occurred.'),
+          );
+          _interstitialAd = ad;
+        },
+        onAdFailedToLoad: (LoadAdError error) {},
       ),
     );
   }

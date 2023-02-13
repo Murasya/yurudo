@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routine_app/model/todo.dart';
 import 'package:routine_app/pages/home/home_page.dart';
-import 'package:routine_app/pages/interstitial_ad_page.dart';
 import 'package:routine_app/pages/search_page.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page.dart';
 
@@ -10,7 +9,6 @@ import 'pages/newTask/new_task_page.dart';
 class AppRouter {
   static const home = '/home';
   static const newTask = '/new';
-  static const interstitialAd = '/ad';
   static const search = '/search';
   static const detail = '/detail';
 
@@ -25,11 +23,6 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) => const NewTaskPage(),
-        );
-      case interstitialAd:
-        return MaterialPageRoute(
-          settings: settings,
-          builder: (context) => const InterstitialAdPage(),
         );
       case search:
         return MaterialPageRoute(
