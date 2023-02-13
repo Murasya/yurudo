@@ -35,7 +35,6 @@ abstract class $HomePageStateCopyWith<$Res> {
   factory $HomePageStateCopyWith(
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res, HomePageState>;
-
   @useResult
   $Res call({List<Todo> todoList, FilterType filter, int displayTerm});
 }
@@ -47,7 +46,6 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -81,7 +79,6 @@ abstract class _$$_HomePageStateCopyWith<$Res>
   factory _$$_HomePageStateCopyWith(
           _$_HomePageState value, $Res Function(_$_HomePageState) then) =
       __$$_HomePageStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({List<Todo> todoList, FilterType filter, int displayTerm});
@@ -187,17 +184,14 @@ abstract class _HomePageState implements HomePageState {
 
   /// タスクリスト
   List<Todo> get todoList;
-
   @override
 
   /// 絞り込み
   FilterType get filter;
-
   @override
 
   /// 表示期間（0: 全て、1: 今日、2: 今週、3: 今月）
   int get displayTerm;
-
   @override
   @JsonKey(ignore: true)
   _$$_HomePageStateCopyWith<_$_HomePageState> get copyWith =>

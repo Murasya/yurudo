@@ -1,4 +1,6 @@
-import 'dart:ui';
+import 'package:const_date_time/const_date_time.dart';
+import 'package:flutter/material.dart';
+import 'package:routine_app/design/app_color.dart';
 
 class Todo {
   /// 管理ID
@@ -50,17 +52,17 @@ class Todo {
 
   const Todo({
     this.id,
-    required this.name,
-    required this.span,
-    required this.remind,
-    required this.time,
+    this.name = '',
+    this.span = 0,
+    this.remind = false,
+    this.time = 0,
     this.count = 0,
     this.skipCount = 0,
     this.skipConsecutive = 0,
     this.isCompleted = false,
-    required this.categoryId,
-    required this.date,
-    required this.beginDate,
+    this.categoryId = const [AppColor.categoryDefault],
+    this.date = const ConstDateTime(2000),
+    this.beginDate = const ConstDateTime(2000),
     this.createdAt,
     this.updatedAt,
   });

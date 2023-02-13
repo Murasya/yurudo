@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_text_field.dart';
 import 'package:routine_app/model/category.dart';
-import 'package:routine_app/model/todo.dart';
+import 'package:routine_app/pages/newTask/new_task_page_state.dart';
 import 'package:routine_app/pages/widget/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
@@ -11,7 +11,7 @@ import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
-import 'widget/category_dialog.dart';
+import '../widget/category_dialog.dart';
 
 // final categoryStringProvider =
 // Provider.autoDispose<TextEditingController>((ref) {
@@ -60,26 +60,18 @@ class NewTaskPage extends ConsumerStatefulWidget {
 }
 
 class _NewTaskPageState extends ConsumerState<NewTaskPage> {
-  String _taskTitle = "";
-  int _span = 1;
-  bool _remind = false;
-  int _time = 0;
   Category selectCategory = Category.defaultValue;
-  late TextEditingController _spanController;
-  late TextEditingController _timeController;
-  late TextEditingController _categoryController;
-  late TextEditingController _dateController;
-  DateTime startDate = DateTime.now();
+  final TextEditingController _spanController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   NotificationService ns = NotificationService();
+  final provider = newTaskPageStateProvider;
+  final dateFormat = DateFormat('y年M月d日');
 
   @override
   void initState() {
     super.initState();
-    _spanController = TextEditingController();
-    _timeController = TextEditingController();
-    _categoryController = TextEditingController();
-    _dateController = TextEditingController();
-
     ns.initializeNotification();
   }
 
@@ -100,26 +92,20 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
 
   @override
   Widget build(BuildContext context) {
+    final NewTaskPageState state = ref.watch(provider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('新規タスク'),
         actions: [
           TextButton(
             onPressed: () {
-              Todo newTodo = Todo(
-                name: _taskTitle,
-                span: _span,
-                remind: _remind,
-                categoryId: [selectCategory.categoryId],
-                time: _time,
-                date: startDate,
-                beginDate: startDate,
-              );
-              ref.read(todoProvider.notifier).add(newTodo);
-              if (_remind) {
+              ref.read(todoProvider.notifier).add(state.todo);
+              if (state.todo.remind) {
                 ns.requestPermissions();
                 ns.registerMessage(
-                    day: startDate, message: '$_taskTitleをやりましょう！');
+                    day: state.todo.date,
+                    message: '${state.todo.name}をやりましょう！');
               }
               Navigator.pushNamed(context, AppRouter.interstitialAd);
             },
@@ -136,72 +122,82 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
           children: [
             AppTextField(
               onChanged: (value) {
-                setState(() {
-                  _taskTitle = value;
-                });
+                final todo = state.todo.copyWith(name: value);
+                ref.read(provider.notifier).updateTodo(todo);
               },
               placeholder: 'タイトルを追加',
             ),
             AppTextField(
               controller: _spanController,
+              readonly: true,
               onTap: () {
                 SpanDialog(
                   onConfirm: (picker, value) {
                     var ans = picker.getSelectedValues();
-                    _spanController.text = '${ans[0]}${ans[1]}に一回';
+                    _spanController.text = '${ans[0]}${ans[1]}に1回';
+                    int span;
                     switch (value[1]) {
                       case 1:
-                        _span = ans[0] * 7;
+                        span = ans[0] * 7;
                         break;
                       default:
-                        _span = ans[0];
+                        span = ans[0];
                         break;
                     }
+                    final todo = state.todo.copyWith(span: span);
+                    ref.read(provider.notifier).updateTodo(todo);
                   },
                 ).showDialog(context);
               },
               placeholder: 'スパンを設定',
             ),
             CheckboxListTile(
-              value: _remind,
+              value: state.todo.remind,
               title: const Text('リマインドする'),
               onChanged: (value) {
-                setState(() {
-                  _remind = value!;
-                });
+                final todo = state.todo.copyWith(remind: value);
+                ref.read(provider.notifier).updateTodo(todo);
               },
             ),
             AppTextField(
               controller: _categoryController,
+              readonly: true,
               onTap: () {
                 showDialog(
                   context: context,
                   builder: (context) => CategoryDialog(
-                    defaultValue: selectCategory,
-                    onConfirm: (value) {
-                      selectCategory = value;
-                      _categoryController.text = value.name;
-                    }
-                  ),
+                      defaultValue: selectCategory,
+                      onConfirm: (value) {
+                        selectCategory = value;
+                        _categoryController.text = value.name;
+                        final todo = state.todo.copyWith(
+                          categoryId: [selectCategory.categoryId],
+                        );
+                        ref.read(provider.notifier).updateTodo(todo);
+                      }),
                 );
               },
               placeholder: '分類を設定',
             ),
             AppTextField(
               controller: _timeController,
+              readonly: true,
               onTap: () {
                 TimeDialog(
                   onConfirm: (picker, value) {
                     var ans = picker.getSelectedValues();
+                    int time;
                     switch (ans[1]) {
                       case 1:
-                        _time = ans[0] * 60;
+                        time = ans[0] * 60;
                         break;
                       default:
-                        _time = ans[0];
+                        time = ans[0];
                         break;
                     }
                     _timeController.text = '${ans[0]}${ans[1]}';
+                    final todo = state.todo.copyWith(time: time);
+                    ref.read(provider.notifier).updateTodo(todo);
                   },
                 ).showDialog(context);
               },
@@ -209,13 +205,14 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
             ),
             AppTextField(
               controller: _dateController,
+              readonly: true,
               onTap: () {
                 DateDialog(
                   onConfirm: (picker, value) {
-                    startDate =
-                    (picker.adapter as DateTimePickerAdapter).value!;
-                    _dateController.text =
-                    '${startDate.year}年${startDate.month}月${startDate.day}日';
+                    DateTime date = DateTime.parse(picker.adapter.toString());
+                    final todo = state.todo.copyWith(date: date);
+                    ref.read(provider.notifier).updateTodo(todo);
+                    _dateController.text = dateFormat.format(date);
                   },
                 ).showDialog(context);
               },

@@ -10,8 +10,14 @@ class DateDialog {
 
   void showDialog(BuildContext context) {
     Picker(
+      title: const Text('開催日'),
       hideHeader: true,
-      adapter: DateTimePickerAdapter(),
+      adapter: DateTimePickerAdapter(
+        customColumnType: [0, 1, 2],
+        isNumberMonth: true,
+      ),
+      cancelText: 'キャンセル',
+      confirmText: 'OK',
       onConfirm: onConfirm,
     ).showDialog(context);
   }
