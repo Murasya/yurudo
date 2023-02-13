@@ -52,10 +52,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
         ),
         TextButton(
           onPressed: () {
-            ref.read(categoryProvider.notifier).setCategoryNames(
-              nameController.map((e) => e.text).toList(),
-            );
-            widget.onConfirm(categoryList[selectCategoryNum]);
+            widget.onConfirm(ref.read(categoryProvider)[selectCategoryNum]);
             Navigator.pop(context);
           },
           child: const Text('OK'),
@@ -71,11 +68,18 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                   width: 12,
                   color: categoryList[i].categoryId,
                 ),
-                const SizedBox(width: 4,),
+                const SizedBox(
+                  width: 4,
+                ),
                 Expanded(
                   child: TextField(
                     controller: nameController[i],
                     style: TextStyle(color: categoryList[i].categoryId),
+                    onChanged: (value) {
+                      ref
+                          .read(categoryProvider.notifier)
+                          .setCategoryName(i, value);
+                    },
                   ),
                 ),
                 Radio<int>(

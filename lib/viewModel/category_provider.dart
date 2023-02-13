@@ -15,11 +15,18 @@ class CategoryNotifier extends StateNotifier<List<Category>> {
     getCategories();
   }
 
+  Future<void> setCategoryName(int index, String name) async {
+    await _database.setCategoryName(index, name);
+    state = [
+      for (var i = 0; i < state.length; i++)
+        if (i == index) state[i].copyWith(name: name) else state[i]
+    ];
+  }
+
   Future<void> setCategoryNames(List<String> names) async {
     await _database.setCategoryNames(names);
     state = [
-      for (var i=0; i<state.length; i++)
-        state[i].copyWith(name: names[i])
+      for (var i = 0; i < state.length; i++) state[i].copyWith(name: names[i])
     ];
   }
 

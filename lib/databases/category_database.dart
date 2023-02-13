@@ -7,19 +7,43 @@ class CategoryDatabase {
   final tableName = 'categoryNames';
   final defaultCategoryNames = [
     '規定の色',
-    '1',
-    '2',
-    '3',
-    '4',
+    '',
+    '',
+    '',
+    '',
   ];
 
   static const defaultCategory = [
-    Category(categoryId: AppColor.categoryDefault, name: '規定の色',),
-    Category(categoryId: AppColor.category1, name: '1',),
-    Category(categoryId: AppColor.category2, name: '2',),
-    Category(categoryId: AppColor.category3, name: '3',),
-    Category(categoryId: AppColor.category4, name: '4',),
+    Category(
+      categoryId: AppColor.categoryDefault,
+      name: '規定の色',
+    ),
+    Category(
+      categoryId: AppColor.category1,
+      name: '',
+    ),
+    Category(
+      categoryId: AppColor.category2,
+      name: '',
+    ),
+    Category(
+      categoryId: AppColor.category3,
+      name: '',
+    ),
+    Category(
+      categoryId: AppColor.category4,
+      name: '',
+    ),
   ];
+
+  Future<void> setCategoryName(int index, String name) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? names = prefs.getStringList(tableName);
+    if (names != null) {
+      names[index] = name;
+      prefs.setStringList(tableName, names);
+    }
+  }
 
   Future<void> setCategoryNames(List<String> names) async {
     final prefs = await SharedPreferences.getInstance();

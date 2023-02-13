@@ -148,6 +148,9 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                     return CategoryDialog(
                       defaultValue: _selectCategory,
                       onConfirm: (value) {
+                        final todo =
+                            state.todo.copyWith(categoryId: [value.categoryId]);
+                        ref.read(provider.notifier).updateTodo(todo);
                         _selectCategory = value;
                         _categoryController.text = value.name;
                       },
