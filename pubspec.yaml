@@ -45,6 +45,7 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   timezone: ^0.9.1
   freezed_annotation: ^2.2.0
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:

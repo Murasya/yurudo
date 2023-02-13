@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_text_field.dart';
+import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
 import 'package:routine_app/pages/widget/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
@@ -9,9 +11,9 @@ import 'package:routine_app/router.dart';
 import 'package:routine_app/viewModel/category_provider.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
-import '../model/category.dart';
-import '../model/todo.dart';
-import 'widget/category_dialog.dart';
+import '../../model/category.dart';
+import '../../model/todo.dart';
+import '../widget/category_dialog.dart';
 
 class TaskDetailPage extends ConsumerStatefulWidget {
   final Todo todo;
@@ -26,38 +28,44 @@ class TaskDetailPage extends ConsumerStatefulWidget {
 }
 
 class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
-  late int _span;
-  late bool _remind;
-  late int _time;
-  late Category _selectCategory;
-  late DateTime _nextDay;
   late final TextEditingController _titleController;
   late final TextEditingController _spanController;
   late final TextEditingController _categoryController;
   late final TextEditingController _timeController;
   late final TextEditingController _nextDayController;
+  late final provider;
+  late Category _selectCategory;
+  final dateFormat = DateFormat('y年M月d日');
 
   @override
   void initState() {
+    provider = taskDetailPageStateProvider(widget.todo);
+    final state = ref.read(provider);
+    final todo = state.todo;
+    _titleController = TextEditingController(text: todo.name);
+    _spanController = TextEditingController(text: '${todo.span}日に1回');
+    _timeController = TextEditingController(text: '${todo.time}分');
+
+    // 次回実施日が昨日以前だった場合は今日にする
+    if (DateTime.now().isBefore(todo.date)) {
+      _nextDayController =
+          TextEditingController(text: dateFormat.format(todo.date));
+    } else {
+      _nextDayController =
+          TextEditingController(text: dateFormat.format(DateTime.now()));
+    }
+
+    final categoryList = ref.read(categoryProvider);
+    _selectCategory = categoryList.firstWhere(
+        (category) => category.categoryId == widget.todo.categoryId.first);
+    _categoryController = TextEditingController(text: _selectCategory.name);
+
     super.initState();
-    _titleController = TextEditingController(text: widget.todo.name);
-    _span = widget.todo.span;
-    _spanController = TextEditingController(text: '$_span日に1回');
-    _remind = widget.todo.remind;
-    _time = widget.todo.time;
-    _timeController = TextEditingController(text: '$_time分');
-    _nextDay = widget.todo.date;
-    _nextDayController = TextEditingController(
-        text: '${_nextDay.year}年${_nextDay.month}月${_nextDay.day}日');
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final categoryList = ref.watch(categoryProvider);
-    _selectCategory = categoryList.firstWhere(
-        (category) => category.categoryId == widget.todo.categoryId.first);
-    _categoryController = TextEditingController(text: _selectCategory.name);
   }
 
   @override
@@ -72,6 +80,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final TaskDetailPageState state = ref.watch(provider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('編集画面'),
@@ -83,36 +93,48 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
             AppTextField(
               label: const Text('タイトル'),
               controller: _titleController,
+              onChanged: (value) {
+                final todo = state.todo.copyWith(
+                  name: value,
+                );
+                ref.read(provider.notifier).updateTodo(todo);
+              },
             ),
             AppTextField(
               label: const Text('スパン'),
+              readonly: true,
               controller: _spanController,
               onTap: () {
                 SpanDialog(
                   onConfirm: (picker, value) {
                     var ans = picker.getSelectedValues();
                     _spanController.text = '${ans[0]}${ans[1]}に一回';
+                    int span;
                     switch (value[1]) {
                       case 1:
-                        _span = ans[0] * 7;
+                        span = ans[0] * 7;
                         break;
                       default:
-                        _span = ans[0];
+                        span = ans[0];
                         break;
                     }
+                    final todo = state.todo.copyWith(span: span);
+                    ref.read(provider.notifier).updateTodo(todo);
                   },
                 ).showDialog(context);
               },
             ),
             CheckboxListTile(
-              value: _remind,
+              value: state.todo.remind,
               title: const Text('リマインドする'),
               onChanged: (value) {
-                setState(() => _remind = value!);
+                final todo = state.todo.copyWith(remind: value);
+                ref.read(provider.notifier).updateTodo(todo);
               },
             ),
             AppTextField(
               label: const Text('分類'),
+              readonly: true,
               controller: _categoryController,
               onTap: () {
                 showDialog(
@@ -131,33 +153,54 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
             ),
             AppTextField(
               label: const Text('要する時間'),
+              readonly: true,
               controller: _timeController,
               onTap: () {
                 TimeDialog(
                   onConfirm: (picker, value) {
                     var ans = picker.getSelectedValues();
+                    int time;
                     switch (ans[1]) {
                       case 1:
-                        _time = ans[0] * 60;
+                        time = ans[0] * 60;
                         break;
                       default:
-                        _time = ans[0];
+                        time = ans[0];
                         break;
                     }
+                    final todo = state.todo.copyWith(time: time);
+                    ref.read(provider.notifier).updateTodo(todo);
                     _timeController.text = '${ans[0]}${ans[1]}';
                   },
                 ).showDialog(context);
               },
             ),
             AppTextField(
+              label: const Text('実施予定だった日'),
+              readonly: true,
+              controller: TextEditingController(
+                text: dateFormat.format(state.todo.date),
+              ),
+            ),
+            AppTextField(
+              label: const Text('ルーチンとしてできなかった回数'),
+              readonly: true,
+              controller: TextEditingController(
+                text: '${state.todo.skipCount}',
+              ),
+            ),
+            AppTextField(
               label: const Text('次回実施日'),
               controller: _nextDayController,
+              readonly: true,
               onTap: () {
                 DateDialog(
                   onConfirm: (picker, value) {
-                    _nextDay = (picker.adapter as DateTimePickerAdapter).value!;
+                    final todo = state.todo.copyWith(
+                        date: (picker.adapter as DateTimePickerAdapter).value!);
+                    ref.read(provider.notifier).updateTodo(todo);
                     _nextDayController.text =
-                        '${_nextDay.year}年${_nextDay.month}月${_nextDay.day}日';
+                        dateFormat.format(state.todo.date);
                   },
                 ).showDialog(context);
               },
@@ -176,20 +219,11 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
   }
 
   Widget finishEditButton() {
+    var state = ref.read(provider);
     return ElevatedButton(
       onPressed: () {
         Navigator.pop(context);
-        Todo newTodo = widget.todo.copyWith(
-          name: _titleController.text,
-          span: _span,
-          remind: _remind,
-          categoryId: [_selectCategory.categoryId],
-          time: _time,
-          date: _nextDay,
-        );
-        if (_remind) {
-        }
-        ref.read(todoProvider.notifier).update(newTodo);
+        ref.read(todoProvider.notifier).update(state.todo);
       },
       child: const Text('編集終了'),
     );

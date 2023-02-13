@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routine_app/utils/disable_focus_node.dart';
 
 class AppTextField extends StatelessWidget {
   final Widget? label;
@@ -6,6 +7,7 @@ class AppTextField extends StatelessWidget {
   final String? placeholder;
   final Function(String)? onChanged;
   final VoidCallback? onTap;
+  final bool readonly;
 
   const AppTextField({
     Key? key,
@@ -14,6 +16,7 @@ class AppTextField extends StatelessWidget {
     this.placeholder,
     this.onChanged,
     this.onTap,
+    this.readonly = false,
   }) : super(key: key);
 
   @override
@@ -29,6 +32,8 @@ class AppTextField extends StatelessWidget {
             hintText: placeholder,
             label: label,
           ),
+          readOnly: readonly,
+          focusNode: readonly ? DisableFocusNode() : null,
         ),
       ],
     );

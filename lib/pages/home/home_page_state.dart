@@ -11,7 +11,8 @@ enum FilterType {
 }
 
 final homePageStateProvider =
-    StateNotifierProvider<HomePageStateNotifier, HomePageState>((ref) {
+    StateNotifierProvider.autoDispose<HomePageStateNotifier, HomePageState>(
+        (ref) {
   return HomePageStateNotifier(
     ref.watch(todoProvider),
   );
