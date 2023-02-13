@@ -43,7 +43,12 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     final state = ref.read(provider);
     final todo = state.todo;
     _titleController = TextEditingController(text: todo.name);
-    _spanController = TextEditingController(text: '${todo.span}日に1回');
+    if (todo.span < 7) {
+      _spanController = TextEditingController(text: '${todo.span}日に1回');
+    } else {
+      _spanController =
+          TextEditingController(text: '${(todo.span / 7).toInt()}週に1回');
+    }
     _timeController = TextEditingController(text: '${todo.time}分');
 
     // 次回実施日が昨日以前だった場合は今日にする
@@ -108,7 +113,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                 SpanDialog(
                   onConfirm: (picker, value) {
                     var ans = picker.getSelectedValues();
-                    _spanController.text = '${ans[0]}${ans[1]}に一回';
+                    _spanController.text = '${ans[0]}${ans[1]}に1回';
                     int span;
                     switch (value[1]) {
                       case 1:

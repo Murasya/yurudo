@@ -9,7 +9,7 @@ class Todo {
   /// タスク名
   final String name;
 
-  /// スパン　○日に一回
+  /// スパン　○日に1回
   final int span;
 
   /// リマインド
