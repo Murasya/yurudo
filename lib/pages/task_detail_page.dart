@@ -6,7 +6,6 @@ import 'package:routine_app/pages/widget/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
-import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/viewModel/category_provider.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
@@ -37,7 +36,6 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
   late final TextEditingController _categoryController;
   late final TextEditingController _timeController;
   late final TextEditingController _nextDayController;
-  final NotificationService ns = NotificationService();
 
   @override
   void initState() {
@@ -51,7 +49,6 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     _nextDay = widget.todo.date;
     _nextDayController = TextEditingController(
         text: '${_nextDay.year}年${_nextDay.month}月${_nextDay.day}日');
-    ns.initializeNotification();
   }
 
   @override
@@ -191,9 +188,6 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
           date: _nextDay,
         );
         if (_remind) {
-          ns.requestPermissions();
-          ns.registerMessage(
-              day: _nextDay, message: '${_titleController.text}をやりましょう！');
         }
         ref.read(todoProvider.notifier).update(newTodo);
       },

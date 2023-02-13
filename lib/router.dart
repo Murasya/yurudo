@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routine_app/model/todo.dart';
-import 'package:routine_app/pages/home_page.dart';
+import 'package:routine_app/pages/home/home_page.dart';
 import 'package:routine_app/pages/interstitial_ad_page.dart';
 import 'package:routine_app/pages/search_page.dart';
 import 'package:routine_app/pages/task_detail_page.dart';

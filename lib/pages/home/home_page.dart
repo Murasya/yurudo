@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/model/todo.dart';
+import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
@@ -19,7 +20,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Todo> todoList = ref.watch(todoProvider);
+    final state = ref.watch(homePageStateProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +39,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: const Icon(Icons.add),
       ),
       body: PageView.builder(itemBuilder: (context, index) {
-        return _page(index, todoList);
+        return _page(index, state.todoList);
       }),
     );
   }
