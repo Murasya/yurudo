@@ -1,6 +1,5 @@
 import 'package:const_date_time/const_date_time.dart';
 import 'package:flutter/material.dart';
-import 'package:routine_app/design/app_color.dart';
 
 class Todo {
   /// 管理ID
@@ -60,7 +59,7 @@ class Todo {
     this.skipCount = 0,
     this.skipConsecutive = 0,
     this.isCompleted = false,
-    this.categoryId = const [AppColor.categoryDefault],
+    this.categoryId = const [],
     this.date = const ConstDateTime(2000),
     this.beginDate = const ConstDateTime(2000),
     this.createdAt,

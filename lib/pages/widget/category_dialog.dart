@@ -5,7 +5,7 @@ import '../../model/category.dart';
 import '../../viewModel/category_provider.dart';
 
 class CategoryDialog extends ConsumerStatefulWidget {
-  final Category defaultValue;
+  final Category? defaultValue;
   final void Function(Category value) onConfirm;
 
   const CategoryDialog({
@@ -19,7 +19,7 @@ class CategoryDialog extends ConsumerStatefulWidget {
 }
 
 class _CategoryDialogState extends ConsumerState<CategoryDialog> {
-  late int selectCategoryNum;
+  late int? selectCategoryNum;
   late List<Category> categoryList;
   late List<TextEditingController> nameController;
 
@@ -32,7 +32,9 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     categoryList = ref.watch(categoryProvider);
-    selectCategoryNum = categoryList.indexOf(widget.defaultValue);
+    selectCategoryNum = widget.defaultValue != null
+        ? categoryList.indexOf(widget.defaultValue!)
+        : null;
     nameController = List.generate(
       categoryList.length,
       (index) => TextEditingController(text: categoryList[index].name),
@@ -52,7 +54,9 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
         ),
         TextButton(
           onPressed: () {
-            widget.onConfirm(ref.read(categoryProvider)[selectCategoryNum]);
+            if (selectCategoryNum != null) {
+              widget.onConfirm(ref.read(categoryProvider)[selectCategoryNum!]);
+            }
             Navigator.pop(context);
           },
           child: const Text('OK'),

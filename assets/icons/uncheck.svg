@@ -1,0 +1,16 @@
+<svg id="コンポーネント_1_13" data-name="コンポーネント 1 – 13" xmlns="http://www.w3.org/2000/svg" width="24"
+    height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="長方形_25" data-name="長方形 25" width="20" height="14.444" fill="#c9b68f" />
+    </clipPath>
+  </defs>
+  <rect id="長方形_27" data-name="長方形 27" width="24" height="24" rx="4" fill="#fff" />
+  <g id="グループ_6" data-name="グループ 6" transform="translate(2 4.279)" opacity="0.204">
+    <g id="グループ_4" data-name="グループ 4" transform="translate(0 0)" clip-path="url(#clip-path)">
+      <path id="パス_5" data-name="パス 5"
+          d="M16.007.291A74.04,74.04,0,0,1,8.933,7.71a.7.7,0,0,1-.884-.031A30.253,30.253,0,0,1,4.108,3.244a.868.868,0,0,0-1.276-.085L.265,5.626A.868.868,0,0,0,.305,6.91a93.5,93.5,0,0,1,6.588,6.829,2.164,2.164,0,0,0,3.186.009c2.563-2.765,6.312-6.7,9.591-9.6a.877.877,0,0,0,.1-1.279L17.262.266a.846.846,0,0,0-1.255.025"
+          transform="translate(0 0)" fill="#c9b68f" />
+    </g>
+  </g>
+</svg>

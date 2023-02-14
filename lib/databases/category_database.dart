@@ -5,19 +5,8 @@ import '../model/category.dart';
 
 class CategoryDatabase {
   final tableName = 'categoryNames';
-  final defaultCategoryNames = [
-    '規定の色',
-    '',
-    '',
-    '',
-    '',
-  ];
 
   static const defaultCategory = [
-    Category(
-      categoryId: AppColor.categoryDefault,
-      name: '規定の色',
-    ),
     Category(
       categoryId: AppColor.category1,
       name: '',
@@ -32,6 +21,10 @@ class CategoryDatabase {
     ),
     Category(
       categoryId: AppColor.category4,
+      name: '',
+    ),
+    Category(
+      categoryId: AppColor.category5,
       name: '',
     ),
   ];
@@ -52,8 +45,8 @@ class CategoryDatabase {
 
   Future<List<String>> getCategoryNames() async {
     final prefs = await SharedPreferences.getInstance();
-    List<String>? categoryNames =
-        prefs.getStringList(tableName) ?? defaultCategoryNames;
+    List<String>? categoryNames = prefs.getStringList(tableName) ??
+        defaultCategory.map((e) => e.name).toList();
     return categoryNames;
   }
 }

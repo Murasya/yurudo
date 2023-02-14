@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/router.dart';
 
 void main() {
@@ -20,7 +21,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColor.backgroundColor,
+          toolbarTextStyle: TextStyle(
+            color: AppColor.fontColor,
+          ),
+        ),
+        backgroundColor: AppColor.backgroundColor,
       ),
       initialRoute: AppRouter.home,
       onGenerateRoute: AppRouter.generateRoute,

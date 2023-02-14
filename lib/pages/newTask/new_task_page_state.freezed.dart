@@ -28,7 +28,6 @@ abstract class $NewTaskPageStateCopyWith<$Res> {
   factory $NewTaskPageStateCopyWith(
           NewTaskPageState value, $Res Function(NewTaskPageState) then) =
       _$NewTaskPageStateCopyWithImpl<$Res, NewTaskPageState>;
-
   @useResult
   $Res call({Todo todo});
 }
@@ -40,7 +39,6 @@ class _$NewTaskPageStateCopyWithImpl<$Res, $Val extends NewTaskPageState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -64,7 +62,6 @@ abstract class _$$_NewTaskPageStateCopyWith<$Res>
   factory _$$_NewTaskPageStateCopyWith(
           _$_NewTaskPageState value, $Res Function(_$_NewTaskPageState) then) =
       __$$_NewTaskPageStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({Todo todo});
@@ -129,7 +126,6 @@ abstract class _NewTaskPageState implements NewTaskPageState {
 
   @override
   Todo get todo;
-
   @override
   @JsonKey(ignore: true)
   _$$_NewTaskPageStateCopyWith<_$_NewTaskPageState> get copyWith =>

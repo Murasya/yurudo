@@ -25,6 +25,12 @@ mixin _$HomePageState {
   /// 表示期間（0: 全て、1: 今日、2: 今週、3: 今月）
   int get displayTerm => throw _privateConstructorUsedError;
 
+  /// 今日
+  DateTime get today => throw _privateConstructorUsedError;
+
+  /// 表示している日付
+  DateTime get pageDate => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $HomePageStateCopyWith<HomePageState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -35,8 +41,14 @@ abstract class $HomePageStateCopyWith<$Res> {
   factory $HomePageStateCopyWith(
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res, HomePageState>;
+
   @useResult
-  $Res call({List<Todo> todoList, FilterType filter, int displayTerm});
+  $Res call(
+      {List<Todo> todoList,
+      FilterType filter,
+      int displayTerm,
+      DateTime today,
+      DateTime pageDate});
 }
 
 /// @nodoc
@@ -55,6 +67,8 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
     Object? todoList = null,
     Object? filter = null,
     Object? displayTerm = null,
+    Object? today = null,
+    Object? pageDate = null,
   }) {
     return _then(_value.copyWith(
       todoList: null == todoList
@@ -69,6 +83,14 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
           ? _value.displayTerm
           : displayTerm // ignore: cast_nullable_to_non_nullable
               as int,
+      today: null == today
+          ? _value.today
+          : today // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      pageDate: null == pageDate
+          ? _value.pageDate
+          : pageDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -79,9 +101,15 @@ abstract class _$$_HomePageStateCopyWith<$Res>
   factory _$$_HomePageStateCopyWith(
           _$_HomePageState value, $Res Function(_$_HomePageState) then) =
       __$$_HomePageStateCopyWithImpl<$Res>;
+
   @override
   @useResult
-  $Res call({List<Todo> todoList, FilterType filter, int displayTerm});
+  $Res call(
+      {List<Todo> todoList,
+      FilterType filter,
+      int displayTerm,
+      DateTime today,
+      DateTime pageDate});
 }
 
 /// @nodoc
@@ -98,6 +126,8 @@ class __$$_HomePageStateCopyWithImpl<$Res>
     Object? todoList = null,
     Object? filter = null,
     Object? displayTerm = null,
+    Object? today = null,
+    Object? pageDate = null,
   }) {
     return _then(_$_HomePageState(
       todoList: null == todoList
@@ -112,6 +142,14 @@ class __$$_HomePageStateCopyWithImpl<$Res>
           ? _value.displayTerm
           : displayTerm // ignore: cast_nullable_to_non_nullable
               as int,
+      today: null == today
+          ? _value.today
+          : today // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      pageDate: null == pageDate
+          ? _value.pageDate
+          : pageDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -122,7 +160,9 @@ class _$_HomePageState implements _HomePageState {
   _$_HomePageState(
       {final List<Todo> todoList = const [],
       this.filter = FilterType.all,
-      this.displayTerm = 0})
+      this.displayTerm = 0,
+      required this.today,
+      required this.pageDate})
       : _todoList = todoList;
 
   /// タスクリスト
@@ -147,9 +187,17 @@ class _$_HomePageState implements _HomePageState {
   @JsonKey()
   final int displayTerm;
 
+  /// 今日
+  @override
+  final DateTime today;
+
+  /// 表示している日付
+  @override
+  final DateTime pageDate;
+
   @override
   String toString() {
-    return 'HomePageState(todoList: $todoList, filter: $filter, displayTerm: $displayTerm)';
+    return 'HomePageState(todoList: $todoList, filter: $filter, displayTerm: $displayTerm, today: $today, pageDate: $pageDate)';
   }
 
   @override
@@ -160,12 +208,20 @@ class _$_HomePageState implements _HomePageState {
             const DeepCollectionEquality().equals(other._todoList, _todoList) &&
             (identical(other.filter, filter) || other.filter == filter) &&
             (identical(other.displayTerm, displayTerm) ||
-                other.displayTerm == displayTerm));
+                other.displayTerm == displayTerm) &&
+            (identical(other.today, today) || other.today == today) &&
+            (identical(other.pageDate, pageDate) ||
+                other.pageDate == pageDate));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_todoList), filter, displayTerm);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_todoList),
+      filter,
+      displayTerm,
+      today,
+      pageDate);
 
   @JsonKey(ignore: true)
   @override
@@ -178,20 +234,35 @@ abstract class _HomePageState implements HomePageState {
   factory _HomePageState(
       {final List<Todo> todoList,
       final FilterType filter,
-      final int displayTerm}) = _$_HomePageState;
+      final int displayTerm,
+      required final DateTime today,
+      required final DateTime pageDate}) = _$_HomePageState;
 
   @override
 
   /// タスクリスト
   List<Todo> get todoList;
+
   @override
 
   /// 絞り込み
   FilterType get filter;
+
   @override
 
   /// 表示期間（0: 全て、1: 今日、2: 今週、3: 今月）
   int get displayTerm;
+
+  @override
+
+  /// 今日
+  DateTime get today;
+
+  @override
+
+  /// 表示している日付
+  DateTime get pageDate;
+
   @override
   @JsonKey(ignore: true)
   _$$_HomePageStateCopyWith<_$_HomePageState> get copyWith =>

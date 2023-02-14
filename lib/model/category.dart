@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:routine_app/design/app_color.dart';
-
 class Category {
   /// カテゴリID（カラーコード）
   final Color categoryId;
@@ -12,10 +10,6 @@ class Category {
     required this.categoryId,
     required this.name,
   });
-
-  static Category get defaultValue => const Category(categoryId: AppColor.categoryDefault, name: '規定の色',);
-
-
 
   Map<String, dynamic> toMap() {
     return {

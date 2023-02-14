@@ -22,7 +22,7 @@ class NewTaskPage extends ConsumerStatefulWidget {
 }
 
 class _NewTaskPageState extends ConsumerState<NewTaskPage> {
-  Category selectCategory = Category.defaultValue;
+  Category? selectCategory;
   final TextEditingController _spanController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
@@ -139,7 +139,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                         selectCategory = value;
                         _categoryController.text = value.name;
                         final todo = state.todo.copyWith(
-                          categoryId: [selectCategory.categoryId],
+                          categoryId: [selectCategory!.categoryId],
                         );
                         ref.read(provider.notifier).updateTodo(todo);
                       }),
