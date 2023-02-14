@@ -23,14 +23,31 @@ class _HomePageState extends ConsumerState<HomePage> {
     final state = ref.watch(homePageStateProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRouter.search);
-              },
-              icon: const Icon(Icons.dehaze)),
-        ],
+      appBar: AppBar(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.close),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 40, top: 50),
+              child: Column(
+                children: [
+                  drawerItem(text: '利用規約', hasIcon: true),
+                  drawerItem(text: 'プライバシーポリシー', hasIcon: true),
+                  drawerItem(text: 'フィードバック / お問い合わせ'),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () {
@@ -131,6 +148,28 @@ class _HomePageState extends ConsumerState<HomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget drawerItem({
+    required String text,
+    bool hasIcon = false,
+    VoidCallback? onTap,
+  }) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: onTap,
+          child: Row(
+            children: [
+              Text(text),
+              const SizedBox(width: 4),
+              if (hasIcon) const Icon(Icons.open_in_new),
+            ],
+          ),
+        ),
+        const SizedBox(height: 35),
+      ],
     );
   }
 }
