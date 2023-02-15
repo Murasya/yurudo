@@ -70,7 +70,7 @@ class TodoDatabase {
     var newTodo = todo.copyWithNoId(
       id: null,
       count: todo.count + 1,
-      date: todo.date.add(Duration(days: todo.span)),
+      date: todo.date!.add(Duration(days: todo.span)),
     );
     await db.update(
       tableName,

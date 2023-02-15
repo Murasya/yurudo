@@ -96,7 +96,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
         child: Column(
           children: [
             AppTextField(
-              label: const Text('タイトル'),
+              label: 'タイトル',
               controller: _titleController,
               onChanged: (value) {
                 final todo = state.todo.copyWith(
@@ -106,7 +106,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
               },
             ),
             AppTextField(
-              label: const Text('スパン'),
+              label: 'スパン',
               readonly: true,
               controller: _spanController,
               onTap: () {
@@ -138,7 +138,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
               },
             ),
             AppTextField(
-              label: const Text('分類'),
+              label: '分類',
               readonly: true,
               controller: _categoryController,
               onTap: () {
@@ -160,7 +160,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
               },
             ),
             AppTextField(
-              label: const Text('要する時間'),
+              label: '時間',
               readonly: true,
               controller: _timeController,
               onTap: () {
@@ -184,21 +184,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
               },
             ),
             AppTextField(
-              label: const Text('実施予定だった日'),
-              readonly: true,
-              controller: TextEditingController(
-                text: dateFormat.format(state.todo.date),
-              ),
-            ),
-            AppTextField(
-              label: const Text('ルーチンとしてできなかった回数'),
-              readonly: true,
-              controller: TextEditingController(
-                text: '${state.todo.skipCount}',
-              ),
-            ),
-            AppTextField(
-              label: const Text('次回実施日'),
+              label: '実施予定日',
               controller: _nextDayController,
               readonly: true,
               onTap: () {
@@ -207,8 +193,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                     final todo = state.todo.copyWith(
                         date: (picker.adapter as DateTimePickerAdapter).value!);
                     ref.read(provider.notifier).updateTodo(todo);
-                    _nextDayController.text =
-                        dateFormat.format(state.todo.date);
+                    _nextDayController.text = dateFormat.format(todo.date!);
                   },
                 ).showDialog(context);
               },

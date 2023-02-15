@@ -1,4 +1,3 @@
-import 'package:const_date_time/const_date_time.dart';
 import 'package:flutter/material.dart';
 
 class Todo {
@@ -33,10 +32,10 @@ class Todo {
   final List<Color> categoryId;
 
   /// 次回実施日
-  final DateTime date;
+  final DateTime? date;
 
   /// 初回実施日
-  final DateTime beginDate;
+  final DateTime? beginDate;
 
   /// 作成日時
   final DateTime? createdAt;
@@ -53,15 +52,15 @@ class Todo {
     this.id,
     this.name = '',
     this.span = 0,
-    this.remind = false,
+    this.remind = true,
     this.time = 0,
     this.count = 0,
     this.skipCount = 0,
     this.skipConsecutive = 0,
     this.isCompleted = false,
     this.categoryId = const [],
-    this.date = const ConstDateTime(2000),
-    this.beginDate = const ConstDateTime(2000),
+    this.date,
+    this.beginDate,
     this.createdAt,
     this.updatedAt,
   });
@@ -143,10 +142,10 @@ class Todo {
       'count': count,
       'skipCount': skipCount,
       'skipConsecutive': skipConsecutive,
-      'isCompleted': isCompleted ? 1:0,
+      'isCompleted': isCompleted ? 1 : 0,
       'categoryId': categoryId.map((e) => e.value).join(","),
-      'date': date.toIso8601String(),
-      'beginDate': beginDate.toIso8601String(),
+      'date': date?.toIso8601String(),
+      'beginDate': beginDate?.toIso8601String(),
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
     };

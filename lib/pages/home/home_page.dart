@@ -207,11 +207,11 @@ class _HomePageState extends ConsumerState<HomePage> {
     final state = ref.watch(provider);
     DateTime pageDay = state.today.add(Duration(days: index));
     List<Todo> todayTask =
-        todoList.where((todo) => isSameDay(todo.date, pageDay)).toList();
+        todoList.where((todo) => isSameDay(todo.date!, pageDay)).toList();
     List<Todo> pastTask = todoList
         .where((todo) =>
-            !isSameDay(todo.date, pageDay) &&
-            todo.date.isBefore(pageDay) &&
+            !isSameDay(todo.date!, pageDay) &&
+            todo.date!.isBefore(pageDay) &&
             !todo.isCompleted)
         .toList();
 
