@@ -13,7 +13,7 @@ import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../model/category.dart';
 import '../../model/todo.dart';
-import '../widget/category_dialog.dart';
+import '../widget/categoryDialog/category_dialog.dart';
 
 class TaskDetailPage extends ConsumerStatefulWidget {
   final Todo todo;

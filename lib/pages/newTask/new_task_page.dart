@@ -13,7 +13,7 @@ import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
-import '../widget/category_dialog.dart';
+import '../widget/categoryDialog/category_dialog.dart';
 
 class NewTaskPage extends ConsumerStatefulWidget {
   const NewTaskPage({Key? key}) : super(key: key);
