@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:routine_app/design/app_color.dart';
+import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/design/app_text_field.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
 import 'package:routine_app/pages/widget/date_dialog.dart';
@@ -34,7 +36,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
   late final TextEditingController _nextDayController;
   late final provider;
   Category? _selectCategory;
-  final dateFormat = DateFormat('y年M月d日');
+  final dateFormat = DateFormat('y/M/d');
 
   @override
   void initState() {
@@ -79,10 +81,26 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
   @override
   Widget build(BuildContext context) {
     final TaskDetailPageState state = ref.watch(provider);
+    final deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('編集画面'),
+        backgroundColor: AppColor.secondaryColor,
+        foregroundColor: AppColor.fontColor,
+        centerTitle: true,
+        elevation: 0,
+        leading: IconButton(
+          iconSize: 30,
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          'ゆるDOの詳細',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -95,101 +113,136 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                 ref.read(provider.notifier).setName(value);
               },
             ),
-            AppTextField(
-              label: 'スパン',
-              readonly: true,
-              controller: _spanController,
-              onTap: () {
-                SpanDialog(
-                  onConfirm: (picker, value) {
-                    var ans = picker.getSelectedValues();
-                    _spanController.text = '${ans[0]}${ans[1]}に1回';
-                    int span;
-                    switch (value[1]) {
-                      case 1:
-                        span = ans[0] * 7;
-                        break;
-                      default:
-                        span = ans[0];
-                        break;
-                    }
-                    ref.read(provider.notifier).setSpan(span);
-                  },
-                ).showDialog(context);
-              },
-            ),
-            CheckboxListTile(
-              value: state.remind,
-              title: const Text('リマインドする'),
-              onChanged: (value) {
-                ref.read(provider.notifier).setRemind(value ?? false);
-              },
-            ),
-            AppTextField(
-              label: '分類',
-              readonly: true,
-              controller: _categoryController,
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CategoryDialog(
-                      defaultValue: _selectCategory,
-                      onConfirm: (value) {
-                        ref
-                            .read(provider.notifier)
-                            .setCategory(_selectCategory);
-                        _selectCategory = value;
-                        _categoryController.text = value.name;
-                      },
-                    );
-                  },
-                );
-              },
-            ),
-            AppTextField(
-              label: '時間',
-              readonly: true,
-              controller: _timeController,
-              onTap: () {
-                TimeDialog(
-                  onConfirm: (picker, value) {
-                    var ans = picker.getSelectedValues();
-                    int time;
-                    switch (ans[1]) {
-                      case 1:
-                        time = ans[0] * 60;
-                        break;
-                      default:
-                        time = ans[0];
-                        break;
-                    }
-                    ref.read(provider.notifier).setTime(time);
-                    _timeController.text = '${ans[0]}${ans[1]}';
-                  },
-                ).showDialog(context);
-              },
-            ),
-            AppTextField(
-              label: '実施予定日',
-              controller: _nextDayController,
-              readonly: true,
-              onTap: () {
-                DateDialog(
-                  onConfirm: (picker, value) {
-                    final day =
-                        (picker.adapter as DateTimePickerAdapter).value!;
-                    ref.read(provider.notifier).setNextDay(day);
-                    _nextDayController.text = dateFormat.format(day);
-                  },
-                ).showDialog(context);
-              },
-            ),
+            const SizedBox(height: 30),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                deleteButton(),
+                SizedBox(
+                  width: deviceWidth / 2 - 20,
+                  child: Column(
+                    children: [
+                      AppTextField(
+                        label: 'スパン',
+                        readonly: true,
+                        controller: _spanController,
+                        onTap: () {
+                          SpanDialog(
+                            onConfirm: (picker, value) {
+                              var ans = picker.getSelectedValues();
+                              _spanController.text = '${ans[0]}${ans[1]}に1回';
+                              int span;
+                              switch (value[1]) {
+                                case 1:
+                                  span = ans[0] * 7;
+                                  break;
+                                default:
+                                  span = ans[0];
+                                  break;
+                              }
+                              ref.read(provider.notifier).setSpan(span);
+                            },
+                          ).showDialog(context);
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                      AppTextField(
+                        label: '分類',
+                        readonly: true,
+                        controller: _categoryController,
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CategoryDialog(
+                                defaultValue: _selectCategory,
+                                onConfirm: (value) {
+                                  ref
+                                      .read(provider.notifier)
+                                      .setCategory(_selectCategory);
+                                  _selectCategory = value;
+                                  _categoryController.text = value.name;
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                      AppTextField(
+                        label: '時間',
+                        readonly: true,
+                        controller: _timeController,
+                        onTap: () {
+                          TimeDialog(
+                            onConfirm: (picker, value) {
+                              var ans = picker.getSelectedValues();
+                              int time;
+                              switch (ans[1]) {
+                                case 1:
+                                  time = ans[0] * 60;
+                                  break;
+                                default:
+                                  time = ans[0];
+                                  break;
+                              }
+                              ref.read(provider.notifier).setTime(time);
+                              _timeController.text = '${ans[0]}${ans[1]}';
+                            },
+                          ).showDialog(context);
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                      AppTextField(
+                        label: '実施予定日',
+                        controller: _nextDayController,
+                        readonly: true,
+                        onTap: () {
+                          DateDialog(
+                            onConfirm: (picker, value) {
+                              final day =
+                                  (picker.adapter as DateTimePickerAdapter)
+                                      .value!;
+                              ref.read(provider.notifier).setNextDay(day);
+                              _nextDayController.text = dateFormat.format(day);
+                            },
+                          ).showDialog(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: deviceWidth / 2 - 20,
+                  padding: const EdgeInsets.only(top: 25),
+                  child: CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: state.remind,
+                    activeColor: AppColor.fontColor2,
+                    checkboxShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    title: Transform.translate(
+                      offset: const Offset(-20, 0),
+                      child: const Text(
+                        'リマインドする',
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      ref.read(provider.notifier).setRemind(value ?? false);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(),
+            Column(
+              children: [
                 finishEditButton(),
+                const SizedBox(height: 12),
+                deleteButton(),
               ],
             )
           ],
@@ -200,48 +253,59 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
 
   Widget finishEditButton() {
     var state = ref.read(provider);
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.pop(context);
-        ref.read(todoProvider.notifier).update(state.todo);
-      },
-      child: const Text('編集終了'),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: AppStyle.button.copyWith(
+          backgroundColor:
+              const MaterialStatePropertyAll(AppColor.disableColor),
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+          ref.read(todoProvider.notifier).update(state.todo);
+        },
+        child: const Text('変更を保存する'),
+      ),
     );
   }
 
   Widget deleteButton() {
-    return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor:
-            MaterialStateProperty.all(Theme.of(context).colorScheme.error),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: AppStyle.button.copyWith(
+          backgroundColor:
+              const MaterialStatePropertyAll(AppColor.secondaryColor),
+          foregroundColor: const MaterialStatePropertyAll(AppColor.fontColor2),
+        ),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('本当に削除しますか？'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.popUntil(
+                      context,
+                      ModalRoute.withName(AppRouter.home),
+                    );
+                    ref.read(todoProvider.notifier).delete(widget.todo.id!);
+                  },
+                  child: const Text('削除する'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('削除しない'),
+                ),
+              ],
+            ),
+          );
+        },
+        child: const Text('削除する'),
       ),
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('本当に削除しますか？'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.popUntil(
-                    context,
-                    ModalRoute.withName(AppRouter.home),
-                  );
-                  ref.read(todoProvider.notifier).delete(widget.todo.id!);
-                },
-                child: const Text('削除する'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('削除しない'),
-              ),
-            ],
-          ),
-        );
-      },
-      child: const Text('削除する'),
     );
   }
 }
