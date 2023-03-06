@@ -29,7 +29,6 @@ abstract class $CategoryDialogStateCopyWith<$Res> {
   factory $CategoryDialogStateCopyWith(
           CategoryDialogState value, $Res Function(CategoryDialogState) then) =
       _$CategoryDialogStateCopyWithImpl<$Res, CategoryDialogState>;
-
   @useResult
   $Res call({int? selectButtonNum});
 }
@@ -41,7 +40,6 @@ class _$CategoryDialogStateCopyWithImpl<$Res, $Val extends CategoryDialogState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -65,7 +63,6 @@ abstract class _$$_CategoryDialogStateCopyWith<$Res>
   factory _$$_CategoryDialogStateCopyWith(_$_CategoryDialogState value,
           $Res Function(_$_CategoryDialogState) then) =
       __$$_CategoryDialogStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({int? selectButtonNum});
@@ -136,7 +133,6 @@ abstract class _CategoryDialogState implements CategoryDialogState {
 
   /// 選んでいるボタンの数字
   int? get selectButtonNum;
-
   @override
   @JsonKey(ignore: true)
   _$$_CategoryDialogStateCopyWith<_$_CategoryDialogState> get copyWith =>

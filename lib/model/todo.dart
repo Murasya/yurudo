@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Todo {
   /// 管理ID
   final int? id;
@@ -26,16 +24,13 @@ class Todo {
   final int skipConsecutive;
 
   /// タスク完了したか
-  final bool isCompleted;
+  final List<bool> isCompleted;
 
-  /// カテゴリID（カラーコード）
-  final List<Color> categoryId;
+  /// カテゴリID
+  final int? categoryId;
 
-  /// 次回実施日
-  final DateTime? date;
-
-  /// 初回実施日
-  final DateTime? beginDate;
+  /// 実施日
+  final List<DateTime> date;
 
   /// 作成日時
   final DateTime? createdAt;
@@ -45,7 +40,7 @@ class Todo {
 
   @override
   String toString() {
-    return 'Todo{id: $id, name: $name, span: $span, remind: $remind, time: $time, count: $count, skipCount: $skipCount, skipConsecutive: $skipConsecutive, isCompleted: $isCompleted, categoryId: $categoryId, date: $date, beginDate: $beginDate, createdAt: $createdAt, updatedAt: $updatedAt}';
+    return 'Todo{id: $id, name: $name, span: $span, remind: $remind, time: $time, count: $count, skipCount: $skipCount, skipConsecutive: $skipConsecutive, isCompleted: $isCompleted, categoryId: $categoryId, date: $date, createdAt: $createdAt, updatedAt: $updatedAt}';
   }
 
   const Todo({
@@ -57,10 +52,9 @@ class Todo {
     this.count = 0,
     this.skipCount = 0,
     this.skipConsecutive = 0,
-    this.isCompleted = false,
-    this.categoryId = const [],
-    this.date,
-    this.beginDate,
+    this.isCompleted = const [],
+    this.categoryId,
+    this.date = const [],
     this.createdAt,
     this.updatedAt,
   });
@@ -74,10 +68,9 @@ class Todo {
     int? count,
     int? skipCount,
     int? skipConsecutive,
-    bool? isCompleted,
-    List<Color>? categoryId,
-    DateTime? date,
-    DateTime? beginDate,
+    List<bool>? isCompleted,
+    int? categoryId,
+    List<DateTime>? date,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -93,7 +86,6 @@ class Todo {
       isCompleted: isCompleted ?? this.isCompleted,
       categoryId: categoryId ?? this.categoryId,
       date: date ?? this.date,
-      beginDate: beginDate ?? this.beginDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -108,10 +100,9 @@ class Todo {
     int? count,
     int? skipCount,
     int? skipConsecutive,
-    bool? isCompleted,
-    List<Color>? categoryId,
-    DateTime? date,
-    DateTime? beginDate,
+    List<bool>? isCompleted,
+    int? categoryId,
+    List<DateTime>? date,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -127,7 +118,6 @@ class Todo {
       isCompleted: isCompleted ?? this.isCompleted,
       categoryId: categoryId ?? this.categoryId,
       date: date ?? this.date,
-      beginDate: beginDate ?? this.beginDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -142,10 +132,9 @@ class Todo {
       'count': count,
       'skipCount': skipCount,
       'skipConsecutive': skipConsecutive,
-      'isCompleted': isCompleted ? 1 : 0,
-      'categoryId': categoryId.map((e) => e.value).join(","),
-      'date': date?.toIso8601String(),
-      'beginDate': beginDate?.toIso8601String(),
+      'isCompleted': isCompleted.map((e) => e ? 1 : 0).join(","),
+      'categoryId': categoryId,
+      'date': date.map((e) => e.toIso8601String()).join(","),
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
     };
@@ -154,13 +143,20 @@ class Todo {
   }
 
   factory Todo.fromMap(Map<String, dynamic> map) {
-    List<Color> categoryId;
-    if (('${map['categoryId']}').isEmpty) {
-      categoryId = [];
+    List<DateTime> date;
+    if (('${map['date']}').isEmpty) {
+      date = [];
     } else {
-      categoryId = ('${map['categoryId']}')
+      date =
+          ('${map['date']}').split(',').map((e) => DateTime.parse(e)).toList();
+    }
+    List<bool> isCompleted;
+    if (('${map['isCompleted']}').isEmpty) {
+      isCompleted = [];
+    } else {
+      isCompleted = ('${map['isCompleted']}')
           .split(',')
-          .map((e) => Color(int.parse(e)))
+          .map((e) => e == '1' ? true : false)
           .toList();
     }
     return Todo(
@@ -172,10 +168,9 @@ class Todo {
       count: map['count'] as int,
       skipCount: map['skipCount'] as int,
       skipConsecutive: map['skipConsecutive'] as int,
-      isCompleted: map['isCompleted'] == 1 ? true : false,
-      categoryId: categoryId,
-      date: DateTime.parse(map['date']),
-      beginDate: DateTime.parse(map['beginDate']),
+      isCompleted: isCompleted,
+      categoryId: map['categoryId'],
+      date: date,
       createdAt: DateTime.parse(map['createdAt']),
       updatedAt: DateTime.parse(map['updatedAt']),
     );

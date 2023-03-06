@@ -70,8 +70,8 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                             width: 14,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
-                              color: categoryList[i].categoryId,
-                            ),
+                            color: categoryList[i].color,
+                          ),
                           ),
                           const SizedBox(
                             width: 8,

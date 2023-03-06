@@ -28,26 +28,21 @@ class TodoDatabase {
           beginDate TEXT,
           createdAt TEXT,
           updatedAt TEXT)
-        '''
-        );
+        ''');
       },
       version: 1,
     );
     return database;
   }
 
-  Future<Todo> update(Todo todo) async {
+  Future<void> update(Todo todo) async {
     final Database db = await database;
-    Todo updateTodo = todo.copyWith(
-      updatedAt: DateTime.now(),
-    );
     db.update(
       tableName,
-      updateTodo.toMap(),
+      todo.toMap(),
       where: 'id = ?',
-      whereArgs: [updateTodo.id],
+      whereArgs: [todo.id],
     );
-    return updateTodo;
   }
 
   Future<void> delete(int id) async {
@@ -60,38 +55,36 @@ class TodoDatabase {
   }
 
   // 完了した場合。戻り値は[updateTodo, newTodo]
-  Future<List<Todo>> complete(Todo todo) async {
-    final Database db = await database;
-    final now = DateTime.now();
-    var oldTodo = todo.copyWith(
-      isCompleted: true,
-      updatedAt: now,
-    );
-    var newTodo = todo.copyWithNoId(
-      id: null,
-      count: todo.count + 1,
-      date: todo.date!.add(Duration(days: todo.span)),
-    );
-    await db.update(
-      tableName,
-      oldTodo.toMap(),
-      where: 'id = ?',
-      whereArgs: [todo.id],
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    return [oldTodo, await insert(newTodo)];
-  }
+  // Future<List<Todo>> complete(Todo todo) async {
+  //   final Database db = await database;
+  //   final now = DateTime.now();
+  //   var oldTodo = todo.copyWith(
+  //     isCompleted: true,
+  //     updatedAt: now,
+  //   );
+  //   var newTodo = todo.copyWithNoId(
+  //     id: null,
+  //     count: todo.count + 1,
+  //     date: todo.date!.add(Duration(days: todo.span)),
+  //   );
+  //   await db.update(
+  //     tableName,
+  //     oldTodo.toJson(),
+  //     where: 'id = ?',
+  //     whereArgs: [todo.id],
+  //     conflictAlgorithm: ConflictAlgorithm.replace,
+  //   );
+  //   return [oldTodo, await insert(newTodo)];
+  // }
 
   Future<Todo> insert(Todo todo) async {
     final Database db = await database;
-    final now = DateTime.now();
-    var newTodo = todo.copyWith(createdAt: now, updatedAt: now);
     final id = await db.insert(
       tableName,
-      newTodo.toMap(),
+      todo.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    return newTodo.copyWith(id: id);
+    return todo.copyWith(id: id);
   }
 
   Future<List<Todo>> getAll() async {
@@ -100,5 +93,15 @@ class TodoDatabase {
     return List.generate(maps.length, (i) {
       return Todo.fromMap(maps[i]);
     });
+  }
+
+  Future<Todo> select(int id) async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    return Todo.fromMap(maps.first);
   }
 }

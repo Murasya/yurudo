@@ -16,7 +16,17 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$NewTaskPageState {
-  Todo get todo => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+
+  int? get span => throw _privateConstructorUsedError;
+
+  bool get remind => throw _privateConstructorUsedError;
+
+  Category? get category => throw _privateConstructorUsedError;
+
+  int? get time => throw _privateConstructorUsedError;
+
+  DateTime? get firstDay => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NewTaskPageStateCopyWith<NewTaskPageState> get copyWith =>
@@ -28,8 +38,17 @@ abstract class $NewTaskPageStateCopyWith<$Res> {
   factory $NewTaskPageStateCopyWith(
           NewTaskPageState value, $Res Function(NewTaskPageState) then) =
       _$NewTaskPageStateCopyWithImpl<$Res, NewTaskPageState>;
+
   @useResult
-  $Res call({Todo todo});
+  $Res call(
+      {String name,
+      int? span,
+      bool remind,
+      Category? category,
+      int? time,
+      DateTime? firstDay});
+
+  $CategoryCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -45,14 +64,51 @@ class _$NewTaskPageStateCopyWithImpl<$Res, $Val extends NewTaskPageState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? todo = null,
+    Object? name = null,
+    Object? span = freezed,
+    Object? remind = null,
+    Object? category = freezed,
+    Object? time = freezed,
+    Object? firstDay = freezed,
   }) {
     return _then(_value.copyWith(
-      todo: null == todo
-          ? _value.todo
-          : todo // ignore: cast_nullable_to_non_nullable
-              as Todo,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      span: freezed == span
+          ? _value.span
+          : span // ignore: cast_nullable_to_non_nullable
+              as int?,
+      remind: null == remind
+          ? _value.remind
+          : remind // ignore: cast_nullable_to_non_nullable
+              as bool,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as Category?,
+      time: freezed == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int?,
+      firstDay: freezed == firstDay
+          ? _value.firstDay
+          : firstDay // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get category {
+    if (_value.category == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.category!, (value) {
+      return _then(_value.copyWith(category: value) as $Val);
+    });
   }
 }
 
@@ -62,9 +118,19 @@ abstract class _$$_NewTaskPageStateCopyWith<$Res>
   factory _$$_NewTaskPageStateCopyWith(
           _$_NewTaskPageState value, $Res Function(_$_NewTaskPageState) then) =
       __$$_NewTaskPageStateCopyWithImpl<$Res>;
+
   @override
   @useResult
-  $Res call({Todo todo});
+  $Res call(
+      {String name,
+      int? span,
+      bool remind,
+      Category? category,
+      int? time,
+      DateTime? firstDay});
+
+  @override
+  $CategoryCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -78,13 +144,38 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? todo = null,
+    Object? name = null,
+    Object? span = freezed,
+    Object? remind = null,
+    Object? category = freezed,
+    Object? time = freezed,
+    Object? firstDay = freezed,
   }) {
     return _then(_$_NewTaskPageState(
-      todo: null == todo
-          ? _value.todo
-          : todo // ignore: cast_nullable_to_non_nullable
-              as Todo,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      span: freezed == span
+          ? _value.span
+          : span // ignore: cast_nullable_to_non_nullable
+              as int?,
+      remind: null == remind
+          ? _value.remind
+          : remind // ignore: cast_nullable_to_non_nullable
+              as bool,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as Category?,
+      time: freezed == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int?,
+      firstDay: freezed == firstDay
+          ? _value.firstDay
+          : firstDay // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -92,14 +183,32 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_NewTaskPageState implements _NewTaskPageState {
-  const _$_NewTaskPageState({required this.todo});
+  const _$_NewTaskPageState(
+      {required this.name,
+      required this.span,
+      required this.remind,
+      this.category = null,
+      this.time = null,
+      required this.firstDay});
 
   @override
-  final Todo todo;
+  final String name;
+  @override
+  final int? span;
+  @override
+  final bool remind;
+  @override
+  @JsonKey()
+  final Category? category;
+  @override
+  @JsonKey()
+  final int? time;
+  @override
+  final DateTime? firstDay;
 
   @override
   String toString() {
-    return 'NewTaskPageState(todo: $todo)';
+    return 'NewTaskPageState(name: $name, span: $span, remind: $remind, category: $category, time: $time, firstDay: $firstDay)';
   }
 
   @override
@@ -107,11 +216,19 @@ class _$_NewTaskPageState implements _NewTaskPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NewTaskPageState &&
-            (identical(other.todo, todo) || other.todo == todo));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.span, span) || other.span == span) &&
+            (identical(other.remind, remind) || other.remind == remind) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.time, time) || other.time == time) &&
+            (identical(other.firstDay, firstDay) ||
+                other.firstDay == firstDay));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, todo);
+  int get hashCode =>
+      Object.hash(runtimeType, name, span, remind, category, time, firstDay);
 
   @JsonKey(ignore: true)
   @override
@@ -121,11 +238,32 @@ class _$_NewTaskPageState implements _NewTaskPageState {
 }
 
 abstract class _NewTaskPageState implements NewTaskPageState {
-  const factory _NewTaskPageState({required final Todo todo}) =
-      _$_NewTaskPageState;
+  const factory _NewTaskPageState(
+      {required final String name,
+      required final int? span,
+      required final bool remind,
+      final Category? category,
+      final int? time,
+      required final DateTime? firstDay}) = _$_NewTaskPageState;
 
   @override
-  Todo get todo;
+  String get name;
+
+  @override
+  int? get span;
+
+  @override
+  bool get remind;
+
+  @override
+  Category? get category;
+
+  @override
+  int? get time;
+
+  @override
+  DateTime? get firstDay;
+
   @override
   @JsonKey(ignore: true)
   _$$_NewTaskPageStateCopyWith<_$_NewTaskPageState> get copyWith =>

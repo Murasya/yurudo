@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:routine_app/model/todo.dart';
+
+import '../../model/category.dart';
 
 part 'new_task_page_state.freezed.dart';
 
@@ -10,18 +11,47 @@ final newTaskPageStateProvider = StateNotifierProvider.autoDispose<
 });
 
 class NewTaskPageStateNotifier extends StateNotifier<NewTaskPageState> {
-  NewTaskPageStateNotifier() : super(const NewTaskPageState(todo: Todo()));
+  NewTaskPageStateNotifier()
+      : super(const NewTaskPageState(
+          name: '',
+          span: null,
+          remind: true,
+          firstDay: null,
+        ));
 
-  void updateTodo(todo) {
-    state = state.copyWith(
-      todo: todo,
-    );
+  void setName(String name) {
+    state = state.copyWith(name: name);
+  }
+
+  void setSpan(int span) {
+    state = state.copyWith(span: span);
+  }
+
+  void setCategory(Category? category) {
+    state = state.copyWith(category: category);
+  }
+
+  void setTime(int? time) {
+    state = state.copyWith(time: time);
+  }
+
+  void setDate(DateTime firstDay) {
+    state = state.copyWith(firstDay: firstDay);
+  }
+
+  void setRemind(bool remind) {
+    state = state.copyWith(remind: remind);
   }
 }
 
 @freezed
 class NewTaskPageState with _$NewTaskPageState {
   const factory NewTaskPageState({
-    required Todo todo,
+    required String name,
+    required int? span,
+    required bool remind,
+    @Default(null) Category? category,
+    @Default(null) int? time,
+    required DateTime? firstDay,
   }) = _NewTaskPageState;
 }

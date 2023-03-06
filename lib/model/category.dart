@@ -1,37 +1,19 @@
 import 'dart:ui';
 
-class Category {
-  /// カテゴリID（カラーコード）
-  final Color categoryId;
-  /// カテゴリ名
-  final String name;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const Category({
-    required this.categoryId,
-    required this.name,
-  });
+part 'category.freezed.dart';
 
-  Map<String, dynamic> toMap() {
-    return {
-      'categoryId': categoryId.value,
-      'name': name,
-    };
-  }
+@freezed
+class Category with _$Category {
+  const factory Category({
+    /// カテゴリNo.
+    required int id,
 
-  factory Category.fromMap(Map<String, dynamic> map) {
-    return Category(
-      categoryId: Color(map['categoryId'] as int),
-      name: map['name'] as String,
-    );
-  }
+    /// カラー
+    required Color color,
 
-  Category copyWith({
-    Color? categoryId,
-    String? name,
-  }) {
-    return Category(
-      categoryId: categoryId ?? this.categoryId,
-      name: name ?? this.name,
-    );
-  }
+    /// カテゴリ名
+    @Default('') String name,
+  }) = _Category;
 }

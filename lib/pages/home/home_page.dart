@@ -10,7 +10,6 @@ import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/model/todo.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/router.dart';
-import 'package:routine_app/viewModel/todo_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -206,14 +205,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget _page(int index, List<Todo> todoList) {
     final state = ref.watch(provider);
     DateTime pageDay = state.today.add(Duration(days: index));
-    List<Todo> todayTask =
-        todoList.where((todo) => isSameDay(todo.date!, pageDay)).toList();
-    List<Todo> pastTask = todoList
-        .where((todo) =>
-            !isSameDay(todo.date!, pageDay) &&
-            todo.date!.isBefore(pageDay) &&
-            !todo.isCompleted)
+    List<Todo> todayTask = todoList
+        .where((todo) => todo.date.any((e) => isSameDay(e, pageDay)))
         .toList();
+    List<Todo> pastTask = todoList.where((todo) {
+      final notCompleteIndex = todo.isCompleted.indexOf(false);
+      return todoList.indexOf(todo) < notCompleteIndex;
+    }).toList();
 
     return SingleChildScrollView(
       child: Padding(
@@ -240,7 +238,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 return _taskItem(todo);
               },
             ),
-            if (index == 0) ...[
+            if (index == 0 && pastTask.isNotEmpty) ...[
               const Text(
                 '実施が遅れている ゆるDO',
                 style: TextStyle(
@@ -280,25 +278,23 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             Container(
               width: 12,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8),
                   bottomLeft: Radius.circular(8),
                 ),
-                color:
-                    (todo.categoryId.isNotEmpty) ? todo.categoryId.first : null,
               ),
             ),
             GestureDetector(
               onTap: () {
-                if (!todo.isCompleted) {
-                  ref.read(todoProvider.notifier).complete(todo);
-                }
+                // if (!todo.isCompleted) {
+                //   ref.read(todoProvider.notifier).complete(todo);
+                // }
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: SvgPicture.asset(
-                  (todo.isCompleted) ? AppAssets.check : AppAssets.uncheck,
+                  (todo.isCompleted[0]) ? AppAssets.check : AppAssets.uncheck,
                   width: 24,
                 ),
               ),

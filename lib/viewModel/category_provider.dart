@@ -12,7 +12,9 @@ class CategoryNotifier extends StateNotifier<List<Category>> {
   final CategoryDatabase _database;
 
   CategoryNotifier(this._database) : super(CategoryDatabase.defaultCategory) {
-    getCategories();
+    _database.init().then((_) {
+      getCategories();
+    });
   }
 
   Future<void> setCategoryName(int index, String name) async {
@@ -23,19 +25,12 @@ class CategoryNotifier extends StateNotifier<List<Category>> {
     ];
   }
 
-  Future<void> setCategoryNames(List<String> names) async {
-    await _database.setCategoryNames(names);
-    state = [
-      for (var i = 0; i < state.length; i++) state[i].copyWith(name: names[i])
-    ];
-  }
-
-  Future<void> getCategories() async {
-    final names = await _database.getCategoryNames();
+  void getCategories() {
+    final names = _database.getCategoryNames();
     List<Category> categoryList = [];
     for (var i = 0; i < state.length; i++) {
       var s = state[i];
-      categoryList.add(Category(categoryId: s.categoryId, name: names[i]));
+      categoryList.add(Category(id: i, color: s.color, name: names[i]));
     }
     state = categoryList;
   }

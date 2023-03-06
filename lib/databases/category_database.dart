@@ -5,48 +5,61 @@ import '../model/category.dart';
 
 class CategoryDatabase {
   final tableName = 'categoryNames';
+  late final SharedPreferences _prefs;
 
   static const defaultCategory = [
     Category(
-      categoryId: AppColor.category1,
+      id: 0,
+      color: AppColor.category1,
       name: '',
     ),
     Category(
-      categoryId: AppColor.category2,
+      id: 1,
+      color: AppColor.category2,
       name: '',
     ),
     Category(
-      categoryId: AppColor.category3,
+      id: 2,
+      color: AppColor.category3,
       name: '',
     ),
     Category(
-      categoryId: AppColor.category4,
+      id: 3,
+      color: AppColor.category4,
       name: '',
     ),
     Category(
-      categoryId: AppColor.category5,
+      id: 4,
+      color: AppColor.category5,
       name: '',
     ),
   ];
 
-  Future<void> setCategoryName(int index, String name) async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String>? names = prefs.getStringList(tableName);
-    if (names != null) {
-      names[index] = name;
-      prefs.setStringList(tableName, names);
+  Future<void> init() async {
+    _prefs = await SharedPreferences.getInstance();
+    if (_prefs.getStringList(tableName) == null) {
+      await _prefs.setStringList(
+        tableName,
+        defaultCategory.map((e) => e.name).toList(),
+      );
     }
   }
 
-  Future<void> setCategoryNames(List<String> names) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(tableName, names);
+  Future<void> setCategoryName(int index, String name) async {
+    List<String>? names = _prefs.getStringList(tableName);
+    if (names != null) {
+      names[index] = name;
+      await _prefs.setStringList(tableName, names);
+    } else {
+      throw Exception('init()を先に呼び出してください');
+    }
   }
 
-  Future<List<String>> getCategoryNames() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String>? categoryNames = prefs.getStringList(tableName) ??
-        defaultCategory.map((e) => e.name).toList();
-    return categoryNames;
+  List<String> getCategoryNames() {
+    List<String>? names = _prefs.getStringList(tableName);
+    if (names == null) {
+      throw Exception('init()を先に呼び出してください');
+    }
+    return names;
   }
 }
