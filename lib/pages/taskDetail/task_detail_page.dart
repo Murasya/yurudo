@@ -87,8 +87,6 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
       appBar: AppBar(
         backgroundColor: AppColor.secondaryColor,
         foregroundColor: AppColor.fontColor,
-        centerTitle: true,
-        elevation: 0,
         leading: IconButton(
           iconSize: 30,
           icon: const Icon(Icons.chevron_left),

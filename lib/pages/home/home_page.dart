@@ -36,7 +36,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(70),
           child: Column(

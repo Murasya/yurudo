@@ -23,11 +23,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColor.backgroundColor,
+          centerTitle: true,
           toolbarTextStyle: TextStyle(
             color: AppColor.fontColor,
           ),
+          elevation: 0,
         ),
-        backgroundColor: AppColor.backgroundColor,
+        colorScheme:
+            const ColorScheme.light(background: AppColor.backgroundColor),
       ),
       initialRoute: AppRouter.home,
       onGenerateRoute: AppRouter.generateRoute,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_color.dart';
+import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/design/app_text_field.dart';
 import 'package:routine_app/model/category.dart';
 import 'package:routine_app/pages/newTask/new_task_page_state.dart';
@@ -213,13 +214,9 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 40),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(0, 40),
-                    backgroundColor: AppColor.primaryColor,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                  style: AppStyle.button.copyWith(
+                    backgroundColor:
+                        const MaterialStatePropertyAll(AppColor.primaryColor),
                   ),
                   onPressed: () {
                     if (state.name.isEmpty ||
