@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routine_app/model/todo.dart';
+import 'package:routine_app/pages/feedback/feedback_page.dart';
 import 'package:routine_app/pages/home/home_page.dart';
 import 'package:routine_app/pages/search_page.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page.dart';
@@ -11,6 +12,7 @@ class AppRouter {
   static const newTask = '/new';
   static const search = '/search';
   static const detail = '/detail';
+  static const feedback = '/feedback';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -38,6 +40,11 @@ class AppRouter {
           builder: (context) => TaskDetailPage(
             todo: settings.arguments as Todo,
           ),
+        );
+      case feedback:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const FeedbackPage(),
         );
     }
     return null;

@@ -153,7 +153,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                 children: [
                   drawerItem(text: '利用規約', hasIcon: true),
                   drawerItem(text: 'プライバシーポリシー', hasIcon: true),
-                  drawerItem(text: 'フィードバック / お問い合わせ'),
+                  drawerItem(
+                    text: 'フィードバック / お問い合わせ',
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRouter.feedback),
+                  ),
                 ],
               ),
             ),
@@ -209,7 +213,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         .toList();
     List<Todo> pastTask = todoList.where((todo) {
       final notCompleteIndex = todo.isCompleted.indexOf(false);
-      return todoList.indexOf(todo) < notCompleteIndex;
+      return todo.date[notCompleteIndex].isBefore(DateTime.now());
     }).toList();
 
     return SingleChildScrollView(
@@ -238,6 +242,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             if (index == 0 && pastTask.isNotEmpty) ...[
+              const SizedBox(height: 38),
               const Text(
                 '実施が遅れている ゆるDO',
                 style: TextStyle(
