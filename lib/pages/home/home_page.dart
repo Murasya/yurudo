@@ -43,14 +43,23 @@ class _HomePageState extends ConsumerState<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    dateFormat.format(
-                        state.pageDate.subtract(const Duration(days: 1))),
-                    style: const TextStyle(
-                      color: AppColor.fontColor,
-                      fontSize: 18,
+                  if (state.displayTerm == TermType.day)
+                    Text(
+                      dateFormat.format(
+                          state.pageDate.subtract(const Duration(days: 1))),
+                      style: const TextStyle(
+                        color: AppColor.fontColor,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
+                  if (state.displayTerm != TermType.day)
+                    Text(
+                      '前の${state.displayTerm.displayName}',
+                      style: const TextStyle(
+                        color: AppColor.fontColor,
+                        fontSize: 14,
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16, right: 24),
                     child: SvgPicture.asset(
@@ -68,20 +77,40 @@ class _HomePageState extends ConsumerState<HomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          dateFormat.format(state.pageDate),
-                          style: const TextStyle(
-                            color: AppColor.backgroundColor,
-                            fontSize: 24,
+                        if (state.displayTerm == TermType.day) ...[
+                          Text(
+                            dateFormat.format(state.pageDate),
+                            style: const TextStyle(
+                              color: AppColor.backgroundColor,
+                              fontSize: 24,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '(${DateFormat.E('ja').format(state.pageDate)})',
-                          style: const TextStyle(
-                            color: AppColor.backgroundColor,
-                            fontSize: 12,
+                          Text(
+                            '(${DateFormat.E('ja').format(state.pageDate)})',
+                            style: const TextStyle(
+                              color: AppColor.backgroundColor,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
+                        ],
+                        if (state.displayTerm == TermType.week) ...[
+                          Text(
+                            '${DateFormat('M/d').format(state.pageDate)}~${state.pageDate.add(const Duration(days: 7)).day}',
+                            style: const TextStyle(
+                              color: AppColor.backgroundColor,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ],
+                        if (state.displayTerm == TermType.month) ...[
+                          Text(
+                            DateFormat('y/M').format(state.pageDate),
+                            style: const TextStyle(
+                              color: AppColor.backgroundColor,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -95,14 +124,23 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ),
                     ),
                   ),
-                  Text(
-                    dateFormat
-                        .format(state.pageDate.add(const Duration(days: 1))),
-                    style: const TextStyle(
-                      color: AppColor.fontColor,
-                      fontSize: 18,
+                  if (state.displayTerm == TermType.day)
+                    Text(
+                      dateFormat
+                          .format(state.pageDate.add(const Duration(days: 1))),
+                      style: const TextStyle(
+                        color: AppColor.fontColor,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
+                  if (state.displayTerm != TermType.day)
+                    Text(
+                      '次の${state.displayTerm.displayName}',
+                      style: const TextStyle(
+                        color: AppColor.fontColor,
+                        fontSize: 14,
+                      ),
+                    ),
                 ],
               ),
               const SizedBox(height: 18),
@@ -118,18 +156,18 @@ class _HomePageState extends ConsumerState<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             displayChangeButton(
-              text: '日',
-              isActive: true,
+              term: TermType.day,
+              isActive: state.displayTerm == TermType.day,
             ),
             const SizedBox(width: 12),
             displayChangeButton(
-              text: '週',
-              isActive: false,
+              term: TermType.week,
+              isActive: state.displayTerm == TermType.week,
             ),
             const SizedBox(width: 12),
             displayChangeButton(
-              text: '月',
-              isActive: false,
+              term: TermType.month,
+              isActive: state.displayTerm == TermType.month,
             ),
           ],
         ),
@@ -225,9 +263,9 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'この日の ゆるDO',
-              style: TextStyle(
+            Text(
+              'この${state.displayTerm.displayName}の ゆるDO',
+              style: const TextStyle(
                 color: AppColor.fontColor,
                 fontSize: 14,
               ),
@@ -241,7 +279,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                 return _taskItem(todo);
               },
             ),
-            if (index == 0 && pastTask.isNotEmpty) ...[
+            if (index == 0 &&
+                pastTask.isNotEmpty &&
+                state.displayTerm == TermType.day) ...[
               const SizedBox(height: 38),
               const Text(
                 '実施が遅れている ゆるDO',
@@ -267,6 +307,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Widget _taskItem(Todo todo) {
+    final state = ref.watch(provider);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -328,20 +370,30 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      '${todo.time}',
-                      style: const TextStyle(
-                        color: AppColor.fontColor2,
-                        fontSize: 22,
+                    if (state.displayTerm == TermType.day) ...[
+                      Text(
+                        '${todo.time}',
+                        style: const TextStyle(
+                          color: AppColor.fontColor2,
+                          fontSize: 22,
+                        ),
                       ),
-                    ),
-                    const Text(
-                      '分',
-                      style: TextStyle(
-                        color: AppColor.fontColor2,
-                        fontSize: 14,
+                      const Text(
+                        '分',
+                        style: TextStyle(
+                          color: AppColor.fontColor2,
+                          fontSize: 14,
+                        ),
                       ),
-                    ),
+                    ],
+                    if (state.displayTerm != TermType.day)
+                      Text(
+                        DateFormat('M/d').format(todo.date.first),
+                        style: const TextStyle(
+                          color: AppColor.fontColor2,
+                          fontSize: 22,
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -375,22 +427,28 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Widget displayChangeButton({
-    required String text,
+    required TermType term,
     bool isActive = false,
   }) {
-    return Container(
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: isActive ? AppColor.primaryColor : AppColor.secondaryColor,
-      ),
-      child: Center(
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 14,
-            color: isActive ? AppColor.backgroundColor : AppColor.primaryColor,
+    return GestureDetector(
+      onTap: () {
+        ref.read(provider.notifier).changeTerm(term);
+      },
+      child: Container(
+        width: 32,
+        height: 32,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: isActive ? AppColor.primaryColor : AppColor.secondaryColor,
+        ),
+        child: Center(
+          child: Text(
+            term.displayName,
+            style: TextStyle(
+              fontSize: 14,
+              color:
+                  isActive ? AppColor.backgroundColor : AppColor.primaryColor,
+            ),
           ),
         ),
       ),

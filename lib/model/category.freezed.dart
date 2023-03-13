@@ -34,7 +34,6 @@ mixin _$Category {
 abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res, Category>;
-
   @useResult
   $Res call({int id, Color color, String name});
 }
@@ -46,7 +45,6 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -79,7 +77,6 @@ abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
   factory _$$_CategoryCopyWith(
           _$_Category value, $Res Function(_$_Category) then) =
       __$$_CategoryCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({int id, Color color, String name});
@@ -170,17 +167,14 @@ abstract class _Category implements Category {
 
   /// カテゴリNo.
   int get id;
-
   @override
 
   /// カラー
   Color get color;
-
   @override
 
   /// カテゴリ名
   String get name;
-
   @override
   @JsonKey(ignore: true)
   _$$_CategoryCopyWith<_$_Category> get copyWith =>

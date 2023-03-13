@@ -17,15 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TaskDetailPageState {
   String get title => throw _privateConstructorUsedError;
-
   int get span => throw _privateConstructorUsedError;
-
   bool get remind => throw _privateConstructorUsedError;
-
   Category? get category => throw _privateConstructorUsedError;
-
   int? get time => throw _privateConstructorUsedError;
-
   DateTime? get nextDay => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -38,7 +33,6 @@ abstract class $TaskDetailPageStateCopyWith<$Res> {
   factory $TaskDetailPageStateCopyWith(
           TaskDetailPageState value, $Res Function(TaskDetailPageState) then) =
       _$TaskDetailPageStateCopyWithImpl<$Res, TaskDetailPageState>;
-
   @useResult
   $Res call(
       {String title,
@@ -118,7 +112,6 @@ abstract class _$$_TaskDetailPageStateCopyWith<$Res>
   factory _$$_TaskDetailPageStateCopyWith(_$_TaskDetailPageState value,
           $Res Function(_$_TaskDetailPageState) then) =
       __$$_TaskDetailPageStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -246,22 +239,16 @@ abstract class _TaskDetailPageState implements TaskDetailPageState {
 
   @override
   String get title;
-
   @override
   int get span;
-
   @override
   bool get remind;
-
   @override
   Category? get category;
-
   @override
   int? get time;
-
   @override
   DateTime? get nextDay;
-
   @override
   @JsonKey(ignore: true)
   _$$_TaskDetailPageStateCopyWith<_$_TaskDetailPageState> get copyWith =>

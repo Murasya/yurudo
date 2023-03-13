@@ -10,6 +10,16 @@ enum FilterType {
   all,
 }
 
+enum TermType {
+  day('日'),
+  week('週'),
+  month('月');
+
+  const TermType(this.displayName);
+
+  final String displayName;
+}
+
 final homePageStateProvider =
     StateNotifierProvider.autoDispose<HomePageStateNotifier, HomePageState>(
         (ref) {
@@ -34,6 +44,12 @@ class HomePageStateNotifier extends StateNotifier<HomePageState> {
       pageDate: state.today.add(Duration(days: index)),
     );
   }
+
+  void changeTerm(TermType type) {
+    state = state.copyWith(
+      displayTerm: type,
+    );
+  }
 }
 
 @freezed
@@ -45,8 +61,8 @@ class HomePageState with _$HomePageState {
     /// 絞り込み
     @Default(FilterType.all) FilterType filter,
 
-    /// 表示期間（0: 全て、1: 今日、2: 今週、3: 今月）
-    @Default(0) int displayTerm,
+    /// 表示期間
+    @Default(TermType.day) TermType displayTerm,
 
     /// 今日
     required DateTime today,

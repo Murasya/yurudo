@@ -22,8 +22,8 @@ mixin _$HomePageState {
   /// 絞り込み
   FilterType get filter => throw _privateConstructorUsedError;
 
-  /// 表示期間（0: 全て、1: 今日、2: 今週、3: 今月）
-  int get displayTerm => throw _privateConstructorUsedError;
+  /// 表示期間
+  TermType get displayTerm => throw _privateConstructorUsedError;
 
   /// 今日
   DateTime get today => throw _privateConstructorUsedError;
@@ -45,7 +45,7 @@ abstract class $HomePageStateCopyWith<$Res> {
   $Res call(
       {List<Todo> todoList,
       FilterType filter,
-      int displayTerm,
+      TermType displayTerm,
       DateTime today,
       DateTime pageDate});
 }
@@ -81,7 +81,7 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
       displayTerm: null == displayTerm
           ? _value.displayTerm
           : displayTerm // ignore: cast_nullable_to_non_nullable
-              as int,
+              as TermType,
       today: null == today
           ? _value.today
           : today // ignore: cast_nullable_to_non_nullable
@@ -105,7 +105,7 @@ abstract class _$$_HomePageStateCopyWith<$Res>
   $Res call(
       {List<Todo> todoList,
       FilterType filter,
-      int displayTerm,
+      TermType displayTerm,
       DateTime today,
       DateTime pageDate});
 }
@@ -139,7 +139,7 @@ class __$$_HomePageStateCopyWithImpl<$Res>
       displayTerm: null == displayTerm
           ? _value.displayTerm
           : displayTerm // ignore: cast_nullable_to_non_nullable
-              as int,
+              as TermType,
       today: null == today
           ? _value.today
           : today // ignore: cast_nullable_to_non_nullable
@@ -158,7 +158,7 @@ class _$_HomePageState implements _HomePageState {
   _$_HomePageState(
       {final List<Todo> todoList = const [],
       this.filter = FilterType.all,
-      this.displayTerm = 0,
+      this.displayTerm = TermType.day,
       required this.today,
       required this.pageDate})
       : _todoList = todoList;
@@ -180,10 +180,10 @@ class _$_HomePageState implements _HomePageState {
   @JsonKey()
   final FilterType filter;
 
-  /// 表示期間（0: 全て、1: 今日、2: 今週、3: 今月）
+  /// 表示期間
   @override
   @JsonKey()
-  final int displayTerm;
+  final TermType displayTerm;
 
   /// 今日
   @override
@@ -232,7 +232,7 @@ abstract class _HomePageState implements HomePageState {
   factory _HomePageState(
       {final List<Todo> todoList,
       final FilterType filter,
-      final int displayTerm,
+      final TermType displayTerm,
       required final DateTime today,
       required final DateTime pageDate}) = _$_HomePageState;
 
@@ -240,14 +240,17 @@ abstract class _HomePageState implements HomePageState {
 
   /// タスクリスト
   List<Todo> get todoList;
+
   @override
 
   /// 絞り込み
   FilterType get filter;
+
   @override
 
-  /// 表示期間（0: 全て、1: 今日、2: 今週、3: 今月）
-  int get displayTerm;
+  /// 表示期間
+  TermType get displayTerm;
+
   @override
 
   /// 今日
