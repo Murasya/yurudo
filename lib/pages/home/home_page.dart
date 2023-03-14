@@ -255,7 +255,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// 各日のページ
   Widget _page(int index, List<Todo> todoList) {
     final state = ref.watch(provider);
-    DateTime pageDay = state.today.add(Duration(days: index));
+    DateTime pageDay =
+        state.today.add(Duration(days: index * state.displayTerm.term));
     List<Todo> todayTask = todoList
         .where((todo) => todo.date.any((e) => isSameDay(e, pageDay)))
         .toList();
@@ -286,7 +287,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               itemCount: todayTask.length,
               itemBuilder: (context, index) {
                 var todo = todayTask[index];
-                return _taskItem(todo);
+                return _taskItem(todo, pageDay);
               },
             ),
             if (index == 0 &&
@@ -306,7 +307,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 itemCount: pastTask.length,
                 itemBuilder: (context, index) {
                   var todo = pastTask[index];
-                  return _taskItem(todo);
+                  return _taskItem(todo, pageDay);
                 },
               ),
             ],
@@ -318,9 +319,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   /// それぞれのタスク
-  Widget _taskItem(Todo todo) {
+  Widget _taskItem(Todo todo, DateTime pageDay) {
     final state = ref.watch(provider);
-    final index = todo.date.indexWhere((d) => isSameDay(d, state.pageDate));
+    final index = todo.date.indexWhere((d) => isSameDay(d, pageDay));
 
     Widget timeWidget() {
       final now = DateTime.now();

@@ -11,13 +11,14 @@ enum FilterType {
 }
 
 enum TermType {
-  day('日'),
-  week('週'),
-  month('月');
+  day('日', 1),
+  week('週', 7),
+  month('月', 30);
 
-  const TermType(this.displayName);
+  const TermType(this.displayName, this.term);
 
   final String displayName;
+  final int term;
 }
 
 final homePageStateProvider =
@@ -41,7 +42,7 @@ class HomePageStateNotifier extends StateNotifier<HomePageState> {
 
   void changeDay(int index) {
     state = state.copyWith(
-      pageDate: state.today.add(Duration(days: index)),
+      pageDate: state.today.add(Duration(days: index * state.displayTerm.term)),
     );
   }
 
