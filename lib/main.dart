@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/router.dart';
+import 'package:routine_app/services/notification_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+  NotificationService().requestPermissions();
 
   runApp(
     const ProviderScope(child: MyApp()),

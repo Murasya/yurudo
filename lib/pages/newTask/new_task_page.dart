@@ -13,6 +13,7 @@ import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
+import '../../services/notification_service.dart';
 import '../widget/categoryDialog/category_dialog.dart';
 
 class NewTaskPage extends ConsumerStatefulWidget {
@@ -28,7 +29,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
-  //NotificationService ns = NotificationService();
+  NotificationService ns = NotificationService();
   final provider = newTaskPageStateProvider;
   final dateFormat = DateFormat('y年M月d日');
   InterstitialAd? _interstitialAd;
@@ -36,7 +37,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   @override
   void initState() {
     super.initState();
-    //ns.initializeNotification();
+    ns.initializeNotification();
     adLoad();
   }
 
@@ -233,10 +234,10 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                           time: state.time ?? 0,
                         );
                     if (state.remind) {
-                      //ns.requestPermissions();
-                      // ns.registerMessage(
-                      //     day: state.todo.date,
-                      //     message: '${state.todo.name}をやりましょう！');
+                      ns.requestPermissions();
+                      ns.registerMessage(
+                          day: state.firstDay!,
+                          message: '${state.name}をやりましょう！');
                     }
                     _interstitialAd?.show();
                     Navigator.popUntil(

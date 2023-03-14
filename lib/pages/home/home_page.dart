@@ -10,6 +10,8 @@ import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/model/todo.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/router.dart';
+import 'package:routine_app/services/notification_service.dart';
+import 'package:routine_app/viewModel/category_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -33,6 +35,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(provider);
+    NotificationService().setNotifications(state.todoList);
 
     return Scaffold(
       appBar: AppBar(
@@ -243,6 +246,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
+  /// 各日のページ
   Widget _page(int index, List<Todo> todoList) {
     final state = ref.watch(provider);
     DateTime pageDay = state.today.add(Duration(days: index));
@@ -306,6 +310,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
+  /// それぞれのタスク
   Widget _taskItem(Todo todo) {
     final state = ref.watch(provider);
 
@@ -324,8 +329,11 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             Container(
               width: 12,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: ref
+                    .watch(categoryProvider.notifier)
+                    .getColor(todo.categoryId),
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(8),
                   bottomLeft: Radius.circular(8),
                 ),

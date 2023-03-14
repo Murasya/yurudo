@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routine_app/databases/category_database.dart';
 
 import '../model/category.dart';
 
 final categoryProvider =
-    StateNotifierProvider<CategoryNotifier, List<Category>>((ref) {
+StateNotifierProvider<CategoryNotifier, List<Category>>((ref) {
   return CategoryNotifier(CategoryDatabase());
 });
 
@@ -23,6 +24,14 @@ class CategoryNotifier extends StateNotifier<List<Category>> {
       for (var i = 0; i < state.length; i++)
         if (i == index) state[i].copyWith(name: name) else state[i]
     ];
+  }
+
+  Color getColor(int? id) {
+    if (id == null) {
+      return Colors.transparent;
+    } else {
+      return state.firstWhere((category) => category.id == id).color;
+    }
   }
 
   void getCategories() {
