@@ -219,13 +219,13 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                     backgroundColor:
                         const MaterialStatePropertyAll(AppColor.primaryColor),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (state.name.isEmpty ||
                         state.span == null ||
                         state.firstDay == null) {
                       return;
                     }
-                    ref.read(todoProvider.notifier).create(
+                    await ref.read(todoProvider.notifier).create(
                           name: state.name,
                           span: state.span!,
                           firstDay: state.firstDay!,
@@ -233,13 +233,8 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                           categoryId: state.category?.id,
                           time: state.time ?? 0,
                         );
-                    if (state.remind) {
-                      ns.requestPermissions();
-                      ns.registerMessage(
-                          day: state.firstDay!,
-                          message: '${state.name}をやりましょう！');
-                    }
                     _interstitialAd?.show();
+                    if (!mounted) return;
                     Navigator.popUntil(
                       context,
                       (route) => route.settings.name == AppRouter.home,

@@ -13,6 +13,8 @@ import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/viewModel/category_provider.dart';
 
+import '../../viewModel/todo_provider.dart';
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
     Key? key,
@@ -246,6 +248,10 @@ class _HomePageState extends ConsumerState<HomePage> {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
+  bool isBeforeDay(DateTime a, DateTime b) {
+    return !isSameDay(a, b) && a.isBefore(b);
+  }
+
   /// 各日のページ
   Widget _page(int index, List<Todo> todoList) {
     final state = ref.watch(provider);
@@ -255,7 +261,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         .toList();
     List<Todo> pastTask = todoList.where((todo) {
       final notCompleteIndex = todo.isCompleted.indexOf(false);
-      return todo.date[notCompleteIndex].isBefore(DateTime.now());
+      return isBeforeDay(todo.date[notCompleteIndex], DateTime.now());
     }).toList();
 
     return SingleChildScrollView(
@@ -303,7 +309,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                   return _taskItem(todo);
                 },
               ),
-            ]
+            ],
+            const SizedBox(height: 100),
           ],
         ),
       ),
@@ -313,6 +320,70 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// それぞれのタスク
   Widget _taskItem(Todo todo) {
     final state = ref.watch(provider);
+    final index = todo.date.indexWhere((d) => isSameDay(d, state.pageDate));
+
+    Widget timeWidget() {
+      final now = DateTime.now();
+      final unCompleteIndex = todo.isCompleted.indexOf(false);
+      if (index == -1) {
+        String num = (todo.date[unCompleteIndex].difference(now).inDays < 30)
+            ? '~1'
+            : '1';
+        String suf = (todo.date[unCompleteIndex].difference(now).inDays < 7)
+            ? '週間'
+            : (todo.date.last.difference(now).inDays < 30)
+                ? 'か月'
+                : 'か月超';
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              num,
+              style: const TextStyle(
+                fontSize: 22,
+                color: AppColor.emphasisColor,
+              ),
+            ),
+            Text(
+              suf,
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColor.emphasisColor,
+              ),
+            )
+          ],
+        );
+      }
+      if (state.displayTerm == TermType.day) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '${todo.time}',
+              style: const TextStyle(
+                color: AppColor.fontColor2,
+                fontSize: 22,
+              ),
+            ),
+            const Text(
+              '分',
+              style: TextStyle(
+                color: AppColor.fontColor2,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        );
+      } else {
+        return Text(
+          DateFormat('M/d').format(todo.date.first),
+          style: const TextStyle(
+            color: AppColor.fontColor2,
+            fontSize: 22,
+          ),
+        );
+      }
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -341,14 +412,21 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             GestureDetector(
               onTap: () {
-                // if (!todo.isCompleted) {
-                //   ref.read(todoProvider.notifier).complete(todo);
-                // }
+                if (index == -1 || !todo.isCompleted[index]) {
+                  debugPrint('complete!');
+                  ref.read(todoProvider.notifier).complete(
+                        todo: todo,
+                        completeDay: state.pageDate,
+                        nextDay: state.pageDate.add(Duration(days: todo.span)),
+                      );
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: SvgPicture.asset(
-                  (todo.isCompleted[0]) ? AppAssets.check : AppAssets.uncheck,
+                  (index != -1 && todo.isCompleted[index])
+                      ? AppAssets.check
+                      : AppAssets.uncheck,
                   width: 24,
                 ),
               ),
@@ -375,35 +453,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ),
               child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (state.displayTerm == TermType.day) ...[
-                      Text(
-                        '${todo.time}',
-                        style: const TextStyle(
-                          color: AppColor.fontColor2,
-                          fontSize: 22,
-                        ),
-                      ),
-                      const Text(
-                        '分',
-                        style: TextStyle(
-                          color: AppColor.fontColor2,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                    if (state.displayTerm != TermType.day)
-                      Text(
-                        DateFormat('M/d').format(todo.date.first),
-                        style: const TextStyle(
-                          color: AppColor.fontColor2,
-                          fontSize: 22,
-                        ),
-                      ),
-                  ],
-                ),
+                child: timeWidget(),
               ),
             ),
           ],

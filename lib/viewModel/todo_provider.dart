@@ -20,29 +20,24 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     DateTime? nextDay,
   }) async {
     final now = DateTime.now();
-    final completeIndex = todo.date.indexOf(completeDay);
-    // 完了フラグを変更
-    var updateTodo = todo.copyWith(
-      isCompleted: todo.isCompleted.map((e) {
-        if (todo.isCompleted.indexOf(e) == completeIndex) {
-          return true;
-        } else {
-          return e;
-        }
-      }).toList(),
-    );
+    // 完了処理
+    // 未完了を全部消す
+    int unCompleteIndex = todo.isCompleted.indexOf(false);
+    todo.isCompleted.removeRange(unCompleteIndex, todo.isCompleted.length);
+    todo.date.removeRange(unCompleteIndex, todo.date.length);
+    // 完了を作成
+    todo.isCompleted.add(true);
+    todo.date.add(completeDay);
     // 次回実施日がある場合はさらに追加
     if (nextDay != null) {
-      updateTodo = updateTodo.copyWith(
-        date: [...updateTodo.date, nextDay],
-        isCompleted: [...updateTodo.isCompleted, false],
-        updatedAt: now,
-      );
+      todo.isCompleted.add(false);
+      todo.date.add(nextDay);
     }
-    _database.update(updateTodo);
+    todo = todo.copyWith(updatedAt: now);
+    _database.update(todo);
     state = [
       for (var s in state)
-        if (s.id == updateTodo.id) updateTodo else s
+        if (s.id == todo.id) todo else s
     ];
   }
 
