@@ -360,7 +360,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '${todo.time}',
+              (todo.time == null) ? '- ' : '${todo.time}',
               style: const TextStyle(
                 color: AppColor.fontColor2,
                 fontSize: 22,

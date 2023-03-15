@@ -66,7 +66,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     required DateTime firstDay,
     required bool remind,
     int? categoryId,
-    int time = 0,
+    int? time,
   }) async {
     final now = DateTime.now();
     // 次回実施日、作成日、更新日を追加

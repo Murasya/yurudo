@@ -12,7 +12,7 @@ class Todo {
   final bool remind;
 
   /// タスクに要する時間
-  final int time;
+  final int? time;
 
   /// これまでの実施回数
   final int count;
@@ -48,7 +48,7 @@ class Todo {
     this.name = '',
     this.span = 0,
     this.remind = true,
-    this.time = 0,
+    this.time,
     this.count = 0,
     this.skipCount = 0,
     this.skipConsecutive = 0,

@@ -231,7 +231,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                           firstDay: state.firstDay!,
                           remind: state.remind,
                           categoryId: state.category?.id,
-                          time: state.time ?? 0,
+                          time: state.time,
                         );
                     _interstitialAd?.show();
                     if (!mounted) return;
