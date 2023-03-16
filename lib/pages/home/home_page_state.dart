@@ -46,6 +46,16 @@ class HomePageStateNotifier extends StateNotifier<HomePageState> {
     );
   }
 
+  bool isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  void updateToday() {
+    if (!isSameDay(state.today, DateTime.now())) {
+      state = state.copyWith(today: DateTime.now());
+    }
+  }
+
   void changeTerm(TermType type) {
     state = state.copyWith(
       displayTerm: type,

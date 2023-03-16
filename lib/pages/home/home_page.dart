@@ -38,6 +38,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(provider);
     NotificationService().setNotifications(state.todoList);
+    ref.watch(provider.notifier).updateToday();
 
     return Scaffold(
       appBar: AppBar(
