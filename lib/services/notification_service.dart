@@ -108,8 +108,9 @@ class NotificationService {
     final today = DateTime.now();
     final tomorrow = today.add(const Duration(days: 1));
     final tomorrowTodo = todos
-        .where((todo) => todo.date.any((d) =>
-            isSameDay(d, tomorrow) && todo.isCompleted[todo.date.indexOf(d)]))
+        .where((todo) =>
+            todo.expectedDate != null &&
+            isSameDay(todo.expectedDate!, tomorrow))
         .toList();
     String message = '';
     for (var i = 0; i < min(3, tomorrowTodo.length); i++) {

@@ -7,13 +7,10 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_assets.dart';
 import 'package:routine_app/design/app_color.dart';
-import 'package:routine_app/model/todo.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
+import 'package:routine_app/pages/home/widget/page_widget.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
-import 'package:routine_app/viewModel/category_provider.dart';
-
-import '../../viewModel/todo_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -240,7 +237,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       body: PageView.builder(onPageChanged: (index) {
         ref.read(provider.notifier).changeDay(index);
       }, itemBuilder: (context, index) {
-        return _page(index, state.todoList);
+        return PageWidget(index: index);
       }),
     );
   }
@@ -251,217 +248,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   bool isBeforeDay(DateTime a, DateTime b) {
     return !isSameDay(a, b) && a.isBefore(b);
-  }
-
-  /// 各日のページ
-  Widget _page(int index, List<Todo> todoList) {
-    final state = ref.watch(provider);
-    DateTime pageDay =
-        state.today.add(Duration(days: index * state.displayTerm.term));
-    List<Todo> todayTask = todoList
-        .where((todo) => todo.date.any((e) => isSameDay(e, pageDay)))
-        .toList();
-    List<Todo> pastTask = todoList.where((todo) {
-      final notCompleteIndex = todo.isCompleted.indexOf(false);
-      return isBeforeDay(todo.date[notCompleteIndex], DateTime.now());
-    }).toList();
-
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'この${state.displayTerm.displayName}の ゆるDO',
-              style: const TextStyle(
-                color: AppColor.fontColor,
-                fontSize: 14,
-              ),
-            ),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: todayTask.length,
-              itemBuilder: (context, index) {
-                var todo = todayTask[index];
-                return _taskItem(todo, pageDay);
-              },
-            ),
-            if (index == 0 &&
-                pastTask.isNotEmpty &&
-                state.displayTerm == TermType.day) ...[
-              const SizedBox(height: 38),
-              const Text(
-                '実施が遅れている ゆるDO',
-                style: TextStyle(
-                  color: AppColor.fontColor,
-                  fontSize: 14,
-                ),
-              ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: pastTask.length,
-                itemBuilder: (context, index) {
-                  var todo = pastTask[index];
-                  return _taskItem(todo, pageDay);
-                },
-              ),
-            ],
-            const SizedBox(height: 100),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// それぞれのタスク
-  Widget _taskItem(Todo todo, DateTime pageDay) {
-    final state = ref.watch(provider);
-    final index = todo.date.indexWhere((d) => isSameDay(d, pageDay));
-
-    Widget timeWidget() {
-      final now = DateTime.now();
-      final unCompleteIndex = todo.isCompleted.indexOf(false);
-      if (index == -1) {
-        String num = (todo.date[unCompleteIndex].difference(now).inDays < 30)
-            ? '~1'
-            : '1';
-        String suf = (todo.date[unCompleteIndex].difference(now).inDays < 7)
-            ? '週間'
-            : (todo.date.last.difference(now).inDays < 30)
-                ? 'か月'
-                : 'か月超';
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              num,
-              style: const TextStyle(
-                fontSize: 22,
-                color: AppColor.emphasisColor,
-              ),
-            ),
-            Text(
-              suf,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColor.emphasisColor,
-              ),
-            )
-          ],
-        );
-      }
-      if (state.displayTerm == TermType.day) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              (todo.time == null) ? '- ' : '${todo.time}',
-              style: const TextStyle(
-                color: AppColor.fontColor2,
-                fontSize: 22,
-              ),
-            ),
-            const Text(
-              '分',
-              style: TextStyle(
-                color: AppColor.fontColor2,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        );
-      } else {
-        return Text(
-          DateFormat('M/d').format(todo.date.first),
-          style: const TextStyle(
-            color: AppColor.fontColor2,
-            fontSize: 22,
-          ),
-        );
-      }
-    }
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: AppColor.secondaryColor,
-      ),
-      height: 60,
-      margin: const EdgeInsets.only(top: 12),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, AppRouter.detail, arguments: todo);
-        },
-        child: Row(
-          children: [
-            Container(
-              width: 12,
-              decoration: BoxDecoration(
-                color: ref
-                    .watch(categoryProvider.notifier)
-                    .getColor(todo.categoryId),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  bottomLeft: Radius.circular(8),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                if (index == -1 || !todo.isCompleted[index]) {
-                  debugPrint('complete!');
-                  ref.read(todoProvider.notifier).complete(
-                        todo: todo,
-                        completeDay: state.pageDate,
-                        nextDay: state.pageDate.add(Duration(days: todo.span)),
-                      );
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: SvgPicture.asset(
-                  (index != -1 && todo.isCompleted[index])
-                      ? AppAssets.check
-                      : AppAssets.uncheck,
-                  width: 24,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Text(
-                todo.name,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Container(
-              width: 70,
-              height: double.infinity,
-              margin: const EdgeInsets.only(left: 12),
-              decoration: const BoxDecoration(
-                color: AppColor.thirdColor,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
-                ),
-              ),
-              child: Center(
-                child: timeWidget(),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   Widget drawerItem({

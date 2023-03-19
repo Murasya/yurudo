@@ -23,14 +23,14 @@ class Todo {
   /// タスクの連続スキップ回数
   final int skipConsecutive;
 
-  /// タスク完了したか
-  final List<bool> isCompleted;
-
   /// カテゴリID
   final int? categoryId;
 
   /// 実施日
-  final List<DateTime> date;
+  final List<DateTime> completeDate;
+
+  /// 実施予定日
+  final DateTime? expectedDate;
 
   /// 作成日時
   final DateTime? createdAt;
@@ -40,7 +40,7 @@ class Todo {
 
   @override
   String toString() {
-    return 'Todo{id: $id, name: $name, span: $span, remind: $remind, time: $time, count: $count, skipCount: $skipCount, skipConsecutive: $skipConsecutive, isCompleted: $isCompleted, categoryId: $categoryId, date: $date, createdAt: $createdAt, updatedAt: $updatedAt}';
+    return 'Todo{id: $id, name: $name, span: $span, remind: $remind, time: $time, count: $count, skipCount: $skipCount, skipConsecutive: $skipConsecutive, categoryId: $categoryId, completeDate: $completeDate, expectedDate: $expectedDate, createdAt: $createdAt, updatedAt: $updatedAt}';
   }
 
   const Todo({
@@ -52,9 +52,9 @@ class Todo {
     this.count = 0,
     this.skipCount = 0,
     this.skipConsecutive = 0,
-    this.isCompleted = const [],
     this.categoryId,
-    this.date = const [],
+    this.completeDate = const [],
+    this.expectedDate,
     this.createdAt,
     this.updatedAt,
   });
@@ -68,9 +68,9 @@ class Todo {
     int? count,
     int? skipCount,
     int? skipConsecutive,
-    List<bool>? isCompleted,
     int? categoryId,
-    List<DateTime>? date,
+    List<DateTime>? completeDate,
+    DateTime? expectedDate,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -83,9 +83,9 @@ class Todo {
       count: count ?? this.count,
       skipCount: skipCount ?? this.skipCount,
       skipConsecutive: skipConsecutive ?? this.skipConsecutive,
-      isCompleted: isCompleted ?? this.isCompleted,
       categoryId: categoryId ?? this.categoryId,
-      date: date ?? this.date,
+      completeDate: completeDate ?? this.completeDate,
+      expectedDate: expectedDate ?? this.expectedDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -100,9 +100,9 @@ class Todo {
     int? count,
     int? skipCount,
     int? skipConsecutive,
-    List<bool>? isCompleted,
     int? categoryId,
-    List<DateTime>? date,
+    List<DateTime>? completeDate,
+    DateTime? expectedDate,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -115,9 +115,9 @@ class Todo {
       count: count ?? this.count,
       skipCount: skipCount ?? this.skipCount,
       skipConsecutive: skipConsecutive ?? this.skipConsecutive,
-      isCompleted: isCompleted ?? this.isCompleted,
       categoryId: categoryId ?? this.categoryId,
-      date: date ?? this.date,
+      completeDate: completeDate ?? this.completeDate,
+      expectedDate: expectedDate ?? this.expectedDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -132,9 +132,9 @@ class Todo {
       'count': count,
       'skipCount': skipCount,
       'skipConsecutive': skipConsecutive,
-      'isCompleted': isCompleted.map((e) => e ? 1 : 0).join(","),
       'categoryId': categoryId,
-      'date': date.map((e) => e.toIso8601String()).join(","),
+      'completeDate': completeDate.map((e) => e.toIso8601String()).join(","),
+      'expectedDate': expectedDate?.toIso8601String(),
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
     };
@@ -143,20 +143,13 @@ class Todo {
   }
 
   factory Todo.fromMap(Map<String, dynamic> map) {
-    List<DateTime> date;
-    if (('${map['date']}').isEmpty) {
-      date = [];
+    List<DateTime> completeDate;
+    if (('${map['completeDate']}').isEmpty) {
+      completeDate = [];
     } else {
-      date =
-          ('${map['date']}').split(',').map((e) => DateTime.parse(e)).toList();
-    }
-    List<bool> isCompleted;
-    if (('${map['isCompleted']}').isEmpty) {
-      isCompleted = [];
-    } else {
-      isCompleted = ('${map['isCompleted']}')
+      completeDate = ('${map['completeDate']}')
           .split(',')
-          .map((e) => e == '1' ? true : false)
+          .map((e) => DateTime.parse(e))
           .toList();
     }
     return Todo(
@@ -168,9 +161,9 @@ class Todo {
       count: map['count'] as int,
       skipCount: map['skipCount'] as int,
       skipConsecutive: map['skipConsecutive'] as int,
-      isCompleted: isCompleted,
       categoryId: map['categoryId'],
-      date: date,
+      completeDate: completeDate,
+      expectedDate: DateTime.tryParse(map['expectedDate']),
       createdAt: DateTime.parse(map['createdAt']),
       updatedAt: DateTime.parse(map['updatedAt']),
     );

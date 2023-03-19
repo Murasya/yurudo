@@ -28,7 +28,7 @@ class TaskDetailPageStateNotifier extends StateNotifier<TaskDetailPageState> {
           remind: todo.remind,
           category: category,
           time: todo.time,
-          nextDay: todo.date.last,
+          nextDay: todo.expectedDate,
         ));
 
   void setName(String name) {

@@ -22,10 +22,9 @@ class TodoDatabase {
           count INTEGER,
           skipCount INTEGER,
           skipConsecutive INTEGER,
-          isCompleted INTEGER,
           categoryId INTEGER,
-          date TEXT,
-          beginDate TEXT,
+          completeDate TEXT,
+          expectedDate TEXT,
           createdAt TEXT,
           updatedAt TEXT)
         ''');
@@ -53,29 +52,6 @@ class TodoDatabase {
       whereArgs: [id],
     );
   }
-
-  // 完了した場合。戻り値は[updateTodo, newTodo]
-  // Future<List<Todo>> complete(Todo todo) async {
-  //   final Database db = await database;
-  //   final now = DateTime.now();
-  //   var oldTodo = todo.copyWith(
-  //     isCompleted: true,
-  //     updatedAt: now,
-  //   );
-  //   var newTodo = todo.copyWithNoId(
-  //     id: null,
-  //     count: todo.count + 1,
-  //     date: todo.date!.add(Duration(days: todo.span)),
-  //   );
-  //   await db.update(
-  //     tableName,
-  //     oldTodo.toJson(),
-  //     where: 'id = ?',
-  //     whereArgs: [todo.id],
-  //     conflictAlgorithm: ConflictAlgorithm.replace,
-  //   );
-  //   return [oldTodo, await insert(newTodo)];
-  // }
 
   Future<Todo> insert(Todo todo) async {
     final Database db = await database;

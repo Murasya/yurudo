@@ -21,19 +21,11 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }) async {
     final now = DateTime.now();
     // 完了処理
-    // 未完了を全部消す
-    int unCompleteIndex = todo.isCompleted.indexOf(false);
-    todo.isCompleted.removeRange(unCompleteIndex, todo.isCompleted.length);
-    todo.date.removeRange(unCompleteIndex, todo.date.length);
-    // 完了を作成
-    todo.isCompleted.add(true);
-    todo.date.add(completeDay);
-    // 次回実施日がある場合はさらに追加
-    if (nextDay != null) {
-      todo.isCompleted.add(false);
-      todo.date.add(nextDay);
-    }
-    todo = todo.copyWith(updatedAt: now);
+    todo.completeDate.add(completeDay);
+    todo = todo.copyWith(
+      expectedDate: completeDay.add(Duration(days: todo.span)),
+      updatedAt: now,
+    );
     _database.update(todo);
     state = [
       for (var s in state)
@@ -75,9 +67,8 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       span: span,
       remind: remind,
       time: time,
-      isCompleted: [false, false],
       categoryId: categoryId,
-      date: [firstDay, firstDay.add(Duration(days: span))],
+      expectedDate: firstDay,
       createdAt: now,
       updatedAt: now,
     );
