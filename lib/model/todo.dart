@@ -164,7 +164,7 @@ class Todo {
       name: map['name'] as String,
       span: map['span'] as int,
       remind: map['remind'] == 1 ? true : false,
-      time: map['time'] as int,
+      time: map['time'] as int?,
       count: map['count'] as int,
       skipCount: map['skipCount'] as int,
       skipConsecutive: map['skipConsecutive'] as int,
