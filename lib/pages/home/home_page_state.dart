@@ -12,8 +12,8 @@ enum FilterType {
 
 enum TermType {
   day('日', 1),
-  week('週', 7),
-  month('月', 30);
+  week('週', 7);
+  //month('月', 30);
 
   const TermType(this.displayName, this.term);
 

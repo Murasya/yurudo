@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_assets.dart';
@@ -50,9 +51,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                     Text(
                       dateFormat.format(
                           state.pageDate.subtract(const Duration(days: 1))),
-                      style: const TextStyle(
+                      style: GoogleFonts.harmattan(
                         color: AppColor.fontColor,
-                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
                       ),
                     ),
                   if (state.displayTerm != TermType.day)
@@ -79,41 +81,45 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
                       children: [
                         if (state.displayTerm == TermType.day) ...[
                           Text(
                             dateFormat.format(state.pageDate),
-                            style: const TextStyle(
+                            style: GoogleFonts.harmattan(
                               color: AppColor.backgroundColor,
-                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28,
                             ),
                           ),
                           Text(
                             '(${DateFormat.E('ja').format(state.pageDate)})',
                             style: const TextStyle(
                               color: AppColor.backgroundColor,
-                              fontSize: 12,
+                              fontSize: 14,
                             ),
                           ),
                         ],
                         if (state.displayTerm == TermType.week) ...[
                           Text(
                             '${DateFormat('M/d').format(state.pageDate)}~${state.pageDate.add(const Duration(days: 7)).day}',
-                            style: const TextStyle(
+                            style: GoogleFonts.harmattan(
                               color: AppColor.backgroundColor,
-                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28,
                             ),
                           ),
                         ],
-                        if (state.displayTerm == TermType.month) ...[
-                          Text(
-                            DateFormat('y/M').format(state.pageDate),
-                            style: const TextStyle(
-                              color: AppColor.backgroundColor,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ],
+                        // if (state.displayTerm == TermType.month) ...[
+                        //   Text(
+                        //     DateFormat('y/M').format(state.pageDate),
+                        //     style: GoogleFonts.harmattan(
+                        //       color: AppColor.backgroundColor,
+                        //       fontSize: 24,
+                        //     ),
+                        //   ),
+                        // ],
                       ],
                     ),
                   ),
@@ -131,9 +137,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                     Text(
                       dateFormat
                           .format(state.pageDate.add(const Duration(days: 1))),
-                      style: const TextStyle(
+                      style: GoogleFonts.harmattan(
                         color: AppColor.fontColor,
-                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
                       ),
                     ),
                   if (state.displayTerm != TermType.day)
@@ -167,11 +174,11 @@ class _HomePageState extends ConsumerState<HomePage> {
               term: TermType.week,
               isActive: state.displayTerm == TermType.week,
             ),
-            const SizedBox(width: 12),
-            displayChangeButton(
-              term: TermType.month,
-              isActive: state.displayTerm == TermType.month,
-            ),
+            // const SizedBox(width: 12),
+            // displayChangeButton(
+            //   term: TermType.month,
+            //   isActive: state.displayTerm == TermType.month,
+            // ),
           ],
         ),
         iconTheme: const IconThemeData(color: AppColor.fontColor),
@@ -228,17 +235,22 @@ class _HomePageState extends ConsumerState<HomePage> {
                 '新しいゆるDOを作成',
                 style: TextStyle(
                   fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               )
             ],
           ),
         ),
       ),
-      body: PageView.builder(onPageChanged: (index) {
-        ref.read(provider.notifier).changeDay(index);
-      }, itemBuilder: (context, index) {
-        return PageWidget(index: index);
-      }),
+      body: PageView.builder(
+        controller: PageController(initialPage: 100),
+        onPageChanged: (index) {
+          ref.read(provider.notifier).changeDay(index - 100);
+        },
+        itemBuilder: (context, index) {
+          return PageWidget(index: index - 100);
+        },
+      ),
     );
   }
 
@@ -292,6 +304,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             term.displayName,
             style: TextStyle(
               fontSize: 14,
+              fontWeight: FontWeight.bold,
               color:
                   isActive ? AppColor.backgroundColor : AppColor.primaryColor,
             ),

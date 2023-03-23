@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/router.dart';
@@ -33,6 +34,24 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme:
             const ColorScheme.light(background: AppColor.backgroundColor),
+        fontFamily: 'NotoSansJP',
+        textTheme: TextTheme(
+          bodyMedium: const TextStyle(
+            color: AppColor.fontColor,
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+          ),
+          labelMedium: GoogleFonts.harmattan(
+            color: AppColor.fontColor2,
+            fontWeight: FontWeight.bold,
+            fontSize: 26,
+          ),
+          labelLarge: GoogleFonts.harmattan(
+            color: AppColor.emphasisColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 28,
+          ),
+        ),
       ),
       initialRoute: AppRouter.home,
       onGenerateRoute: AppRouter.generateRoute,

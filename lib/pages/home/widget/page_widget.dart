@@ -54,7 +54,14 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
     late final List<Todo> todoList;
     late final List<Todo> pastTodoList;
     if (widget.index < 0) {
-      todoList = [];
+      todoList = state.todoList
+          .where((todo) =>
+              isContainDay(todo.completeDate, pageDay) ||
+              (todo.expectedDate != null &&
+                  todo.expectedDate!.difference(pageDay).inDays % todo.span ==
+                      0 &&
+                  state.today.difference(pageDay).inDays < todo.span))
+          .toList();
       pastTodoList = [];
     } else if (widget.index == 0) {
       todoList = state.todoList
@@ -83,11 +90,8 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'この${state.displayTerm.displayName}の ゆるDO',
-              style: const TextStyle(
-                color: AppColor.fontColor,
-                fontSize: 14,
-              ),
+              'この${state.displayTerm.displayName}のゆるDOと所要時間',
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
@@ -95,18 +99,15 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
               itemCount: todoList.length,
               itemBuilder: (context, index) {
                 var todo = todoList[index];
-                return _taskItem(todo);
+                return _taskItem(todo, context);
               },
             ),
             if (pastTodoList.isNotEmpty &&
                 state.displayTerm == TermType.day) ...[
               const SizedBox(height: 38),
-              const Text(
-                '実施が遅れている ゆるDO',
-                style: TextStyle(
-                  color: AppColor.fontColor,
-                  fontSize: 14,
-                ),
+              Text(
+                '実施が遅れているゆるDOと遅延時間',
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -114,7 +115,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                 itemCount: pastTodoList.length,
                 itemBuilder: (context, index) {
                   var todo = pastTodoList[index];
-                  return _taskItem(todo);
+                  return _taskItem(todo, context);
                 },
               ),
             ],
@@ -125,7 +126,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
     );
   }
 
-  Widget _taskItem(Todo todo) {
+  Widget _taskItem(Todo todo, BuildContext context) {
     Widget timeWidget() {
       if (isSameDay(state.today, pageDay) &&
           isBeforeDay(todo.expectedDate, pageDay)) {
@@ -142,18 +143,15 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
           children: [
             Text(
               num,
-              style: const TextStyle(
-                fontSize: 22,
-                color: AppColor.emphasisColor,
-              ),
+              style: Theme.of(context).textTheme.labelLarge,
             ),
             Text(
               suf,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColor.emphasisColor,
-              ),
-            )
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: AppColor.emphasisColor),
+            ),
           ],
         );
       }
@@ -163,18 +161,9 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
           children: [
             Text(
               (todo.time == null) ? '- ' : '${todo.time}',
-              style: const TextStyle(
-                color: AppColor.fontColor2,
-                fontSize: 22,
-              ),
+              style: Theme.of(context).textTheme.labelMedium,
             ),
-            const Text(
-              '分',
-              style: TextStyle(
-                color: AppColor.fontColor2,
-                fontSize: 14,
-              ),
-            ),
+            Text('分', style: Theme.of(context).textTheme.bodyMedium),
           ],
         );
       } else {
