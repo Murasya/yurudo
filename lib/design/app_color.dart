@@ -8,6 +8,7 @@ class AppColor {
   static const Color secondaryColor = Color(0xFFF7F4EC);
   static const Color thirdColor = Color(0xFFF4EFE2);
   static const Color buttonSecondary = Color(0xFFF0EBDE);
+  static const Color bannerColor = Color(0xFFF3EFE3);
   static const Color emphasisColor = Color(0xFFB15F00);
   static const Color lineColor = Color(0xFF40402F);
   static const Color disableColor = Color(0xFFBEBEBE);
