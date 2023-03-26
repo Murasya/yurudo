@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routine_app/databases/todo_database.dart';
 import 'package:routine_app/model/todo.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
+import 'package:routine_app/utils/date.dart';
 
 final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
   return TodoNotifier(TodoDatabase());
@@ -22,9 +23,28 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }) async {
     final now = DateTime.now();
     // 完了処理
-    todo.completeDate.add(completeDay);
     todo = todo.copyWith(
+      completeDate: [...todo.completeDate, completeDay],
       expectedDate: nextDay,
+      updatedAt: now,
+    );
+    _database.update(todo);
+    state = [
+      for (var s in state)
+        if (s.id == todo.id) todo else s
+    ];
+  }
+
+  Future<void> unComplete({
+    required Todo todo,
+    required DateTime completeDay,
+  }) async {
+    final now = DateTime.now();
+    // 完了処理
+    todo = todo.copyWith(
+      completeDate:
+          todo.completeDate.where((d) => !d.isSameDay(completeDay)).toList(),
+      expectedDate: completeDay,
       updatedAt: now,
     );
     _database.update(todo);

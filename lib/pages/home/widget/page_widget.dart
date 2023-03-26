@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/pages/home/widget/next_schedule.dart';
 import 'package:routine_app/pages/home/widget/next_schedule_state.dart';
+import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../../design/app_assets.dart';
 import '../../../design/app_color.dart';
@@ -140,7 +141,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
             ? '週間'
             : (todo.expectedDate!.difference(state.today).inDays < 30)
                 ? 'か月'
-            : 'か月超';
+                : 'か月超';
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -210,13 +211,19 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                 if (!isContainDay(todo.completeDate, pageDay)) {
                   debugPrint('complete!');
                   showDialog(
-                      context: context,
-                      builder: (_) => NextSchedule(
-                        args: NextScheduleArgs(
-                          todo: todo,
-                          completeDay: pageDay,
-                        ),
-                      ));
+                    context: context,
+                    builder: (_) => NextSchedule(
+                      args: NextScheduleArgs(
+                        todo: todo,
+                        completeDay: pageDay,
+                      ),
+                    ),
+                  );
+                } else {
+                  ref.read(todoProvider.notifier).unComplete(
+                        todo: todo,
+                        completeDay: pageDay,
+                      );
                 }
               },
               child: Padding(
