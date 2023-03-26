@@ -240,17 +240,14 @@ abstract class _HomePageState implements HomePageState {
 
   /// タスクリスト
   List<Todo> get todoList;
-
   @override
 
   /// 絞り込み
   FilterType get filter;
-
   @override
 
   /// 表示期間
   TermType get displayTerm;
-
   @override
 
   /// 今日

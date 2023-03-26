@@ -41,6 +41,11 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w500,
             fontSize: 14,
           ),
+          bodyLarge: const TextStyle(
+            color: AppColor.fontColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
           labelMedium: GoogleFonts.harmattan(
             color: AppColor.fontColor2,
             fontWeight: FontWeight.bold,

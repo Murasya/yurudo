@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
+import 'package:routine_app/pages/home/widget/next_schedule.dart';
+import 'package:routine_app/pages/home/widget/next_schedule_state.dart';
 
 import '../../../design/app_assets.dart';
 import '../../../design/app_color.dart';
 import '../../../model/todo.dart';
 import '../../../router.dart';
 import '../../../viewModel/category_provider.dart';
-import '../../../viewModel/todo_provider.dart';
 
 bool isSameDay(DateTime? a, DateTime? b) {
   if (a == null || b == null) return false;
@@ -206,11 +207,19 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
               onTap: () {
                 if (!isContainDay(todo.completeDate, pageDay)) {
                   debugPrint('complete!');
-                  ref.read(todoProvider.notifier).complete(
-                        todo: todo,
-                        completeDay: state.pageDate,
-                        nextDay: state.pageDate.add(Duration(days: todo.span)),
-                      );
+                  showDialog(
+                      context: context,
+                      builder: (_) => NextSchedule(
+                            args: NextScheduleArgs(
+                              span: todo.span,
+                              completeDay: pageDay,
+                            ),
+                          ));
+                  // ref.read(todoProvider.notifier).complete(
+                  //       todo: todo,
+                  //       completeDay: state.pageDate,
+                  //       nextDay: state.pageDate.add(Duration(days: todo.span)),
+                  //     );
                 }
               },
               child: Padding(
