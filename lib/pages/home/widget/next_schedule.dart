@@ -7,10 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_assets.dart';
 import 'package:routine_app/design/app_style.dart';
+import 'package:routine_app/pages/home/widget/next_schedule_close.dart';
 import 'package:routine_app/pages/home/widget/next_schedule_state.dart';
 import 'package:routine_app/utils/date.dart';
 
 import '../../../design/app_color.dart';
+import '../../../viewModel/todo_provider.dart';
 
 class NextSchedule extends ConsumerStatefulWidget {
   final NextScheduleArgs args;
@@ -78,7 +80,20 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                         offset: const Offset(10, 0),
                         child: IconButton(
                           icon: const Icon(Icons.close),
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () async {
+                            bool finish = await showDialog(
+                              context: context,
+                              builder: (_) => const NextScheduleClose(),
+                            );
+                            if (finish) {
+                              ref.read(todoProvider.notifier).complete(
+                                    todo: widget.args.todo,
+                                    completeDay: widget.args.completeDay,
+                                    nextDay: null,
+                                  );
+                              Navigator.pop(context);
+                            }
+                          },
                         ),
                       ),
                     ],
@@ -96,6 +111,22 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   calendar(),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ElevatedButton(
+                      style: AppStyle.button,
+                      onPressed: () {
+                        ref.read(todoProvider.notifier).complete(
+                              todo: widget.args.todo,
+                              completeDay: widget.args.completeDay,
+                              nextDay: ref.read(provider).selectDay,
+                            );
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -151,15 +182,6 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                 ],
               ),
           ],
-        ),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.only(top: 20),
-          child: ElevatedButton(
-            style: AppStyle.button,
-            onPressed: () {},
-            child: const Text('OK'),
-          ),
         ),
       ],
     );

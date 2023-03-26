@@ -211,15 +211,10 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                       context: context,
                       builder: (_) => NextSchedule(
                             args: NextScheduleArgs(
-                              span: todo.span,
+                              todo: todo,
                               completeDay: pageDay,
                             ),
                           ));
-                  // ref.read(todoProvider.notifier).complete(
-                  //       todo: todo,
-                  //       completeDay: state.pageDate,
-                  //       nextDay: state.pageDate.add(Duration(days: todo.span)),
-                  //     );
                 }
               },
               child: Padding(

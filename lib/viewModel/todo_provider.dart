@@ -23,7 +23,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     // 完了処理
     todo.completeDate.add(completeDay);
     todo = todo.copyWith(
-      expectedDate: completeDay.add(Duration(days: todo.span)),
+      expectedDate: nextDay,
       updatedAt: now,
     );
     _database.update(todo);

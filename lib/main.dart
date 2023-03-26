@@ -36,6 +36,11 @@ class MyApp extends StatelessWidget {
             const ColorScheme.light(background: AppColor.backgroundColor),
         fontFamily: 'NotoSansJP',
         textTheme: TextTheme(
+          bodySmall: const TextStyle(
+            color: AppColor.fontColor,
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+          ),
           bodyMedium: const TextStyle(
             color: AppColor.fontColor,
             fontWeight: FontWeight.w500,

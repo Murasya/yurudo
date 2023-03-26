@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../model/todo.dart';
+
 part 'next_schedule_state.freezed.dart';
 
 final nextScheduleStateProvider = StateNotifierProvider.autoDispose
@@ -12,8 +14,8 @@ final nextScheduleStateProvider = StateNotifierProvider.autoDispose
 class NextScheduleStateNotifier extends StateNotifier<NextScheduleState> {
   NextScheduleStateNotifier(NextScheduleArgs args)
       : super(NextScheduleState(
-          displayMonth: args.completeDay,
-          selectDay: args.completeDay.add(Duration(days: args.span)),
+    displayMonth: args.completeDay,
+          selectDay: args.completeDay.add(Duration(days: args.todo.span)),
         ));
 
   void changeMonth({bool isBefore = false}) {
@@ -37,7 +39,7 @@ class NextScheduleStateNotifier extends StateNotifier<NextScheduleState> {
 @freezed
 class NextScheduleArgs with _$NextScheduleArgs {
   const factory NextScheduleArgs({
-    required int span,
+    required Todo todo,
     required DateTime completeDay,
   }) = _NextScheduleArgs;
 }

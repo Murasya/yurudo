@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$NextScheduleArgs {
-  int get span => throw _privateConstructorUsedError;
+  Todo get todo => throw _privateConstructorUsedError;
 
   DateTime get completeDay => throw _privateConstructorUsedError;
 
@@ -32,7 +32,7 @@ abstract class $NextScheduleArgsCopyWith<$Res> {
       _$NextScheduleArgsCopyWithImpl<$Res, NextScheduleArgs>;
 
   @useResult
-  $Res call({int span, DateTime completeDay});
+  $Res call({Todo todo, DateTime completeDay});
 }
 
 /// @nodoc
@@ -42,21 +42,20 @@ class _$NextScheduleArgsCopyWithImpl<$Res, $Val extends NextScheduleArgs>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? span = null,
+    Object? todo = null,
     Object? completeDay = null,
   }) {
     return _then(_value.copyWith(
-      span: null == span
-          ? _value.span
-          : span // ignore: cast_nullable_to_non_nullable
-              as int,
+      todo: null == todo
+          ? _value.todo
+          : todo // ignore: cast_nullable_to_non_nullable
+              as Todo,
       completeDay: null == completeDay
           ? _value.completeDay
           : completeDay // ignore: cast_nullable_to_non_nullable
@@ -74,7 +73,7 @@ abstract class _$$_NextScheduleArgsCopyWith<$Res>
 
   @override
   @useResult
-  $Res call({int span, DateTime completeDay});
+  $Res call({Todo todo, DateTime completeDay});
 }
 
 /// @nodoc
@@ -88,14 +87,14 @@ class __$$_NextScheduleArgsCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? span = null,
+    Object? todo = null,
     Object? completeDay = null,
   }) {
     return _then(_$_NextScheduleArgs(
-      span: null == span
-          ? _value.span
-          : span // ignore: cast_nullable_to_non_nullable
-              as int,
+      todo: null == todo
+          ? _value.todo
+          : todo // ignore: cast_nullable_to_non_nullable
+              as Todo,
       completeDay: null == completeDay
           ? _value.completeDay
           : completeDay // ignore: cast_nullable_to_non_nullable
@@ -107,16 +106,16 @@ class __$$_NextScheduleArgsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_NextScheduleArgs implements _NextScheduleArgs {
-  const _$_NextScheduleArgs({required this.span, required this.completeDay});
+  const _$_NextScheduleArgs({required this.todo, required this.completeDay});
 
   @override
-  final int span;
+  final Todo todo;
   @override
   final DateTime completeDay;
 
   @override
   String toString() {
-    return 'NextScheduleArgs(span: $span, completeDay: $completeDay)';
+    return 'NextScheduleArgs(todo: $todo, completeDay: $completeDay)';
   }
 
   @override
@@ -124,13 +123,13 @@ class _$_NextScheduleArgs implements _NextScheduleArgs {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NextScheduleArgs &&
-            (identical(other.span, span) || other.span == span) &&
+            (identical(other.todo, todo) || other.todo == todo) &&
             (identical(other.completeDay, completeDay) ||
                 other.completeDay == completeDay));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, span, completeDay);
+  int get hashCode => Object.hash(runtimeType, todo, completeDay);
 
   @JsonKey(ignore: true)
   @override
@@ -141,15 +140,14 @@ class _$_NextScheduleArgs implements _NextScheduleArgs {
 
 abstract class _NextScheduleArgs implements NextScheduleArgs {
   const factory _NextScheduleArgs(
-      {required final int span,
+      {required final Todo todo,
       required final DateTime completeDay}) = _$_NextScheduleArgs;
 
   @override
-  int get span;
+  Todo get todo;
 
   @override
   DateTime get completeDay;
-
   @override
   @JsonKey(ignore: true)
   _$$_NextScheduleArgsCopyWith<_$_NextScheduleArgs> get copyWith =>
@@ -159,7 +157,6 @@ abstract class _NextScheduleArgs implements NextScheduleArgs {
 /// @nodoc
 mixin _$NextScheduleState {
   DateTime get displayMonth => throw _privateConstructorUsedError;
-
   DateTime get selectDay => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -172,7 +169,6 @@ abstract class $NextScheduleStateCopyWith<$Res> {
   factory $NextScheduleStateCopyWith(
           NextScheduleState value, $Res Function(NextScheduleState) then) =
       _$NextScheduleStateCopyWithImpl<$Res, NextScheduleState>;
-
   @useResult
   $Res call({DateTime displayMonth, DateTime selectDay});
 }
@@ -184,7 +180,6 @@ class _$NextScheduleStateCopyWithImpl<$Res, $Val extends NextScheduleState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -213,7 +208,6 @@ abstract class _$$_NextScheduleStateCopyWith<$Res>
   factory _$$_NextScheduleStateCopyWith(_$_NextScheduleState value,
           $Res Function(_$_NextScheduleState) then) =
       __$$_NextScheduleStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({DateTime displayMonth, DateTime selectDay});
@@ -291,10 +285,8 @@ abstract class _NextScheduleState implements NextScheduleState {
 
   @override
   DateTime get displayMonth;
-
   @override
   DateTime get selectDay;
-
   @override
   @JsonKey(ignore: true)
   _$$_NextScheduleStateCopyWith<_$_NextScheduleState> get copyWith =>
