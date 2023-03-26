@@ -31,10 +31,10 @@ class TaskDetailPage extends ConsumerStatefulWidget {
 class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
   late final TextEditingController _titleController;
   late final TextEditingController _spanController;
-  late final TextEditingController _categoryController;
   late final TextEditingController _timeController;
   late final TextEditingController _nextDayController;
-  late final provider;
+  late final AutoDisposeStateNotifierProvider<TaskDetailPageStateNotifier,
+      TaskDetailPageState> provider;
   Category? _selectCategory;
   final dateFormat = DateFormat('y/M/d');
 
@@ -48,7 +48,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     } else {
       _spanController = TextEditingController(text: '${state.span ~/ 7}週に1回');
     }
-    _timeController = TextEditingController(text: '${state.time}分');
+    _timeController = TextEditingController(
+        text: state.time != null ? '${state.time} 分' : '');
 
     // 次回実施日が昨日以前だった場合は今日にする
     if (state.nextDay != null) {
@@ -57,8 +58,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     } else {
       _nextDayController = TextEditingController(text: '');
     }
-    _categoryController =
-        TextEditingController(text: state.category?.name ?? '');
+    _selectCategory = state.category;
 
     super.initState();
   }
@@ -73,7 +73,6 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     super.dispose();
     _titleController.dispose();
     _spanController.dispose();
-    _categoryController.dispose();
     _timeController.dispose();
     _nextDayController.dispose();
   }
@@ -143,10 +142,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                         },
                       ),
                       const SizedBox(height: 30),
-                      AppTextField(
-                        label: '分類',
-                        readonly: true,
-                        controller: _categoryController,
+                      CategoryTextField(
+                        category: _selectCategory,
                         onTap: () {
                           showDialog(
                             context: context,
@@ -158,7 +155,6 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                                       .read(provider.notifier)
                                       .setCategory(_selectCategory);
                                   _selectCategory = value;
-                                  _categoryController.text = value.name;
                                 },
                               );
                             },
@@ -167,7 +163,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                       ),
                       const SizedBox(height: 30),
                       AppTextField(
-                        label: '時間',
+                        label: '必要時間',
                         readonly: true,
                         controller: _timeController,
                         onTap: () {
@@ -184,7 +180,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                                   break;
                               }
                               ref.read(provider.notifier).setTime(time);
-                              _timeController.text = '${ans[0]}${ans[1]}';
+                              _timeController.text = '${ans[0]} ${ans[1]}';
                             },
                           ).showDialog(context);
                         },
@@ -260,7 +256,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
         ),
         onPressed: () {
           Navigator.pop(context);
-          ref.read(todoProvider.notifier).update(state.todo);
+          ref.read(todoProvider.notifier).update(widget.todo, state);
         },
         child: const Text('変更を保存する'),
       ),

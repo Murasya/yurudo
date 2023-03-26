@@ -56,9 +56,11 @@ class AppTextField extends StatelessWidget {
           controller: controller,
           decoration: InputDecoration(
             hintText: placeholder,
-            isDense: true,
-            contentPadding: const EdgeInsets.symmetric(vertical: 4),
-          ),
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(vertical: 4),
+              border: const UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColor.fontColor),
+              )),
           style: const TextStyle(
             fontSize: 14,
             color: AppColor.fontColor,

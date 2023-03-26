@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/pages/widget/categoryDialog/category_dialog_state.dart';
 import 'package:routine_app/pages/widget/dialog_common.dart';
+import 'package:routine_app/utils/contextEx.dart';
 
 import '../../../model/category.dart';
 import '../../../viewModel/category_provider.dart';
@@ -66,22 +67,22 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                     Row(
                       children: [
                         Container(
-                            height: 14,
-                            width: 14,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
+                          height: 14,
+                          width: 14,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
                             color: categoryList[i].color,
                           ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Expanded(
-                            // width: MediaQuery.of(context).size.width - 200,
-                            child: TextField(
-                              controller: nameController[i],
-                              decoration: const InputDecoration(
-                                hintText: '好きな分類名をつけられます',
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          // width: MediaQuery.of(context).size.width - 200,
+                          child: TextField(
+                            controller: nameController[i],
+                            decoration: const InputDecoration(
+                              hintText: '好きな分類名をつけられます',
                               hintStyle: TextStyle(
                                 fontSize: 14,
                               ),
@@ -89,55 +90,105 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                               contentPadding: EdgeInsets.symmetric(vertical: 0),
                               border: InputBorder.none,
                             ),
-                              onChanged: (value) {
-                                ref
-                                    .read(categoryProvider.notifier)
-                                    .setCategoryName(i, value);
-                              },
-                            ),
+                            onChanged: (value) {
+                              ref
+                                  .read(categoryProvider.notifier)
+                                  .setCategoryName(i, value);
+                            },
                           ),
-                        ],
-                      ),
-                      const Divider(
-                        color: Color(0xFF40402F),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 12),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    minimumSize: const Size(64, 24),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                        ),
+                      ],
                     ),
-                    backgroundColor: (state.selectButtonNum == null ||
+                    const Divider(
+                      color: Color(0xFF40402F),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  minimumSize: const Size(64, 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  backgroundColor: (state.selectButtonNum == null ||
                           state.selectButtonNum != i)
                       ? AppColor.secondaryColor
-                        : AppColor.primaryColor,
-                  ),
-                  onPressed: () {
-                    if (state.selectButtonNum == i) {
-                      ref.read(provider.notifier).setSelectButtonNum(null);
-                    } else {
-                      ref.read(provider.notifier).setSelectButtonNum(i);
-                    }
-                  },
-                  child: Text(
-                    '選択',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: (state.selectButtonNum == null ||
+                      : AppColor.primaryColor,
+                ),
+                onPressed: () {
+                  if (state.selectButtonNum == i) {
+                    ref.read(provider.notifier).setSelectButtonNum(null);
+                  } else {
+                    ref.read(provider.notifier).setSelectButtonNum(i);
+                  }
+                },
+                child: Text(
+                  '選択',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: (state.selectButtonNum == null ||
                               state.selectButtonNum != i)
                           ? AppColor.primaryColor
-                            : AppColor.backgroundColor),
+                          : AppColor.backgroundColor),
+                ),
+              ),
+            ],
+          ),
+      ]),
+    );
+  }
+}
+
+class CategoryTextField extends ConsumerWidget {
+  const CategoryTextField({
+    this.category,
+    this.onTap,
+    Key? key,
+  }) : super(key: key);
+
+  final Category? category;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('分類'),
+        const SizedBox(height: 12),
+        GestureDetector(
+          onTap: onTap,
+          child: Row(
+            children: [
+              if (category != null)
+                Container(
+                  width: 8,
+                  height: 12,
+                  margin: const EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    color: category!.color,
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
-              ],
-            ),
-          ]),
+              Expanded(
+                child: Text(
+                  category?.name ?? 'なし',
+                  style: context.textTheme.bodySmall,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Divider(
+          color: AppColor.fontColor,
+          height: 12.0,
+          thickness: 1.0,
+        ),
+      ],
     );
   }
 }

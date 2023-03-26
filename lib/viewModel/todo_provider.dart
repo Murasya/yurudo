@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routine_app/databases/todo_database.dart';
 import 'package:routine_app/model/todo.dart';
+import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
 
 final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
   return TodoNotifier(TodoDatabase());
@@ -33,8 +34,13 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     ];
   }
 
-  Future<void> update(Todo todo) async {
+  Future<void> update(Todo todo, TaskDetailPageState data) async {
     final newTodo = todo.copyWith(
+      name: data.title,
+      span: data.span,
+      categoryId: data.category?.id,
+      time: data.time,
+      expectedDate: data.nextDay,
       updatedAt: DateTime.now(),
     );
     _database.update(newTodo);
