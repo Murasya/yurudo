@@ -40,11 +40,10 @@ class PageWidget extends ConsumerStatefulWidget {
 
 class _PageWidgetState extends ConsumerState<PageWidget> {
   late final DateTime pageDay;
-  late final HomePageState state;
 
   @override
   void didChangeDependencies() {
-    state = ref.watch(homePageStateProvider);
+    final state = ref.watch(homePageStateProvider);
     pageDay =
         state.today.add(Duration(days: widget.index * state.displayTerm.term));
     super.didChangeDependencies();
@@ -54,6 +53,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
   Widget build(BuildContext context) {
     late final List<Todo> todoList;
     late final List<Todo> pastTodoList;
+    final state = ref.watch(homePageStateProvider);
     if (widget.index < 0) {
       todoList = state.todoList
           .where((todo) =>
@@ -128,6 +128,8 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
   }
 
   Widget _taskItem(Todo todo, BuildContext context) {
+    final state = ref.watch(homePageStateProvider);
+
     Widget timeWidget() {
       if (isSameDay(state.today, pageDay) &&
           isBeforeDay(todo.expectedDate, pageDay)) {
@@ -138,7 +140,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
             ? '週間'
             : (todo.expectedDate!.difference(state.today).inDays < 30)
                 ? 'か月'
-                : 'か月超';
+            : 'か月超';
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -210,11 +212,11 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                   showDialog(
                       context: context,
                       builder: (_) => NextSchedule(
-                            args: NextScheduleArgs(
-                              todo: todo,
-                              completeDay: pageDay,
-                            ),
-                          ));
+                        args: NextScheduleArgs(
+                          todo: todo,
+                          completeDay: pageDay,
+                        ),
+                      ));
                 }
               },
               child: Padding(

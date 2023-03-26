@@ -254,14 +254,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-  bool isSameDay(DateTime a, DateTime b) {
-    return a.year == b.year && a.month == b.month && a.day == b.day;
-  }
-
-  bool isBeforeDay(DateTime a, DateTime b) {
-    return !isSameDay(a, b) && a.isBefore(b);
-  }
-
   Widget drawerItem({
     required String text,
     bool hasIcon = false,
