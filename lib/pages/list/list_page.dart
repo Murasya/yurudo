@@ -10,7 +10,6 @@ import 'package:routine_app/viewModel/category_provider.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../design/app_color.dart';
-import '../../model/category.dart';
 import '../../model/todo.dart';
 import '../../utils/int_ex.dart';
 
@@ -24,8 +23,6 @@ class ListPage extends ConsumerStatefulWidget {
 }
 
 class _ListPageState extends ConsumerState<ListPage> {
-  List<bool> check = List.generate(5, (_) => false);
-
   @override
   Widget build(BuildContext context) {
     List<Todo> todos = ref.watch(todoProvider);
@@ -40,8 +37,6 @@ class _ListPageState extends ConsumerState<ListPage> {
       ),
       minimumSize: const Size(0, 36),
     );
-
-    final List<Category> categories = ref.watch(categoryProvider);
     final state = ref.watch(listPageStateProvider);
     switch (state.sortType) {
       case SortType.addDayAsc:
@@ -109,30 +104,24 @@ class _ListPageState extends ConsumerState<ListPage> {
             ),
             const SizedBox(width: 16),
             ElevatedButton(
-              style: buttonStyle,
+              style: (state.filterType.isEmpty)
+                  ? buttonStyle
+                  : buttonStyle.copyWith(
+                      backgroundColor:
+                          const MaterialStatePropertyAll(AppColor.fontColor2),
+                      foregroundColor:
+                          const MaterialStatePropertyAll(Colors.white),
+                    ),
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (context) {
                     return Stack(
-                      children: [
+                      children: const [
                         Positioned(
                           top: 30,
                           right: 0,
-                          child: AlertDialog(
-                            content: Container(
-                              constraints: const BoxConstraints(
-                                maxWidth: 300,
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  for (var category in categories)
-                                    _filterItem(category),
-                                ],
-                              ),
-                            ),
-                          ),
+                          child: _FilterItem(),
                         ),
                       ],
                     );
@@ -141,7 +130,12 @@ class _ListPageState extends ConsumerState<ListPage> {
               },
               child: Row(
                 children: [
-                  SvgPicture.asset(AppAssets.filter),
+                  SvgPicture.asset(
+                    AppAssets.filter,
+                    color: state.filterType.isEmpty
+                        ? AppColor.fontColor
+                        : Colors.white,
+                  ),
                   const SizedBox(width: 8),
                   const Text('絞り込み'),
                 ],
@@ -181,12 +175,50 @@ class _ListPageState extends ConsumerState<ListPage> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
-        child: ListView(
-          children: [
-            for (final todo in todos) _todoItem(todo),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              const SizedBox(height: 16),
+              if (state.filterType.isNotEmpty)
+                SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                    spacing: 24,
+                    children: [
+                      for (final cat in state.filterType)
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 6,
+                              height: 14,
+                              decoration: BoxDecoration(
+                                color: ref
+                                    .watch(categoryProvider.notifier)
+                                    .getColor(cat),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              ref.watch(categoryProvider.notifier).getName(cat),
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
+                ),
+              const SizedBox(height: 24),
+              ListView(
+                shrinkWrap: true,
+                children: [
+                  for (final todo in todos) _todoItem(todo),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -260,49 +292,71 @@ class _ListPageState extends ConsumerState<ListPage> {
       },
     );
   }
+}
 
-  Widget _filterItem(Category category) {
-    return CheckboxListTile(
-      value: check[category.id],
-      title: Row(
-        children: [
-          Container(
-            width: 6,
-            height: 14,
-            decoration: BoxDecoration(
-              color: category.color,
-              borderRadius: BorderRadius.circular(4),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              category.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: ref
-                        .watch(listPageStateProvider.notifier)
-                        .containFilter(category.id)
-                    ? FontWeight.w500
-                    : FontWeight.w400,
-                color: AppColor.fontColor,
+class _FilterItem extends ConsumerWidget {
+  const _FilterItem({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categories = ref.watch(categoryProvider);
+    final state = ref.watch(listPageStateProvider);
+
+    return AlertDialog(
+      content: Container(
+        constraints: const BoxConstraints(
+          maxWidth: 300,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (var category in categories)
+              CheckboxListTile(
+                value: state.filterType.contains(category.id),
+                title: Row(
+                  children: [
+                    Container(
+                      width: 6,
+                      height: 14,
+                      decoration: BoxDecoration(
+                        color: category.color,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        category.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: state.filterType.contains(category.id)
+                              ? FontWeight.w500
+                              : FontWeight.w400,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (value) {
+                  if (value!) {
+                    ref
+                        .read(listPageStateProvider.notifier)
+                        .addFilter(category);
+                  } else {
+                    ref
+                        .read(listPageStateProvider.notifier)
+                        .removeFilter(category);
+                  }
+                },
               ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
-      controlAffinity: ListTileControlAffinity.leading,
-      onChanged: (value) {
-        setState(() {
-          check[category.id] = value!;
-        });
-        if (value!) {
-          ref.read(listPageStateProvider.notifier).addFilter(category);
-        } else {
-          ref.read(listPageStateProvider.notifier).removeFilter(category);
-        }
-      },
     );
   }
 }

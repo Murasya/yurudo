@@ -44,8 +44,6 @@ class ListPageStateNotifier extends StateNotifier<ListPageState> {
       filterType: state.filterType.where((f) => f != category.id).toList(),
     );
   }
-
-  bool containFilter(int id) => state.filterType.contains(id);
 }
 
 @freezed

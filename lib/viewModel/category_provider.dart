@@ -34,6 +34,14 @@ class CategoryNotifier extends StateNotifier<List<Category>> {
     }
   }
 
+  String getName(int? id) {
+    if (id == null) {
+      return '';
+    } else {
+      return state.firstWhere((category) => category.id == id).name;
+    }
+  }
+
   void getCategories() {
     final names = _database.getCategoryNames();
     List<Category> categoryList = [];
