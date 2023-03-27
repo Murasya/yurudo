@@ -11,6 +11,7 @@ import 'package:routine_app/pages/widget/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
+import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../services/notification_service.dart';
@@ -72,11 +73,61 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: ElevatedButton(
+          style: AppStyle.button.copyWith(
+            backgroundColor:
+                const MaterialStatePropertyAll(AppColor.primaryColor),
+          ),
+          onPressed: () async {
+            if (state.name.isEmpty ||
+                state.span == null ||
+                state.firstDay == null) {
+              ref.read(provider.notifier).setHasError(true);
+              return;
+            }
+            await ref.read(todoProvider.notifier).create(
+                  name: state.name,
+                  span: state.span!,
+                  firstDay: state.firstDay!,
+                  remind: state.remind,
+                  categoryId: state.category?.id,
+                  time: state.time,
+                );
+            _interstitialAd?.show();
+            if (!mounted) return;
+            Navigator.popUntil(
+              context,
+              (route) => route.settings.name == AppRouter.home,
+            );
+          },
+          child: Text(
+            '作成',
+            style: context.textTheme.bodyLarge!.copyWith(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
+              if (state.hasError)
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: const Text(
+                    '必須項目が入力されていません',
+                    style: TextStyle(
+                      color: AppColor.emphasisColor,
+                    ),
+                  ),
+                ),
               AppTextField(
                 label: 'タイトル',
                 placeholder: '入力してください',
@@ -210,43 +261,6 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                     ),
                   ),
                 ],
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 40),
-                child: ElevatedButton(
-                  style: AppStyle.button.copyWith(
-                    backgroundColor:
-                        const MaterialStatePropertyAll(AppColor.primaryColor),
-                  ),
-                  onPressed: () async {
-                    if (state.name.isEmpty ||
-                        state.span == null ||
-                        state.firstDay == null) {
-                      return;
-                    }
-                    await ref.read(todoProvider.notifier).create(
-                          name: state.name,
-                          span: state.span!,
-                          firstDay: state.firstDay!,
-                          remind: state.remind,
-                          categoryId: state.category?.id,
-                          time: state.time,
-                        );
-                    _interstitialAd?.show();
-                    if (!mounted) return;
-                    Navigator.popUntil(
-                      context,
-                      (route) => route.settings.name == AppRouter.home,
-                    );
-                  },
-                  child: const Text(
-                    '作成',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
               ),
             ],
           ),

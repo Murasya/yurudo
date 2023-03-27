@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ListPageState {
   SortType get sortType => throw _privateConstructorUsedError;
-
   List<int> get filterType => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +29,6 @@ abstract class $ListPageStateCopyWith<$Res> {
   factory $ListPageStateCopyWith(
           ListPageState value, $Res Function(ListPageState) then) =
       _$ListPageStateCopyWithImpl<$Res, ListPageState>;
-
   @useResult
   $Res call({SortType sortType, List<int> filterType});
 }
@@ -42,7 +40,6 @@ class _$ListPageStateCopyWithImpl<$Res, $Val extends ListPageState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -71,7 +68,6 @@ abstract class _$$_ListPageStateCopyWith<$Res>
   factory _$$_ListPageStateCopyWith(
           _$_ListPageState value, $Res Function(_$_ListPageState) then) =
       __$$_ListPageStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({SortType sortType, List<int> filterType});
@@ -116,7 +112,6 @@ class _$_ListPageState implements _ListPageState {
   @JsonKey()
   final SortType sortType;
   final List<int> _filterType;
-
   @override
   @JsonKey()
   List<int> get filterType {
@@ -158,10 +153,8 @@ abstract class _ListPageState implements ListPageState {
 
   @override
   SortType get sortType;
-
   @override
   List<int> get filterType;
-
   @override
   @JsonKey(ignore: true)
   _$$_ListPageStateCopyWith<_$_ListPageState> get copyWith =>
