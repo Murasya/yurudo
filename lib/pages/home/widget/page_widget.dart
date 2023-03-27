@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/pages/home/widget/next_schedule.dart';
 import 'package:routine_app/pages/home/widget/next_schedule_state.dart';
+import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../../design/app_assets.dart';
@@ -55,29 +56,37 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
     late final List<Todo> todoList;
     late final List<Todo> pastTodoList;
     final state = ref.watch(homePageStateProvider);
-    if (widget.index < 0) {
-      todoList = state.todoList
-          .where((todo) =>
-              isContainDay(todo.completeDate, pageDay) ||
-              (todo.expectedDate != null &&
-                  todo.expectedDate!.difference(pageDay).inDays % todo.span ==
-                      0 &&
-                  state.today.difference(pageDay).inDays < todo.span))
-          .toList();
-      pastTodoList = [];
-    } else if (widget.index == 0) {
-      todoList = state.todoList
-          .where((todo) =>
-              isSameDay(todo.expectedDate, pageDay) ||
-              isContainDay(todo.completeDate, pageDay))
-          .toList();
-      pastTodoList = state.todoList
-          .where((todo) => isBeforeDay(todo.expectedDate, pageDay))
-          .toList();
+    if (state.displayTerm == TermType.day) {
+      if (widget.index < 0) {
+        todoList = state.todoList
+            .where((todo) =>
+                isContainDay(todo.completeDate, pageDay) ||
+                (todo.expectedDate != null &&
+                    todo.expectedDate!.difference(pageDay).inDays % todo.span ==
+                        0 &&
+                    state.today.difference(pageDay).inDays < todo.span))
+            .toList();
+        pastTodoList = [];
+      } else if (widget.index == 0) {
+        todoList = state.todoList
+            .where((todo) =>
+                isSameDay(todo.expectedDate, pageDay) ||
+                isContainDay(todo.completeDate, pageDay))
+            .toList();
+        pastTodoList = state.todoList
+            .where((todo) => isBeforeDay(todo.expectedDate, pageDay))
+            .toList();
+      } else {
+        todoList = state.todoList.where((todo) {
+          if (todo.expectedDate == null) return false;
+          return todo.expectedDate!.dateDiff(pageDay) % todo.span == 0;
+        }).toList();
+        pastTodoList = [];
+      }
     } else {
       todoList = state.todoList.where((todo) {
         if (todo.expectedDate == null) return false;
-        return todo.expectedDate!.difference(pageDay).inDays % todo.span == 0;
+        return todo.expectedDate!.inWeek(pageDay);
       }).toList();
       pastTodoList = [];
     }
@@ -92,7 +101,9 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'この${state.displayTerm.displayName}のゆるDOと所要時間',
+              state.displayTerm == TermType.day
+                  ? 'この日のゆるDOと所要時間'
+                  : 'この週のゆるDOと実施予定日',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             ListView.builder(
