@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:routine_app/utils/date.dart';
+import 'package:routine_app/utils/int_ex.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -109,12 +111,12 @@ class NotificationService {
     final tomorrow = today.add(const Duration(days: 1));
     final tomorrowTodo = todos
         .where((todo) =>
-            todo.expectedDate != null &&
-            isSameDay(todo.expectedDate!, tomorrow))
+            todo.expectedDate != null && todo.expectedDate!.isSameDay(tomorrow))
         .toList();
     String message = '';
     for (var i = 0; i < min(3, tomorrowTodo.length); i++) {
-      message += '${tomorrowTodo[i].name} [${tomorrowTodo[i].time}\n';
+      message +=
+          '${tomorrowTodo[i].name} [${tomorrowTodo[i].time.toTimeString()}]\n';
     }
     registerMessage(day: tomorrow, message: message);
   }
