@@ -8,7 +8,7 @@ extension IntEx on int? {
     } else if (this! < 30) {
       return '${this! ~/ 7}週に1回';
     } else {
-      return '$thisか月に1回';
+      return '${this! ~/ 30}か月に1回';
     }
   }
 
@@ -16,11 +16,7 @@ extension IntEx on int? {
     if (this == null) {
       return '- 分';
     }
-    if (this! < 60) {
-      return '$this分';
-    } else {
-      return '$this時間';
-    }
+    return '$this分';
   }
 
   int compareToEx(int? a) {

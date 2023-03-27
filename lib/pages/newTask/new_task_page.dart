@@ -12,6 +12,7 @@ import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/utils/contextEx.dart';
+import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../services/notification_service.dart';
@@ -154,39 +155,41 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                             SpanDialog(
                               onConfirm: (picker, value) {
                                 var ans = picker.getSelectedValues();
-                                _spanController.text = '${ans[0]}${ans[1]}に1回';
                                 int span;
                                 switch (value[1]) {
                                   case 1:
                                     span = ans[0] * 7;
                                     break;
+                                  case 2:
+                                    span = ans[0] * 30;
+                                    break;
                                   default:
                                     span = ans[0];
                                     break;
                                 }
+                                _spanController.text = span.toSpanString();
                                 ref.read(provider.notifier).setSpan(span);
                               },
                             ).showDialog(context);
                           },
                         ),
                         const SizedBox(height: 38),
-                        AppTextField(
-                          label: '分類',
-                          placeholder: '選択してください',
-                          controller: _categoryController,
-                          readonly: true,
+                        CategoryTextField(
+                          category: selectCategory,
                           onTap: () {
                             showDialog(
                               context: context,
-                              builder: (context) => CategoryDialog(
+                              builder: (context) {
+                                return CategoryDialog(
                                   defaultValue: selectCategory,
                                   onConfirm: (value) {
-                                    selectCategory = value;
-                                    _categoryController.text = value.name;
                                     ref
                                         .read(provider.notifier)
                                         .setCategory(selectCategory);
-                                  }),
+                                    selectCategory = value;
+                                  },
+                                );
+                              },
                             );
                           },
                         ),
@@ -200,16 +203,8 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                             TimeDialog(
                               onConfirm: (picker, value) {
                                 var ans = picker.getSelectedValues();
-                                int time;
-                                switch (ans[1]) {
-                                  case 1:
-                                    time = ans[0] * 60;
-                                    break;
-                                  default:
-                                    time = ans[0];
-                                    break;
-                                }
-                                _timeController.text = '${ans[0]}${ans[1]}';
+                                int time = ans[0];
+                                _timeController.text = time.toTimeString();
                                 ref.read(provider.notifier).setTime(time);
                               },
                             ).showDialog(context);

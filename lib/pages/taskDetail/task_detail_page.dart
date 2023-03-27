@@ -11,6 +11,7 @@ import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/utils/contextEx.dart';
+import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../model/category.dart';
@@ -44,13 +45,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     provider = taskDetailPageStateProvider(widget.todo);
     final TaskDetailPageState state = ref.read(provider);
     _titleController = TextEditingController(text: state.title);
-    if (state.span < 7) {
-      _spanController = TextEditingController(text: '${state.span}日に1回');
-    } else {
-      _spanController = TextEditingController(text: '${state.span ~/ 7}週に1回');
-    }
-    _timeController = TextEditingController(
-        text: state.time != null ? '${state.time} 分' : '');
+    _spanController = TextEditingController(text: state.span.toSpanString());
+    _timeController = TextEditingController(text: state.time.toTimeString());
 
     // 次回実施日が昨日以前だった場合は今日にする
     if (state.nextDay != null) {
@@ -127,16 +123,19 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                           SpanDialog(
                             onConfirm: (picker, value) {
                               var ans = picker.getSelectedValues();
-                              _spanController.text = '${ans[0]}${ans[1]}に1回';
                               int span;
                               switch (value[1]) {
                                 case 1:
                                   span = ans[0] * 7;
                                   break;
+                                case 2:
+                                  span = ans[0] * 30;
+                                  break;
                                 default:
                                   span = ans[0];
                                   break;
                               }
+                              _spanController.text = span.toSpanString();
                               ref.read(provider.notifier).setSpan(span);
                             },
                           ).showDialog(context);
@@ -171,17 +170,9 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                           TimeDialog(
                             onConfirm: (picker, value) {
                               var ans = picker.getSelectedValues();
-                              int time;
-                              switch (ans[1]) {
-                                case 1:
-                                  time = ans[0] * 60;
-                                  break;
-                                default:
-                                  time = ans[0];
-                                  break;
-                              }
+                              int time = ans[0];
                               ref.read(provider.notifier).setTime(time);
-                              _timeController.text = '${ans[0]} ${ans[1]}';
+                              _timeController.text = time.toTimeString();
                             },
                           ).showDialog(context);
                         },

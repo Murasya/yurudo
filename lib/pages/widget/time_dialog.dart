@@ -12,11 +12,18 @@ class TimeDialog {
     Picker(
       adapter: PickerDataAdapter(
         pickerData: [
-          List.generate(60, (index) => index + 1),
-          ['分', '時間'],
+          List.generate(60, (index) => (index + 1) * 5),
         ],
         isArray: true,
       ),
+      delimiter: [
+        PickerDelimiter(
+          child: Container(
+            alignment: Alignment.center,
+            child: const Text('分'),
+          ),
+        ),
+      ],
       hideHeader: true,
       title: const Text('要する時間'),
       cancelText: 'キャンセル',
