@@ -14,7 +14,7 @@ extension IntEx on int? {
 
   String toTimeString() {
     if (this == null) {
-      return 'なし';
+      return '- 分';
     }
     if (this! < 60) {
       return '$this分';
