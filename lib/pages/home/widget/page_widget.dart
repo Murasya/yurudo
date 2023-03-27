@@ -79,7 +79,8 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
       } else {
         todoList = state.todoList.where((todo) {
           if (todo.expectedDate == null) return false;
-          return todo.expectedDate!.dateDiff(pageDay) % todo.span == 0;
+          return todo.expectedDate!.isBefore(pageDay) &&
+              todo.expectedDate!.dateDiff(pageDay) % todo.span == 0;
         }).toList();
         pastTodoList = [];
       }
