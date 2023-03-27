@@ -1,0 +1,308 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:routine_app/design/app_assets.dart';
+import 'package:routine_app/pages/home/widget/my_drawer.dart';
+import 'package:routine_app/pages/list/list_page_state.dart';
+import 'package:routine_app/router.dart';
+import 'package:routine_app/utils/contextEx.dart';
+import 'package:routine_app/viewModel/category_provider.dart';
+import 'package:routine_app/viewModel/todo_provider.dart';
+
+import '../../design/app_color.dart';
+import '../../model/category.dart';
+import '../../model/todo.dart';
+import '../../utils/int_ex.dart';
+
+class ListPage extends ConsumerStatefulWidget {
+  const ListPage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  ConsumerState createState() => _ListPageState();
+}
+
+class _ListPageState extends ConsumerState<ListPage> {
+  List<bool> check = List.generate(5, (_) => false);
+
+  @override
+  Widget build(BuildContext context) {
+    List<Todo> todos = ref.watch(todoProvider);
+
+    final buttonStyle = ElevatedButton.styleFrom(
+      backgroundColor: AppColor.buttonSecondary,
+      foregroundColor: AppColor.fontColor,
+      textStyle: context.textTheme.bodyMedium,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      minimumSize: const Size(0, 36),
+    );
+
+    final List<Category> categories = ref.watch(categoryProvider);
+    final state = ref.watch(listPageStateProvider);
+    switch (state.sortType) {
+      case SortType.addDayAsc:
+        todos.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+        break;
+      case SortType.addDayDesc:
+        todos.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+        break;
+      case SortType.spanAsc:
+        todos.sort((a, b) => a.span.compareTo(b.span));
+        break;
+      case SortType.spanDesc:
+        todos.sort((a, b) => b.span.compareTo(a.span));
+        break;
+      case SortType.timeAsc:
+        todos.sort((a, b) => a.time.compareToEx(b.time));
+        break;
+      case SortType.timeDesc:
+        todos.sort((a, b) => b.time.compareToEx(a.time));
+        break;
+    }
+    if (state.filterType.isNotEmpty) {
+      todos = todos
+          .where((todo) => state.filterType.contains(todo.categoryId))
+          .toList();
+    }
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: AppColor.fontColor),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ElevatedButton(
+              style: buttonStyle,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Stack(
+                      children: [
+                        Positioned(
+                          top: 30,
+                          child: AlertDialog(
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (var sort in SortType.values)
+                                  _sortItem(sort),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Row(
+                children: [
+                  SvgPicture.asset(AppAssets.sort),
+                  const SizedBox(width: 8),
+                  const Text('並び替え'),
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            ElevatedButton(
+              style: buttonStyle,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Stack(
+                      children: [
+                        Positioned(
+                          top: 30,
+                          right: 0,
+                          child: AlertDialog(
+                            content: Container(
+                              constraints: const BoxConstraints(
+                                maxWidth: 300,
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  for (var category in categories)
+                                    _filterItem(category),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Row(
+                children: [
+                  SvgPicture.asset(AppAssets.filter),
+                  const SizedBox(width: 8),
+                  const Text('絞り込み'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      drawer: const MyDrawer(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        width: double.infinity,
+        height: 60,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColor.primaryColor,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, AppRouter.newTask);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                AppAssets.plus,
+              ),
+              const SizedBox(width: 16),
+              const Text(
+                '新しいゆるDOを作成',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
+        child: ListView(
+          children: [
+            for (final todo in todos) _todoItem(todo),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _todoItem(Todo todo) {
+    final categoryColor =
+        ref.watch(categoryProvider.notifier).getColor(todo.categoryId);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, AppRouter.detail, arguments: todo);
+        },
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 60,
+              padding: const EdgeInsets.fromLTRB(25, 8, 10, 8),
+              decoration: BoxDecoration(
+                color: AppColor.secondaryColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(todo.name),
+            ),
+            Positioned(
+                bottom: 7,
+                right: 10,
+                child: Text(
+                  '${todo.span.toSpanString()} / ${todo.time.toTimeString()}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: AppColor.fontColor3,
+                  ),
+                )),
+            Container(
+              width: 12,
+              height: 60,
+              decoration: BoxDecoration(
+                color: categoryColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  bottomLeft: Radius.circular(8),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _sortItem(SortType sortType) {
+    return RadioListTile<SortType>(
+      value: sortType,
+      groupValue: ref.watch(listPageStateProvider).sortType,
+      title: Text(
+        sortType.title,
+        style: TextStyle(
+          fontWeight: ref.watch(listPageStateProvider).sortType == sortType
+              ? FontWeight.w500
+              : FontWeight.w400,
+        ),
+      ),
+      onChanged: (value) {
+        ref.read(listPageStateProvider.notifier).setSortType(value!);
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  Widget _filterItem(Category category) {
+    return CheckboxListTile(
+      value: check[category.id],
+      title: Row(
+        children: [
+          Container(
+            width: 6,
+            height: 14,
+            decoration: BoxDecoration(
+              color: category.color,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              category.name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: ref
+                        .watch(listPageStateProvider.notifier)
+                        .containFilter(category.id)
+                    ? FontWeight.w500
+                    : FontWeight.w400,
+                color: AppColor.fontColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+      controlAffinity: ListTileControlAffinity.leading,
+      onChanged: (value) {
+        setState(() {
+          check[category.id] = value!;
+        });
+        if (value!) {
+          ref.read(listPageStateProvider.notifier).addFilter(category);
+        } else {
+          ref.read(listPageStateProvider.notifier).removeFilter(category);
+        }
+      },
+    );
+  }
+}

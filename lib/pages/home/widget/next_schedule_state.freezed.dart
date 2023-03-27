@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$NextScheduleArgs {
   Todo get todo => throw _privateConstructorUsedError;
-
   DateTime get completeDay => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +29,6 @@ abstract class $NextScheduleArgsCopyWith<$Res> {
   factory $NextScheduleArgsCopyWith(
           NextScheduleArgs value, $Res Function(NextScheduleArgs) then) =
       _$NextScheduleArgsCopyWithImpl<$Res, NextScheduleArgs>;
-
   @useResult
   $Res call({Todo todo, DateTime completeDay});
 }
@@ -70,7 +68,6 @@ abstract class _$$_NextScheduleArgsCopyWith<$Res>
   factory _$$_NextScheduleArgsCopyWith(
           _$_NextScheduleArgs value, $Res Function(_$_NextScheduleArgs) then) =
       __$$_NextScheduleArgsCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({Todo todo, DateTime completeDay});
@@ -145,7 +142,6 @@ abstract class _NextScheduleArgs implements NextScheduleArgs {
 
   @override
   Todo get todo;
-
   @override
   DateTime get completeDay;
   @override
