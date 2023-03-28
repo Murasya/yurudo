@@ -99,11 +99,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                 );
             _interstitialAd?.show();
             if (!mounted) return;
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRouter.home,
-              (_) => false,
-            );
+            Navigator.pop(context);
           },
           child: Text(
             '作成',
