@@ -54,8 +54,9 @@ class AppTextField extends StatelessWidget {
           onTap: onTap,
           onChanged: onChanged,
           controller: controller,
+          enableInteractiveSelection: !readonly,
           decoration: InputDecoration(
-            hintText: placeholder,
+              hintText: placeholder,
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 4),
               border: const UnderlineInputBorder(
