@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/design/app_text_field.dart';
-import 'package:routine_app/model/category.dart';
 import 'package:routine_app/pages/newTask/new_task_page_state.dart';
 import 'package:routine_app/pages/widget/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
@@ -26,7 +25,6 @@ class NewTaskPage extends ConsumerStatefulWidget {
 }
 
 class _NewTaskPageState extends ConsumerState<NewTaskPage> {
-  Category? selectCategory;
   final TextEditingController _spanController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
@@ -180,19 +178,18 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                           ),
                           const SizedBox(height: 38),
                           CategoryTextField(
-                            category: selectCategory,
+                            category: state.category,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
                               showDialog(
                                 context: context,
                                 builder: (context) {
                                   return CategoryDialog(
-                                    defaultValue: selectCategory,
+                                    defaultValue: state.category,
                                     onConfirm: (value) {
                                       ref
                                           .read(provider.notifier)
-                                          .setCategory(selectCategory);
-                                      selectCategory = value;
+                                          .setCategory(value);
                                     },
                                   );
                                 },

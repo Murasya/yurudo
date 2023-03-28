@@ -14,7 +14,6 @@ import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
-import '../../model/category.dart';
 import '../../model/todo.dart';
 import '../widget/categoryDialog/category_dialog.dart';
 
@@ -37,7 +36,6 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
   late final TextEditingController _nextDayController;
   late final AutoDisposeStateNotifierProvider<TaskDetailPageStateNotifier,
       TaskDetailPageState> provider;
-  Category? _selectCategory;
   final dateFormat = DateFormat('y/M/d');
 
   @override
@@ -55,8 +53,6 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     } else {
       _nextDayController = TextEditingController(text: '');
     }
-    _selectCategory = state.category;
-
     super.initState();
   }
 
@@ -159,19 +155,18 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                           ),
                           const SizedBox(height: 30),
                           CategoryTextField(
-                            category: _selectCategory,
+                            category: state.category,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
                               showDialog(
                                 context: context,
                                 builder: (context) {
                                   return CategoryDialog(
-                                    defaultValue: _selectCategory,
+                                    defaultValue: state.category,
                                     onConfirm: (value) {
                                       ref
                                           .read(provider.notifier)
-                                          .setCategory(_selectCategory);
-                                      _selectCategory = value;
+                                          .setCategory(value);
                                     },
                                   );
                                 },
