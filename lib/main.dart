@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/router.dart';
+import 'package:routine_app/services/app_shared.dart';
 import 'package:routine_app/services/notification_service.dart';
 
 import 'firebase_options.dart';
@@ -25,6 +26,7 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+  AppShared();
 
   runApp(
     const ProviderScope(child: MyApp()),
