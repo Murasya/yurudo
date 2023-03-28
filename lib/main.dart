@@ -51,6 +51,9 @@ class MyApp extends StatelessWidget {
           primary: AppColor.primaryColor,
           background: AppColor.backgroundColor,
         ),
+        snackBarTheme: const SnackBarThemeData(
+          behavior: SnackBarBehavior.floating,
+        ),
         fontFamily: 'NotoSansJP',
         textTheme: TextTheme(
           bodySmall: const TextStyle(

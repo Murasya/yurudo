@@ -266,6 +266,11 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
           FocusManager.instance.primaryFocus?.unfocus();
           Navigator.pop(context);
           ref.read(todoProvider.notifier).update(widget.todo, state);
+          context.showSnackBar(
+            const SnackBar(
+              content: Text('変更しました'),
+            ),
+          );
         },
         child: const Text('変更を保存する'),
       ),
@@ -294,61 +299,67 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
-                            child: const Icon(Icons.close),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        '${widget.todo.name}\nを本当に削除しますか？',
-                        textAlign: TextAlign.center,
-                        style: context.textTheme.bodyMedium!.copyWith(
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: AppStyle.button.copyWith(
-                            backgroundColor: const MaterialStatePropertyAll(
-                                AppColor.emphasisColor),
-                            textStyle: MaterialStatePropertyAll(
-                                context.textTheme.bodyLarge),
-                          ),
-                          onPressed: () {
-                            ref.read(todoProvider.notifier).delete(widget.todo.id!);
-                            Navigator.popUntil(
-                              context,
-                              ModalRoute.withName(AppRouter.home),
-                            );
-                          },
-                          child: const Text('削除する'),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: AppStyle.button.copyWith(
-                            backgroundColor: const MaterialStatePropertyAll(
-                                AppColor.secondaryColor),
-                            foregroundColor:
-                            const MaterialStatePropertyAll(AppColor.fontColor2),
-                            textStyle: MaterialStatePropertyAll(
-                              context.textTheme.bodyMedium!.copyWith(
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('削除しない'),
-                        ),
+                        child: const Icon(Icons.close),
                       ),
                     ],
                   ),
-                ),
+                  Text(
+                    '${widget.todo.name}\nを本当に削除しますか？',
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.bodyMedium!.copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: AppStyle.button.copyWith(
+                        backgroundColor: const MaterialStatePropertyAll(
+                            AppColor.emphasisColor),
+                        textStyle: MaterialStatePropertyAll(
+                            context.textTheme.bodyLarge),
+                      ),
+                      onPressed: () {
+                        ref.read(todoProvider.notifier).delete(widget.todo.id!);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRouter.home,
+                          (_) => false,
+                        );
+                        context.showSnackBar(
+                          const SnackBar(
+                            content: Text('変更しました'),
+                          ),
+                        );
+                      },
+                      child: const Text('削除する'),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: AppStyle.button.copyWith(
+                        backgroundColor: const MaterialStatePropertyAll(
+                            AppColor.secondaryColor),
+                        foregroundColor:
+                            const MaterialStatePropertyAll(AppColor.fontColor2),
+                        textStyle: MaterialStatePropertyAll(
+                          context.textTheme.bodyMedium!.copyWith(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('削除しない'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         },
         child: const Text('削除する'),

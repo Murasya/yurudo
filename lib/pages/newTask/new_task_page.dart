@@ -96,14 +96,15 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                   span: state.span!,
                   firstDay: state.firstDay!,
                   remind: state.remind,
-              categoryId: state.category?.id,
-              time: state.time,
-            );
+                  categoryId: state.category?.id,
+                  time: state.time,
+                );
             _interstitialAd?.show();
             if (!mounted) return;
-            Navigator.popUntil(
+            Navigator.pushNamedAndRemoveUntil(
               context,
-                  (route) => route.settings.name == AppRouter.home,
+              AppRouter.home,
+              (_) => false,
             );
           },
           child: Text(
