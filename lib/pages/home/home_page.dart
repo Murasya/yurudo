@@ -41,6 +41,10 @@ class _HomePageState extends ConsumerState<HomePage> {
     NotificationService().setNotifications(state.todoList);
     ref.watch(provider.notifier).updateToday();
 
+    final DateTime weekEnd = state.pageDate.add(const Duration(days: 6));
+    String month =
+        (state.pageDate.month != weekEnd.month) ? '${weekEnd.month}/' : '';
+
     return Scaffold(
       appBar: AppBar(
         bottom: PreferredSize(
@@ -117,7 +121,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ],
                           if (state.displayTerm == TermType.week) ...[
                             Text(
-                              '${DateFormat('M/d').format(state.pageDate)}~${state.pageDate.add(const Duration(days: 6)).day}',
+                              '${DateFormat('M/d').format(state.pageDate)}~$month${weekEnd.day}',
                               style: GoogleFonts.harmattan(
                                 color: AppColor.backgroundColor,
                                 fontWeight: FontWeight.bold,
