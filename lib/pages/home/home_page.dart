@@ -13,6 +13,7 @@ import 'package:routine_app/pages/home/widget/my_drawer.dart';
 import 'package:routine_app/pages/home/widget/page_widget.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
+import 'package:routine_app/utils/contextEx.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -90,48 +91,51 @@ class _HomePageState extends ConsumerState<HomePage> {
                       borderRadius: BorderRadius.circular(20),
                       color: AppColor.primaryColor,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        if (state.displayTerm == TermType.day) ...[
-                          Text(
-                            dateFormat.format(state.pageDate),
-                            style: GoogleFonts.harmattan(
-                              color: AppColor.backgroundColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28,
+                    child: Transform.translate(
+                      offset: const Offset(0, -2),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          if (state.displayTerm == TermType.day) ...[
+                            Text(
+                              dateFormat.format(state.pageDate),
+                              style: GoogleFonts.harmattan(
+                                color: AppColor.backgroundColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 28,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '(${DateFormat.E('ja').format(state.pageDate)})',
-                            style: const TextStyle(
-                              color: AppColor.backgroundColor,
-                              fontSize: 14,
+                            Text(
+                              '(${DateFormat.E('ja').format(state.pageDate)})',
+                              style: const TextStyle(
+                                color: AppColor.backgroundColor,
+                                fontSize: 14,
+                              ),
                             ),
-                          ),
+                          ],
+                          if (state.displayTerm == TermType.week) ...[
+                            Text(
+                              '${DateFormat('M/d').format(state.pageDate)}~${state.pageDate.add(const Duration(days: 6)).day}',
+                              style: GoogleFonts.harmattan(
+                                color: AppColor.backgroundColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 28,
+                              ),
+                            ),
+                          ],
+                          // if (state.displayTerm == TermType.month) ...[
+                          //   Text(
+                          //     DateFormat('y/M').format(state.pageDate),
+                          //     style: GoogleFonts.harmattan(
+                          //       color: AppColor.backgroundColor,
+                          //       fontSize: 24,
+                          //     ),
+                          //   ),
+                          // ],
                         ],
-                        if (state.displayTerm == TermType.week) ...[
-                          Text(
-                            '${DateFormat('M/d').format(state.pageDate)}~${state.pageDate.add(const Duration(days: 6)).day}',
-                            style: GoogleFonts.harmattan(
-                              color: AppColor.backgroundColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28,
-                            ),
-                          ),
-                        ],
-                        // if (state.displayTerm == TermType.month) ...[
-                        //   Text(
-                        //     DateFormat('y/M').format(state.pageDate),
-                        //     style: GoogleFonts.harmattan(
-                        //       color: AppColor.backgroundColor,
-                        //       fontSize: 24,
-                        //     ),
-                        //   ),
-                        // ],
-                      ],
+                      ),
                     ),
                   ),
                   GestureDetector(
@@ -223,13 +227,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                 AppAssets.plus,
               ),
               const SizedBox(width: 16),
-              const Text(
+              Text(
                 '新しいゆるDOを作成',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                style: context.textTheme.bodyLarge!.copyWith(
+                  color: Colors.white,
                 ),
-              )
+              ),
             ],
           ),
         ),
