@@ -84,6 +84,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                 const MaterialStatePropertyAll(AppColor.primaryColor),
           ),
           onPressed: () async {
+            FocusManager.instance.primaryFocus?.unfocus();
             if (state.name.isEmpty ||
                 state.span == null ||
                 state.firstDay == null) {
@@ -95,14 +96,14 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                   span: state.span!,
                   firstDay: state.firstDay!,
                   remind: state.remind,
-                  categoryId: state.category?.id,
-                  time: state.time,
-                );
+              categoryId: state.category?.id,
+              time: state.time,
+            );
             _interstitialAd?.show();
             if (!mounted) return;
             Navigator.popUntil(
               context,
-              (route) => route.settings.name == AppRouter.home,
+                  (route) => route.settings.name == AppRouter.home,
             );
           },
           child: Text(
@@ -113,152 +114,161 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              if (state.hasError)
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: const Text(
-                    '必須項目が入力されていません',
-                    style: TextStyle(
-                      color: AppColor.emphasisColor,
-                    ),
-                  ),
-                ),
-              AppTextField(
-                label: 'タイトル',
-                placeholder: '入力してください',
-                isRequired: true,
-                onChanged: (value) {
-                  ref.read(provider.notifier).setName(value);
-                },
-              ),
-              const SizedBox(height: 38),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: deviceWidth / 2 - 20,
-                    child: Column(
-                      children: [
-                        AppTextField(
-                          label: 'スパン',
-                          placeholder: '選択してください',
-                          isRequired: true,
-                          controller: _spanController,
-                          readonly: true,
-                          onTap: () {
-                            SpanDialog(
-                              onConfirm: (picker, value) {
-                                var ans = picker.getSelectedValues();
-                                int span;
-                                switch (value[1]) {
-                                  case 1:
-                                    span = ans[0] * 7;
-                                    break;
-                                  case 2:
-                                    span = ans[0] * 30;
-                                    break;
-                                  default:
-                                    span = ans[0];
-                                    break;
-                                }
-                                _spanController.text = span.toSpanString();
-                                ref.read(provider.notifier).setSpan(span);
-                              },
-                            ).showDialog(context);
-                          },
-                        ),
-                        const SizedBox(height: 38),
-                        CategoryTextField(
-                          category: selectCategory,
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CategoryDialog(
-                                  defaultValue: selectCategory,
-                                  onConfirm: (value) {
-                                    ref
-                                        .read(provider.notifier)
-                                        .setCategory(selectCategory);
-                                    selectCategory = value;
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 38),
-                        AppTextField(
-                          label: '必要時間',
-                          placeholder: '選択してください',
-                          controller: _timeController,
-                          readonly: true,
-                          onTap: () {
-                            TimeDialog(
-                              onConfirm: (picker, value) {
-                                var ans = picker.getSelectedValues();
-                                int time = ans[0];
-                                _timeController.text = time.toTimeString();
-                                ref.read(provider.notifier).setTime(time);
-                              },
-                            ).showDialog(context);
-                          },
-                        ),
-                        const SizedBox(height: 38),
-                        AppTextField(
-                          label: '最初の実施予定日',
-                          placeholder: '選択してください',
-                          isRequired: true,
-                          controller: _dateController,
-                          readonly: true,
-                          onTap: () {
-                            DateDialog(
-                              onConfirm: (picker, value) {
-                                DateTime date =
-                                    DateTime.parse(picker.adapter.toString());
-                                ref.read(provider.notifier).setDate(date);
-                                _dateController.text = dateFormat.format(date);
-                              },
-                            ).showDialog(context);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                if (state.hasError)
                   Container(
-                    width: deviceWidth / 2 - 20,
-                    padding: const EdgeInsets.only(top: 25),
-                    child: CheckboxListTile(
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: state.remind,
-                      activeColor: AppColor.fontColor2,
-                      checkboxShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: const Text(
+                      '必須項目が入力されていません',
+                      style: TextStyle(
+                        color: AppColor.emphasisColor,
                       ),
-                      title: Transform.translate(
-                        offset: const Offset(-20, 0),
-                        child: const Text(
-                          'リマインドする',
-                          style: TextStyle(
-                            fontSize: 14,
+                    ),
+                  ),
+                AppTextField(
+                  label: 'タイトル',
+                  placeholder: '入力してください',
+                  isRequired: true,
+                  onChanged: (value) {
+                    ref.read(provider.notifier).setName(value);
+                  },
+                ),
+                const SizedBox(height: 38),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: deviceWidth / 2 - 20,
+                      child: Column(
+                        children: [
+                          AppTextField(
+                            label: 'スパン',
+                            placeholder: '選択してください',
+                            isRequired: true,
+                            controller: _spanController,
+                            readonly: true,
+                            onTap: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              SpanDialog(
+                                onConfirm: (picker, value) {
+                                  var ans = picker.getSelectedValues();
+                                  int span;
+                                  switch (value[1]) {
+                                    case 1:
+                                      span = ans[0] * 7;
+                                      break;
+                                    case 2:
+                                      span = ans[0] * 30;
+                                      break;
+                                    default:
+                                      span = ans[0];
+                                      break;
+                                  }
+                                  _spanController.text = span.toSpanString();
+                                  ref.read(provider.notifier).setSpan(span);
+                                },
+                              ).showDialog(context);
+                            },
+                          ),
+                          const SizedBox(height: 38),
+                          CategoryTextField(
+                            category: selectCategory,
+                            onTap: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CategoryDialog(
+                                    defaultValue: selectCategory,
+                                    onConfirm: (value) {
+                                      ref
+                                          .read(provider.notifier)
+                                          .setCategory(selectCategory);
+                                      selectCategory = value;
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 38),
+                          AppTextField(
+                            label: '必要時間',
+                            placeholder: '選択してください',
+                            controller: _timeController,
+                            readonly: true,
+                            onTap: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              TimeDialog(
+                                onConfirm: (picker, value) {
+                                  var ans = picker.getSelectedValues();
+                                  int time = ans[0];
+                                  _timeController.text = time.toTimeString();
+                                  ref.read(provider.notifier).setTime(time);
+                                },
+                              ).showDialog(context);
+                            },
+                          ),
+                          const SizedBox(height: 38),
+                          AppTextField(
+                            label: '最初の実施予定日',
+                            placeholder: '選択してください',
+                            isRequired: true,
+                            controller: _dateController,
+                            readonly: true,
+                            onTap: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              DateDialog(
+                                onConfirm: (picker, value) {
+                                  DateTime date =
+                                      DateTime.parse(picker.adapter.toString());
+                                  ref.read(provider.notifier).setDate(date);
+                                  _dateController.text =
+                                      dateFormat.format(date);
+                                },
+                              ).showDialog(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: deviceWidth / 2 - 20,
+                      padding: const EdgeInsets.only(top: 25),
+                      child: CheckboxListTile(
+                        controlAffinity: ListTileControlAffinity.leading,
+                        value: state.remind,
+                        activeColor: AppColor.fontColor2,
+                        checkboxShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        title: Transform.translate(
+                          offset: const Offset(-20, 0),
+                          child: const Text(
+                            'リマインドする',
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
                           ),
                         ),
+                        onChanged: (value) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          ref.read(provider.notifier).setRemind(value ?? false);
+                        },
                       ),
-                      onChanged: (value) {
-                        ref.read(provider.notifier).setRemind(value ?? false);
-                      },
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 60),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 60),
+              ],
+            ),
           ),
         ),
       ),
