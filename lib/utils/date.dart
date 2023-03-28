@@ -17,6 +17,17 @@ extension Date on DateTime {
     return d1.difference(d2).inDays;
   }
 
+  bool isBeforeDay(DateTime date) {
+    return isBefore(date) && !isSameDay(date);
+  }
+
+  /// 1か月より前かどうか
+  bool isMonthBefore(DateTime date) {
+    final d1 = DateTime(year, month, day);
+    final d2 = DateTime(date.year, date.month - 1, date.day);
+    return d1.isBeforeDay(d2);
+  }
+
   DateTime get firstDayOfMonth => DateTime(year, month, 1);
 
   int get lastDayOfMonth =>

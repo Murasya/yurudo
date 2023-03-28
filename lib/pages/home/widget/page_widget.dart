@@ -146,14 +146,13 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
     Widget timeWidget() {
       if (isSameDay(state.today, pageDay) &&
           isBeforeDay(todo.expectedDate, pageDay)) {
-        String num = (todo.expectedDate!.difference(state.today).inDays < 30)
-            ? '~1'
-            : '1';
-        String suf = (todo.expectedDate!.difference(state.today).inDays < 7)
+        String num =
+            (todo.expectedDate!.isMonthBefore(state.today)) ? '1' : '~1';
+        String suf = (state.today.inWeek(todo.expectedDate!))
             ? '週間'
-            : (todo.expectedDate!.difference(state.today).inDays < 30)
-                ? 'か月'
-                : 'か月超';
+            : (todo.expectedDate!.isMonthBefore(state.today))
+                ? 'か月超'
+                : 'か月';
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
