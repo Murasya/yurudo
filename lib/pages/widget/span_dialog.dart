@@ -21,7 +21,7 @@ class SpanDialog {
         PickerDelimiter(
           child: Container(
             alignment: Alignment.center,
-            child: const Text('に一回'),
+            child: const Text('に1回'),
           ),
           column: 2,
         ),
