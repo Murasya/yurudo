@@ -26,6 +26,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   final dateFormat = DateFormat('M/d');
   final provider = homePageStateProvider;
+  final _pageController = PageController(initialPage: 100);
 
   @override
   void initState() {
@@ -48,29 +49,38 @@ class _HomePageState extends ConsumerState<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (state.displayTerm == TermType.day)
-                    Text(
-                      dateFormat.format(
-                          state.pageDate.subtract(const Duration(days: 1))),
-                      style: GoogleFonts.harmattan(
-                        color: AppColor.fontColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                      ),
-                    ),
-                  if (state.displayTerm != TermType.day)
-                    Text(
-                      '前の${state.displayTerm.displayName}',
-                      style: const TextStyle(
-                        color: AppColor.fontColor,
-                        fontSize: 14,
-                      ),
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 24),
-                    child: SvgPicture.asset(
-                      AppAssets.triangle,
-                      width: 14,
+                  GestureDetector(
+                    onTap: () => _pageController.previousPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.ease),
+                    child: Row(
+                      children: [
+                        if (state.displayTerm == TermType.day)
+                          Text(
+                            dateFormat.format(state.pageDate
+                                .subtract(const Duration(days: 1))),
+                            style: GoogleFonts.harmattan(
+                              color: AppColor.fontColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            ),
+                          ),
+                        if (state.displayTerm != TermType.day)
+                          Text(
+                            '前の${state.displayTerm.displayName}',
+                            style: const TextStyle(
+                              color: AppColor.fontColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16, right: 24),
+                          child: SvgPicture.asset(
+                            AppAssets.triangle,
+                            width: 14,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
@@ -124,34 +134,43 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 24, right: 16),
-                    child: Transform.rotate(
-                      angle: pi,
-                      child: SvgPicture.asset(
-                        AppAssets.triangle,
-                        width: 14,
-                      ),
+                  GestureDetector(
+                    onTap: () => _pageController.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.ease),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 24, right: 16),
+                          child: Transform.rotate(
+                            angle: pi,
+                            child: SvgPicture.asset(
+                              AppAssets.triangle,
+                              width: 14,
+                            ),
+                          ),
+                        ),
+                        if (state.displayTerm == TermType.day)
+                          Text(
+                            dateFormat.format(
+                                state.pageDate.add(const Duration(days: 1))),
+                            style: GoogleFonts.harmattan(
+                              color: AppColor.fontColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            ),
+                          ),
+                        if (state.displayTerm != TermType.day)
+                          Text(
+                            '次の${state.displayTerm.displayName}',
+                            style: const TextStyle(
+                              color: AppColor.fontColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
-                  if (state.displayTerm == TermType.day)
-                    Text(
-                      dateFormat
-                          .format(state.pageDate.add(const Duration(days: 1))),
-                      style: GoogleFonts.harmattan(
-                        color: AppColor.fontColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                      ),
-                    ),
-                  if (state.displayTerm != TermType.day)
-                    Text(
-                      '次の${state.displayTerm.displayName}',
-                      style: const TextStyle(
-                        color: AppColor.fontColor,
-                        fontSize: 14,
-                      ),
-                    ),
                 ],
               ),
               const SizedBox(height: 18),
@@ -216,7 +235,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
       ),
       body: PageView.builder(
-        controller: PageController(initialPage: 100),
+        controller: _pageController,
         onPageChanged: (index) {
           ref.read(provider.notifier).changeDay(index - 100);
         },
