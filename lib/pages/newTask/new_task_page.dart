@@ -257,6 +257,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                   ),
                 ],
               ),
+              const SizedBox(height: 60),
             ],
           ),
         ),

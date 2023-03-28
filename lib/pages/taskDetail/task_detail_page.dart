@@ -96,142 +96,150 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            finishEditButton(),
+            const SizedBox(height: 12),
+            deleteButton(),
+          ],
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            AppTextField(
-              label: 'タイトル',
-              controller: _titleController,
-              onChanged: (value) {
-                ref.read(provider.notifier).setName(value);
-              },
-            ),
-            const SizedBox(height: 30),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: deviceWidth / 2 - 20,
-                  child: Column(
-                    children: [
-                      AppTextField(
-                        label: 'スパン',
-                        readonly: true,
-                        controller: _spanController,
-                        onTap: () {
-                          SpanDialog(
-                            onConfirm: (picker, value) {
-                              var ans = picker.getSelectedValues();
-                              int span;
-                              switch (value[1]) {
-                                case 1:
-                                  span = ans[0] * 7;
-                                  break;
-                                case 2:
-                                  span = ans[0] * 30;
-                                  break;
-                                default:
-                                  span = ans[0];
-                                  break;
-                              }
-                              _spanController.text = span.toSpanString();
-                              ref.read(provider.notifier).setSpan(span);
-                            },
-                          ).showDialog(context);
-                        },
-                      ),
-                      const SizedBox(height: 30),
-                      CategoryTextField(
-                        category: _selectCategory,
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return CategoryDialog(
-                                defaultValue: _selectCategory,
-                                onConfirm: (value) {
-                                  ref
-                                      .read(provider.notifier)
-                                      .setCategory(_selectCategory);
-                                  _selectCategory = value;
-                                },
-                              );
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 30),
-                      AppTextField(
-                        label: '必要時間',
-                        readonly: true,
-                        controller: _timeController,
-                        onTap: () {
-                          TimeDialog(
-                            onConfirm: (picker, value) {
-                              var ans = picker.getSelectedValues();
-                              int time = ans[0];
-                              ref.read(provider.notifier).setTime(time);
-                              _timeController.text = time.toTimeString();
-                            },
-                          ).showDialog(context);
-                        },
-                      ),
-                      const SizedBox(height: 30),
-                      AppTextField(
-                        label: '実施予定日',
-                        controller: _nextDayController,
-                        readonly: true,
-                        onTap: () {
-                          DateDialog(
-                            onConfirm: (picker, value) {
-                              final day =
-                                  (picker.adapter as DateTimePickerAdapter)
-                                      .value!;
-                              ref.read(provider.notifier).setNextDay(day);
-                              _nextDayController.text = dateFormat.format(day);
-                            },
-                          ).showDialog(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: deviceWidth / 2 - 20,
-                  padding: const EdgeInsets.only(top: 25),
-                  child: CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: state.remind,
-                    activeColor: AppColor.fontColor2,
-                    checkboxShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              AppTextField(
+                label: 'タイトル',
+                controller: _titleController,
+                onChanged: (value) {
+                  ref.read(provider.notifier).setName(value);
+                },
+              ),
+              const SizedBox(height: 30),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: deviceWidth / 2 - 20,
+                    child: Column(
+                      children: [
+                        AppTextField(
+                          label: 'スパン',
+                          readonly: true,
+                          controller: _spanController,
+                          onTap: () {
+                            SpanDialog(
+                              onConfirm: (picker, value) {
+                                var ans = picker.getSelectedValues();
+                                int span;
+                                switch (value[1]) {
+                                  case 1:
+                                    span = ans[0] * 7;
+                                    break;
+                                  case 2:
+                                    span = ans[0] * 30;
+                                    break;
+                                  default:
+                                    span = ans[0];
+                                    break;
+                                }
+                                _spanController.text = span.toSpanString();
+                                ref.read(provider.notifier).setSpan(span);
+                              },
+                            ).showDialog(context);
+                          },
+                        ),
+                        const SizedBox(height: 30),
+                        CategoryTextField(
+                          category: _selectCategory,
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CategoryDialog(
+                                  defaultValue: _selectCategory,
+                                  onConfirm: (value) {
+                                    ref
+                                        .read(provider.notifier)
+                                        .setCategory(_selectCategory);
+                                    _selectCategory = value;
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 30),
+                        AppTextField(
+                          label: '必要時間',
+                          readonly: true,
+                          controller: _timeController,
+                          onTap: () {
+                            TimeDialog(
+                              onConfirm: (picker, value) {
+                                var ans = picker.getSelectedValues();
+                                int time = ans[0];
+                                ref.read(provider.notifier).setTime(time);
+                                _timeController.text = time.toTimeString();
+                              },
+                            ).showDialog(context);
+                          },
+                        ),
+                        const SizedBox(height: 30),
+                        AppTextField(
+                          label: '実施予定日',
+                          controller: _nextDayController,
+                          readonly: true,
+                          onTap: () {
+                            DateDialog(
+                              onConfirm: (picker, value) {
+                                final day =
+                                    (picker.adapter as DateTimePickerAdapter)
+                                        .value!;
+                                ref.read(provider.notifier).setNextDay(day);
+                                _nextDayController.text =
+                                    dateFormat.format(day);
+                              },
+                            ).showDialog(context);
+                          },
+                        ),
+                      ],
                     ),
-                    title: Transform.translate(
-                      offset: const Offset(-20, 0),
-                      child: const Text(
-                        'リマインドする',
-                        style: TextStyle(
-                          fontSize: 14,
+                  ),
+                  Container(
+                    width: deviceWidth / 2 - 20,
+                    padding: const EdgeInsets.only(top: 25),
+                    child: CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: state.remind,
+                      activeColor: AppColor.fontColor2,
+                      checkboxShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      title: Transform.translate(
+                        offset: const Offset(-20, 0),
+                        child: const Text(
+                          'リマインドする',
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
                       ),
+                      onChanged: (value) {
+                        ref.read(provider.notifier).setRemind(value ?? false);
+                      },
                     ),
-                    onChanged: (value) {
-                      ref.read(provider.notifier).setRemind(value ?? false);
-                    },
                   ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            Column(
-              children: [
-                finishEditButton(),
-                const SizedBox(height: 12),
-                deleteButton(),
-              ],
-            )
-          ],
+                ],
+              ),
+              const SizedBox(height: 120),
+            ],
+          ),
         ),
       ),
     );
