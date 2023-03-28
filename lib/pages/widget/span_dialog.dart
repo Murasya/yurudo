@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
+import 'package:routine_app/utils/contextEx.dart';
 
 class SpanDialog {
   final void Function(Picker, List<int>)? onConfirm;
@@ -27,7 +28,11 @@ class SpanDialog {
         ),
       ],
       hideHeader: true,
-      title: const Text('スパン設定'),
+      title: Text(
+        'スパンを設定してください',
+        textAlign: TextAlign.center,
+        style: context.textTheme.bodyMedium!.copyWith(fontSize: 16),
+      ),
       cancelText: 'キャンセル',
       confirmText: 'OK',
       onConfirm: onConfirm,

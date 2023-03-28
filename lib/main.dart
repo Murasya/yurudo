@@ -47,8 +47,10 @@ class MyApp extends StatelessWidget {
           ),
           elevation: 0,
         ),
-        colorScheme:
-        const ColorScheme.light(background: AppColor.backgroundColor),
+        colorScheme: const ColorScheme.light(
+          primary: AppColor.primaryColor,
+          background: AppColor.backgroundColor,
+        ),
         fontFamily: 'NotoSansJP',
         textTheme: TextTheme(
           bodySmall: const TextStyle(

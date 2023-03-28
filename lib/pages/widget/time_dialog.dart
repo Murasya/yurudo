@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
+import 'package:routine_app/utils/contextEx.dart';
 
 class TimeDialog {
   final void Function(Picker, List<int>)? onConfirm;
@@ -25,7 +26,11 @@ class TimeDialog {
         ),
       ],
       hideHeader: true,
-      title: const Text('要する時間'),
+      title: Text(
+        '必要時間を設定してください',
+        textAlign: TextAlign.center,
+        style: context.textTheme.bodyMedium!.copyWith(fontSize: 16),
+      ),
       cancelText: 'キャンセル',
       confirmText: 'OK',
       onConfirm: onConfirm,
