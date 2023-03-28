@@ -62,9 +62,8 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
             .where((todo) =>
                 isContainDay(todo.completeDate, pageDay) ||
                 (todo.expectedDate != null &&
-                    todo.expectedDate!.difference(pageDay).inDays % todo.span ==
-                        0 &&
-                    state.today.difference(pageDay).inDays < todo.span))
+                    todo.expectedDate!.dateDiff(pageDay) % todo.span == 0 &&
+                    state.today.dateDiff(pageDay) < todo.span))
             .toList();
         pastTodoList = [];
       } else if (widget.index == 0) {
