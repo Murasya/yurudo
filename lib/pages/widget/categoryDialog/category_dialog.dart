@@ -165,13 +165,16 @@ class CategoryTextField extends ConsumerWidget {
           child: Row(
             children: [
               if (category != null)
-                Container(
-                  width: 8,
-                  height: 12,
-                  margin: const EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    color: category!.color,
-                    borderRadius: BorderRadius.circular(4),
+                Transform.translate(
+                  offset: const Offset(0, 1),
+                  child: Container(
+                    width: 8,
+                    height: 14,
+                    margin: const EdgeInsets.only(right: 8),
+                    decoration: BoxDecoration(
+                      color: category!.color,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
                   ),
                 ),
               Expanded(
