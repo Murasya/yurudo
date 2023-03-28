@@ -25,7 +25,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     // 完了処理
     todo = todo.copyWith(
       completeDate: [...todo.completeDate, completeDay],
-      expectedDate: nextDay,
+      expectedDate: () => nextDay,
       updatedAt: now,
     );
     _database.update(todo);
@@ -44,7 +44,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     todo = todo.copyWith(
       completeDate:
           todo.completeDate.where((d) => !d.isSameDay(completeDay)).toList(),
-      expectedDate: completeDay,
+      expectedDate: () => completeDay,
       updatedAt: now,
     );
     _database.update(todo);
@@ -60,7 +60,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       span: data.span,
       categoryId: data.category?.id,
       time: data.time,
-      expectedDate: data.nextDay,
+      expectedDate: () => data.nextDay,
       updatedAt: DateTime.now(),
     );
     _database.update(newTodo);

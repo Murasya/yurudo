@@ -91,6 +91,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                                     completeDay: widget.args.completeDay,
                                     nextDay: null,
                                   );
+                              if (!mounted) return;
                               Navigator.pop(context);
                             }
                           },

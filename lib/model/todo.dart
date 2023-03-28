@@ -102,7 +102,7 @@ class Todo {
     int? skipConsecutive,
     int? categoryId,
     List<DateTime>? completeDate,
-    DateTime? expectedDate,
+    DateTime? Function()? expectedDate,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -117,7 +117,7 @@ class Todo {
       skipConsecutive: skipConsecutive ?? this.skipConsecutive,
       categoryId: categoryId ?? this.categoryId,
       completeDate: completeDate ?? this.completeDate,
-      expectedDate: expectedDate ?? this.expectedDate,
+      expectedDate: expectedDate != null ? expectedDate() : this.expectedDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
