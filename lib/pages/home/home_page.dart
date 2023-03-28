@@ -114,7 +114,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ],
                         if (state.displayTerm == TermType.week) ...[
                           Text(
-                            '${DateFormat('M/d').format(state.pageDate)}~${state.pageDate.add(const Duration(days: 7)).day}',
+                            '${DateFormat('M/d').format(state.pageDate)}~${state.pageDate.add(const Duration(days: 6)).day}',
                             style: GoogleFonts.harmattan(
                               color: AppColor.backgroundColor,
                               fontWeight: FontWeight.bold,
