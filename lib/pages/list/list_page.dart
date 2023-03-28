@@ -211,12 +211,12 @@ class _ListPageState extends ConsumerState<ListPage> {
                   ),
                 ),
               const SizedBox(height: 24),
-              ListView(
-                shrinkWrap: true,
+              Column(
                 children: [
                   for (final todo in todos) _todoItem(todo),
                 ],
               ),
+              const SizedBox(height: 80),
             ],
           ),
         ),
