@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme: const ColorScheme.light(
           primary: AppColor.primaryColor,
+          secondary: AppColor.primaryColor,
           background: AppColor.backgroundColor,
         ),
         snackBarTheme: const SnackBarThemeData(
