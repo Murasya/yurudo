@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,10 +10,21 @@ import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
   NotificationService().requestPermissions();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   runApp(
     const ProviderScope(child: MyApp()),
@@ -33,7 +48,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
         colorScheme:
-            const ColorScheme.light(background: AppColor.backgroundColor),
+        const ColorScheme.light(background: AppColor.backgroundColor),
         fontFamily: 'NotoSansJP',
         textTheme: TextTheme(
           bodySmall: const TextStyle(

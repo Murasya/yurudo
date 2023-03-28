@@ -1,13 +1,14 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:path/path.dart';
-//import 'package:path_provider/path_provider.dart';
 import 'package:routine_app/model/todo.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TodoDatabase {
-  final tableName = 'todo';
+  final tableName = 'yurudo';
 
   Future<Database> get database async {
     String dbPath = await getDatabasesPath();
+    FirebaseCrashlytics.instance.log(dbPath);
     //String dbPath = (await getApplicationSupportDirectory()).path;
     final Future<Database> database = openDatabase(
       join(dbPath, '${tableName}_database.db'),
