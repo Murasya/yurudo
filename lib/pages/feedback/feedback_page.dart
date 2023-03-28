@@ -198,9 +198,10 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.popUntil(
+                        Navigator.pushNamedAndRemoveUntil(
                           context,
-                          (route) => route.settings.name == AppRouter.home,
+                          AppRouter.home,
+                          (_) => false,
                         );
                       },
                       child: const Icon(Icons.close),
@@ -243,9 +244,10 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
                           const MaterialStatePropertyAll(AppColor.primaryColor),
                     ),
                     onPressed: () {
-                      Navigator.popUntil(
+                      Navigator.pushNamedAndRemoveUntil(
                         context,
-                        (route) => route.settings.name == AppRouter.home,
+                        AppRouter.home,
+                        (_) => false,
                       );
                     },
                     child: const Text('閉じる'),
