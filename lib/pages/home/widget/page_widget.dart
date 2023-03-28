@@ -6,6 +6,7 @@ import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/pages/home/widget/next_schedule.dart';
 import 'package:routine_app/pages/home/widget/next_schedule_state.dart';
 import 'package:routine_app/utils/date.dart';
+import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../../design/app_assets.dart';
@@ -51,6 +52,14 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
     super.didChangeDependencies();
   }
 
+  int compExp(Todo a, Todo b) {
+    return a.expectedDate!.compareTo(b.expectedDate!);
+  }
+
+  int compTime(Todo a, Todo b) {
+    return a.time.compareToEx(b.time);
+  }
+
   @override
   Widget build(BuildContext context) {
     late final List<Todo> todoList;
@@ -65,6 +74,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                     todo.expectedDate!.dateDiff(pageDay) % todo.span == 0 &&
                     state.today.dateDiff(pageDay) < todo.span))
             .toList();
+        todoList.sort(compTime);
         pastTodoList = [];
       } else if (widget.index == 0) {
         todoList = state.todoList
@@ -72,6 +82,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                 isSameDay(todo.expectedDate, pageDay) ||
                 isContainDay(todo.completeDate, pageDay))
             .toList();
+        todoList.sort(compTime);
         pastTodoList = state.todoList
             .where((todo) => isBeforeDay(todo.expectedDate, pageDay))
             .toList();
@@ -81,6 +92,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
           return todo.expectedDate!.isBefore(pageDay) &&
               todo.expectedDate!.dateDiff(pageDay) % todo.span == 0;
         }).toList();
+        todoList.sort(compTime);
         pastTodoList = [];
       }
     } else {
@@ -88,7 +100,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
         if (todo.expectedDate == null) return false;
         return todo.expectedDate!.inWeek(pageDay);
       }).toList();
-      todoList.sort((a, b) => a.expectedDate!.compareTo(b.expectedDate!));
+      todoList.sort(compExp);
       pastTodoList = [];
     }
 
