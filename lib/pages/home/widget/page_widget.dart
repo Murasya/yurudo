@@ -120,7 +120,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                 state.displayTerm == TermType.day) ...[
               const SizedBox(height: 38),
               Text(
-                '実施が遅れているゆるDOと遅延時間',
+                '実施が遅れているゆるDOと遅延期間',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               ListView.builder(
