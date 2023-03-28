@@ -88,6 +88,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
         if (todo.expectedDate == null) return false;
         return todo.expectedDate!.inWeek(pageDay);
       }).toList();
+      todoList.sort((a, b) => a.expectedDate!.compareTo(b.expectedDate!));
       pastTodoList = [];
     }
 
