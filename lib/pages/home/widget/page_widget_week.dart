@@ -30,8 +30,8 @@ bool isContainDay(List<DateTime> list, DateTime d) {
   return list.any((e) => isSameDay(e, d));
 }
 
-class PageWidget extends ConsumerStatefulWidget {
-  const PageWidget({
+class PageWidgetWeek extends ConsumerStatefulWidget {
+  const PageWidgetWeek({
     required this.index,
     Key? key,
   }) : super(key: key);
@@ -42,13 +42,13 @@ class PageWidget extends ConsumerStatefulWidget {
   ConsumerState createState() => _PageWidgetState();
 }
 
-class _PageWidgetState extends ConsumerState<PageWidget> {
-  late final DateTime pageDay;
+class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
+  late final DateTime pageWeekStart;
 
   @override
   void didChangeDependencies() {
     final state = ref.watch(homePageStateProvider);
-    pageDay =
+    pageWeekStart =
         state.today.add(Duration(days: widget.index * state.displayTerm.term));
     super.didChangeDependencies();
   }
@@ -63,46 +63,31 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    late final List<Todo> todoList;
-    List<Todo> pastTodoList = [];
+    List<Todo> todoList = [];
     final state = ref.watch(homePageStateProvider);
-    if (state.displayTerm == TermType.day) {
-      if (widget.index < 0) {
-        todoList = state.todoList
-            .where((todo) =>
-                isContainDay(todo.completeDate, pageDay) ||
-                (todo.expectedDate != null &&
-                    todo.expectedDate!.dateDiff(pageDay) % todo.span == 0 &&
-                    state.today.dateDiff(pageDay) < todo.span))
-            .toList();
-        todoList.sort(compTime);
-      } else if (widget.index == 0) {
-        todoList = state.todoList
-            .where((todo) =>
-                isSameDay(todo.expectedDate, pageDay) ||
-                isContainDay(todo.completeDate, pageDay))
-            .toList();
-        todoList.sort(compTime);
-        pastTodoList = state.todoList
-            .where((todo) => isBeforeDay(todo.expectedDate, pageDay))
-            .toList();
-        pastTodoList.sort(compExp);
-        pastTodoList = pastTodoList.reversed.toList();
-      } else {
-        todoList = state.todoList.where((todo) {
-          if (todo.expectedDate == null) return false;
-          return todo.expectedDate!.isBefore(pageDay) &&
-              todo.expectedDate!.dateDiff(pageDay) % todo.span == 0;
-        }).toList();
-        todoList.sort(compTime);
+
+    for (var todo in state.todoList) {
+      // 完了したゆるDO
+      for (var comp in todo.completeDate) {
+        if (comp.inWeek(pageWeekStart)) {
+          todoList.add(todo.copyWith(expectedDate: () => comp));
+        }
       }
-    } else {
-      todoList = state.todoList.where((todo) {
-        if (todo.expectedDate == null) return false;
-        return todo.expectedDate!.inWeek(pageDay);
-      }).toList();
-      todoList.sort(compExp);
+      final pageWeekEnd = pageWeekStart.add(const Duration(days: 6));
+      // 未完了のゆるDO
+      if (widget.index < 0 ||
+          todo.expectedDate == null ||
+          todo.expectedDate!.isAfterDay(pageWeekEnd)) continue;
+
+      for (var i = 0; i < 7; i++) {
+        DateTime dayInWeek = pageWeekStart.add(Duration(days: i));
+        if (!dayInWeek.isBeforeDay(todo.expectedDate!) &&
+            todo.expectedDate!.dateDiff(dayInWeek) % todo.span == 0) {
+          todoList.add(todo.copyWith(expectedDate: () => dayInWeek));
+        }
+      }
     }
+    todoList.sort(compExp);
 
     return SingleChildScrollView(
       child: Padding(
@@ -114,9 +99,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              state.displayTerm == TermType.day
-                  ? 'この日のゆるDOと所要時間'
-                  : 'この週のゆるDOと実施予定日',
+              'この週のゆるDOと実施予定日',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             ListView.builder(
@@ -128,23 +111,6 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                 return _taskItem(todo, context);
               },
             ),
-            if (pastTodoList.isNotEmpty &&
-                state.displayTerm == TermType.day) ...[
-              const SizedBox(height: 38),
-              Text(
-                '実施が遅れているゆるDOと遅延期間',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: pastTodoList.length,
-                itemBuilder: (context, index) {
-                  var todo = pastTodoList[index];
-                  return _taskItem(todo, context);
-                },
-              ),
-            ],
             const SizedBox(height: 100),
           ],
         ),
@@ -154,55 +120,6 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
 
   Widget _taskItem(Todo todo, BuildContext context) {
     final state = ref.watch(homePageStateProvider);
-
-    Widget timeWidget() {
-      if (isSameDay(state.today, pageDay) &&
-          isBeforeDay(todo.expectedDate, pageDay)) {
-        String num =
-            (todo.expectedDate!.isMonthBefore(state.today)) ? '1' : '~1';
-        String suf = (state.today.inWeek(todo.expectedDate!))
-            ? '週間'
-            : (todo.expectedDate!.isMonthBefore(state.today))
-                ? 'か月超'
-                : 'か月';
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              num,
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            Text(
-              suf,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: AppColor.emphasisColor),
-            ),
-          ],
-        );
-      }
-      if (state.displayTerm == TermType.day) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              (todo.time == null) ? '- ' : '${todo.time}',
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            Text('分', style: Theme.of(context).textTheme.bodyMedium),
-          ],
-        );
-      } else {
-        return Text(
-          DateFormat('M/d').format(todo.expectedDate!),
-          style: const TextStyle(
-            color: AppColor.fontColor2,
-            fontSize: 22,
-          ),
-        );
-      }
-    }
 
     return Container(
       decoration: BoxDecoration(
@@ -231,34 +148,36 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
             ),
             GestureDetector(
               onTap: () {
-                if (state.today.isBeforeDay(pageDay)) {
+                if (state.today.isBeforeDay(todo.expectedDate!)) {
                   context.showSnackBar(
                     const SnackBar(content: Text('未来のゆるDOは完了できません')),
                   );
                   return;
                 }
-                if (!isContainDay(todo.completeDate, pageDay)) {
+                if (todo.expectedDate == null ||
+                    isContainDay(todo.completeDate, todo.expectedDate!)) {
+                  ref.read(todoProvider.notifier).unComplete(
+                        todo: todo,
+                        completeDay: state.today,
+                      );
+                } else {
                   debugPrint('complete!');
                   showDialog(
                     context: context,
                     builder: (_) => NextSchedule(
                       args: NextScheduleArgs(
                         todo: todo,
-                        completeDay: pageDay,
+                        completeDay: state.today,
                       ),
                     ),
-                  );
-                } else {
-                  ref.read(todoProvider.notifier).unComplete(
-                    todo: todo,
-                    completeDay: pageDay,
                   );
                 }
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: SvgPicture.asset(
-                  (isContainDay(todo.completeDate, pageDay))
+                  (todo.expectedDate == null ||
+                          isContainDay(todo.completeDate, todo.expectedDate!))
                       ? AppAssets.check
                       : AppAssets.uncheck,
                   width: 24,
@@ -287,7 +206,13 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                 ),
               ),
               child: Center(
-                child: timeWidget(),
+                child: Text(
+                  DateFormat('M/d').format(todo.expectedDate!),
+                  style: const TextStyle(
+                    color: AppColor.fontColor2,
+                    fontSize: 22,
+                  ),
+                ),
               ),
             ),
           ],

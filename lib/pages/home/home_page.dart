@@ -10,7 +10,8 @@ import 'package:routine_app/design/app_assets.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/pages/home/widget/my_drawer.dart';
-import 'package:routine_app/pages/home/widget/page_widget.dart';
+import 'package:routine_app/pages/home/widget/page_widget_day.dart';
+import 'package:routine_app/pages/home/widget/page_widget_week.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/utils/contextEx.dart';
@@ -257,7 +258,11 @@ class _HomePageState extends ConsumerState<HomePage> {
               ref.read(provider.notifier).changeDay(index - 100);
             },
             itemBuilder: (context, index) {
-              return PageWidget(index: index - 100);
+              if (state.displayTerm == TermType.day) {
+                return PageWidgetDay(index: index - 100);
+              } else {
+                return PageWidgetWeek(index: index - 100);
+              }
             },
           ),
           IgnorePointer(

@@ -17,8 +17,14 @@ extension Date on DateTime {
     return d1.difference(d2).inDays;
   }
 
+  /// その日より前かどうか（その日は含まない）
   bool isBeforeDay(DateTime date) {
     return isBefore(date) && !isSameDay(date);
+  }
+
+  /// その日より後かどうか（その日は含まない）
+  bool isAfterDay(DateTime date) {
+    return isAfter(date) && !isSameDay(date);
   }
 
   /// 1か月より前かどうか
