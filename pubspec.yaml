@@ -51,6 +51,7 @@ dependencies:
   google_fonts: ^4.0.3
   firebase_core: ^2.8.0
   firebase_crashlytics: ^3.0.17
+  flutter_email_sender: ^5.2.0
 
 dev_dependencies:
   flutter_test:

@@ -163,7 +163,7 @@ class Todo {
       skipConsecutive: map['skipConsecutive'] as int,
       categoryId: map['categoryId'],
       completeDate: completeDate,
-      expectedDate: DateTime.tryParse(map['expectedDate']),
+      expectedDate: DateTime.tryParse(map['expectedDate'] ?? ''),
       createdAt: DateTime.parse(map['createdAt']),
       updatedAt: DateTime.parse(map['updatedAt']),
     );

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:routine_app/design/app_assets.dart';
 import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/router.dart';
+import 'package:routine_app/utils/contextEx.dart';
 
 import '../../design/app_color.dart';
 
@@ -172,8 +174,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
   }
 
   Future<void> _sendEmail(BuildContext context) async {
-    bool emailValid = RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    bool emailValid = RegExp(r"[\w\-._]+@[\w\-._]+\.[A-Za-z]+")
         .hasMatch(_emailController.text);
     if (_emailController.text.isNotEmpty && !emailValid) {
       setState(() {
@@ -181,7 +182,26 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
       });
       return;
     }
-    sentOverlay(context);
+    final Email email = Email(
+      body: '''
+このまま送信してください。
+
+${_contentController.text}
+
+返信先：${_emailController.text}      
+''',
+      subject: 'ゆるDOお問い合わせ',
+      recipients: ['noteappm@gmail.com'],
+      isHTML: false,
+    );
+
+    try {
+      await FlutterEmailSender.send(email);
+      if (!mounted) return;
+      sentOverlay(context);
+    } catch (e) {
+      context.showSnackBar(SnackBar(content: Text(e.toString())));
+    }
   }
 
   void sentOverlay(BuildContext context) {
