@@ -14,6 +14,7 @@ import 'package:routine_app/pages/home/widget/page_widget.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/utils/contextEx.dart';
+import 'package:routine_app/utils/date.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -39,7 +40,13 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(provider);
     NotificationService().setNotifications(state.todoList);
-    ref.watch(provider.notifier).updateToday();
+    if (!state.today.isSameDay(DateTime.now())) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRouter.home,
+        (_) => false,
+      );
+    }
 
     final DateTime weekEnd = state.pageDate.add(const Duration(days: 6));
     String month =
