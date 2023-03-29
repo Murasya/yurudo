@@ -1,14 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../model/todo.dart';
-import '../../viewModel/todo_provider.dart';
-
 part 'home_page_state.freezed.dart';
-
-enum FilterType {
-  all,
-}
 
 enum TermType {
   day('日', 1),
@@ -22,19 +15,14 @@ enum TermType {
 }
 
 final homePageStateProvider =
-    StateNotifierProvider.autoDispose<HomePageStateNotifier, HomePageState>(
-        (ref) {
-  return HomePageStateNotifier(
-    ref.watch(todoProvider),
-  );
+    StateNotifierProvider<HomePageStateNotifier, HomePageState>((ref) {
+  return HomePageStateNotifier();
 });
 
 class HomePageStateNotifier extends StateNotifier<HomePageState> {
-  HomePageStateNotifier(
-    List<Todo> todo,
-  ) : super(
+  HomePageStateNotifier()
+      : super(
           HomePageState(
-            todoList: todo,
             pageDate: DateTime.now(),
             today: DateTime.now(),
           ),
@@ -66,12 +54,6 @@ class HomePageStateNotifier extends StateNotifier<HomePageState> {
 @freezed
 class HomePageState with _$HomePageState {
   factory HomePageState({
-    /// タスクリスト
-    @Default([]) List<Todo> todoList,
-
-    /// 絞り込み
-    @Default(FilterType.all) FilterType filter,
-
     /// 表示期間
     @Default(TermType.day) TermType displayTerm,
 

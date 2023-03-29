@@ -65,7 +65,8 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
     List<Todo> pastTodoList = [];
     final state = ref.watch(homePageStateProvider);
     if (widget.index < 0) {
-      todoList = state.todoList
+      todoList = ref
+          .watch(todoProvider)
           .where((todo) =>
               isContainDay(todo.completeDate, pageDay) ||
               (todo.expectedDate != null &&
@@ -74,19 +75,21 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
           .toList();
       todoList.sort(compTime);
     } else if (widget.index == 0) {
-      todoList = state.todoList
+      todoList = ref
+          .watch(todoProvider)
           .where((todo) =>
               isSameDay(todo.expectedDate, pageDay) ||
               isContainDay(todo.completeDate, pageDay))
           .toList();
       todoList.sort(compTime);
-      pastTodoList = state.todoList
+      pastTodoList = ref
+          .watch(todoProvider)
           .where((todo) => isBeforeDay(todo.expectedDate, pageDay))
           .toList();
       pastTodoList.sort(compExp);
       pastTodoList = pastTodoList.reversed.toList();
     } else {
-      todoList = state.todoList.where((todo) {
+      todoList = ref.watch(todoProvider).where((todo) {
         if (todo.expectedDate == null) return false;
         return todo.expectedDate!.isBefore(pageDay) &&
             todo.expectedDate!.dateDiff(pageDay) % todo.span == 0;

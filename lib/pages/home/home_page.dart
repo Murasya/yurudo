@@ -16,6 +16,7 @@ import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
+import 'package:routine_app/viewModel/todo_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -40,7 +41,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(provider);
-    NotificationService().setNotifications(state.todoList);
+    final todoList = ref.watch(todoProvider);
+    NotificationService().setNotifications(todoList);
     if (!state.today.isSameDay(DateTime.now())) {
       Navigator.pushNamedAndRemoveUntil(
         context,

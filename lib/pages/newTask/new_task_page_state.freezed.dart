@@ -22,7 +22,6 @@ mixin _$NewTaskPageState {
   Category? get category => throw _privateConstructorUsedError;
   int? get time => throw _privateConstructorUsedError;
   DateTime? get firstDay => throw _privateConstructorUsedError;
-
   dynamic get hasError => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,7 +34,6 @@ abstract class $NewTaskPageStateCopyWith<$Res> {
   factory $NewTaskPageStateCopyWith(
           NewTaskPageState value, $Res Function(NewTaskPageState) then) =
       _$NewTaskPageStateCopyWithImpl<$Res, NewTaskPageState>;
-
   @useResult
   $Res call(
       {String name,
@@ -121,7 +119,6 @@ abstract class _$$_NewTaskPageStateCopyWith<$Res>
   factory _$$_NewTaskPageStateCopyWith(
           _$_NewTaskPageState value, $Res Function(_$_NewTaskPageState) then) =
       __$$_NewTaskPageStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -260,25 +257,18 @@ abstract class _NewTaskPageState implements NewTaskPageState {
 
   @override
   String get name;
-
   @override
   int? get span;
-
   @override
   bool get remind;
-
   @override
   Category? get category;
-
   @override
   int? get time;
-
   @override
   DateTime? get firstDay;
-
   @override
   dynamic get hasError;
-
   @override
   @JsonKey(ignore: true)
   _$$_NewTaskPageStateCopyWith<_$_NewTaskPageState> get copyWith =>

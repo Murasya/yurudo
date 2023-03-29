@@ -64,9 +64,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
   @override
   Widget build(BuildContext context) {
     List<Todo> todoList = [];
-    final state = ref.watch(homePageStateProvider);
-
-    for (var todo in state.todoList) {
+    for (var todo in ref.watch(todoProvider)) {
       // 完了したゆるDO
       for (var comp in todo.completeDate) {
         if (comp.inWeek(pageWeekStart)) {
