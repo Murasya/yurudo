@@ -45,11 +45,11 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
   late final DateTime pageDay;
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     final state = ref.watch(homePageStateProvider);
     pageDay =
         state.today.add(Duration(days: widget.index * state.displayTerm.term));
-    super.initState();
+    super.didChangeDependencies();
   }
 
   int compExp(Todo a, Todo b) {
