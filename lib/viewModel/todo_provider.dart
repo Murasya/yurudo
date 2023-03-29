@@ -106,4 +106,8 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   Future<void> getAll() async {
     state = await _database.getAll();
   }
+
+  Todo getTodoFromId(int? id) {
+    return state.firstWhere((todo) => todo.id == id);
+  }
 }

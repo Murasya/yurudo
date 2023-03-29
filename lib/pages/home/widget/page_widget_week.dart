@@ -130,7 +130,13 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
       margin: const EdgeInsets.only(top: 12),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, AppRouter.detail, arguments: todo);
+          late final Todo t;
+          if (isContainDay(todo.completeDate, todo.expectedDate!)) {
+            t = ref.read(todoProvider.notifier).getTodoFromId(todo.id);
+          } else {
+            t = todo;
+          }
+          Navigator.pushNamed(context, AppRouter.detail, arguments: t);
         },
         child: Row(
           children: [
