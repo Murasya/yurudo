@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/pages/home/widget/next_schedule.dart';
 import 'package:routine_app/pages/home/widget/next_schedule_state.dart';
+import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
@@ -231,6 +232,12 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
             ),
             GestureDetector(
               onTap: () {
+                if (state.today.isBeforeDay(pageDay)) {
+                  context.showSnackBar(
+                    const SnackBar(content: Text('未来のゆるDOは完了できません')),
+                  );
+                  return;
+                }
                 if (!isContainDay(todo.completeDate, pageDay)) {
                   debugPrint('complete!');
                   showDialog(
@@ -244,9 +251,9 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                   );
                 } else {
                   ref.read(todoProvider.notifier).unComplete(
-                        todo: todo,
-                        completeDay: pageDay,
-                      );
+                    todo: todo,
+                    completeDay: pageDay,
+                  );
                 }
               },
               child: Padding(
