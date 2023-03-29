@@ -175,51 +175,74 @@ class _ListPageState extends ConsumerState<ListPage> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-              if (state.filterType.isNotEmpty)
-                SizedBox(
-                  width: double.infinity,
-                  child: Wrap(
-                    spacing: 24,
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const SizedBox(height: 16),
+                  if (state.filterType.isNotEmpty)
+                    SizedBox(
+                      width: double.infinity,
+                      child: Wrap(
+                        spacing: 24,
+                        children: [
+                          for (final cat in state.filterType)
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width: 6,
+                                  height: 14,
+                                  decoration: BoxDecoration(
+                                    color: ref
+                                        .watch(categoryProvider.notifier)
+                                        .getColor(cat),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Text(
+                                  ref
+                                      .watch(categoryProvider.notifier)
+                                      .getName(cat),
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ),
+                  const SizedBox(height: 24),
+                  Column(
                     children: [
-                      for (final cat in state.filterType)
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 6,
-                              height: 14,
-                              decoration: BoxDecoration(
-                                color: ref
-                                    .watch(categoryProvider.notifier)
-                                    .getColor(cat),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              ref.watch(categoryProvider.notifier).getName(cat),
-                            ),
-                          ],
-                        ),
+                      for (final todo in todos) _todoItem(todo),
                     ],
                   ),
-                ),
-              const SizedBox(height: 24),
-              Column(
-                children: [
-                  for (final todo in todos) _todoItem(todo),
+                  const SizedBox(height: 80),
                 ],
               ),
-              const SizedBox(height: 80),
-            ],
+            ),
           ),
-        ),
+          IgnorePointer(
+            child: Container(
+              width: double.infinity,
+              height: 200,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white.withOpacity(0),
+                    Colors.white,
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

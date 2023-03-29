@@ -248,14 +248,35 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ),
       ),
-      body: PageView.builder(
-        controller: _pageController,
-        onPageChanged: (index) {
-          ref.read(provider.notifier).changeDay(index - 100);
-        },
-        itemBuilder: (context, index) {
-          return PageWidget(index: index - 100);
-        },
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          PageView.builder(
+            controller: _pageController,
+            onPageChanged: (index) {
+              ref.read(provider.notifier).changeDay(index - 100);
+            },
+            itemBuilder: (context, index) {
+              return PageWidget(index: index - 100);
+            },
+          ),
+          IgnorePointer(
+            child: Container(
+              width: double.infinity,
+              height: 200,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white.withOpacity(0),
+                    Colors.white,
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
