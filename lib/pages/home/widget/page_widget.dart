@@ -64,7 +64,7 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
   @override
   Widget build(BuildContext context) {
     late final List<Todo> todoList;
-    late final List<Todo> pastTodoList;
+    List<Todo> pastTodoList = [];
     final state = ref.watch(homePageStateProvider);
     if (state.displayTerm == TermType.day) {
       if (widget.index < 0) {
@@ -76,7 +76,6 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
                     state.today.dateDiff(pageDay) < todo.span))
             .toList();
         todoList.sort(compTime);
-        pastTodoList = [];
       } else if (widget.index == 0) {
         todoList = state.todoList
             .where((todo) =>
@@ -87,6 +86,8 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
         pastTodoList = state.todoList
             .where((todo) => isBeforeDay(todo.expectedDate, pageDay))
             .toList();
+        pastTodoList.sort(compExp);
+        pastTodoList = pastTodoList.reversed.toList();
       } else {
         todoList = state.todoList.where((todo) {
           if (todo.expectedDate == null) return false;
@@ -94,7 +95,6 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
               todo.expectedDate!.dateDiff(pageDay) % todo.span == 0;
         }).toList();
         todoList.sort(compTime);
-        pastTodoList = [];
       }
     } else {
       todoList = state.todoList.where((todo) {
@@ -102,7 +102,6 @@ class _PageWidgetState extends ConsumerState<PageWidget> {
         return todo.expectedDate!.inWeek(pageDay);
       }).toList();
       todoList.sort(compExp);
-      pastTodoList = [];
     }
 
     return SingleChildScrollView(
