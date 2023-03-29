@@ -33,3 +33,13 @@ extension Date on DateTime {
   int get lastDayOfMonth =>
       DateTime(year, month + 1, 1).add(const Duration(days: -1)).day;
 }
+
+extension DateNullable on DateTime? {
+  bool isSameDay(DateTime? date) {
+    if (this == null && date == null) return true;
+    if (this == null || date == null) return false;
+    return this!.year == date.year &&
+        this!.month == date.month &&
+        this!.day == date.day;
+  }
+}

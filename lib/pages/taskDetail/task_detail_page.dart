@@ -11,11 +11,22 @@ import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/utils/contextEx.dart';
+import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../model/todo.dart';
 import '../widget/categoryDialog/category_dialog.dart';
+
+final isChangedProvider = Provider.autoDispose.family<bool, Todo>((ref, todo) {
+  final state = ref.watch(taskDetailPageStateProvider(todo));
+  return state.title != todo.name ||
+      state.span != todo.span ||
+      state.category?.id != todo.categoryId ||
+      state.time != todo.time ||
+      !state.nextDay.isSameDay(todo.expectedDate) ||
+      state.remind != todo.remind;
+});
 
 class TaskDetailPage extends ConsumerStatefulWidget {
   final Todo todo;
@@ -250,23 +261,29 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
 
   Widget finishEditButton() {
     var state = ref.read(provider);
+    var isChanged = ref.watch(isChangedProvider(widget.todo));
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         style: AppStyle.button.copyWith(
-          backgroundColor:
-              const MaterialStatePropertyAll(AppColor.disableColor),
+          backgroundColor: (isChanged)
+              ? const MaterialStatePropertyAll(AppColor.primaryColor)
+              : const MaterialStatePropertyAll(AppColor.disableColor),
+          foregroundColor: const MaterialStatePropertyAll(Colors.white),
         ),
-        onPressed: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-          Navigator.pop(context);
-          ref.read(todoProvider.notifier).update(widget.todo, state);
-          context.showSnackBar(
-            const SnackBar(
-              content: Text('変更しました'),
-            ),
-          );
-        },
+        onPressed: (isChanged)
+            ? () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                Navigator.pop(context);
+                ref.read(todoProvider.notifier).update(widget.todo, state);
+                context.showSnackBar(
+                  const SnackBar(
+                    content: Text('変更しました'),
+                  ),
+                );
+              }
+            : null,
         child: const Text('変更を保存する'),
       ),
     );
