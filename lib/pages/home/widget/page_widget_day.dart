@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/pages/home/widget/next_schedule.dart';
 import 'package:routine_app/pages/home/widget/next_schedule_state.dart';
+import 'package:routine_app/pages/home/widget/time_widget.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
@@ -145,45 +146,6 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
   Widget _taskItem(Todo todo, BuildContext context) {
     final state = ref.watch(homePageStateProvider);
 
-    Widget timeWidget() {
-      if (isSameDay(state.today, pageDay) &&
-          isBeforeDay(todo.expectedDate, pageDay)) {
-        String num =
-            (todo.expectedDate!.isMonthBefore(state.today)) ? '1' : '~1';
-        String suf = (state.today.inWeek(todo.expectedDate!))
-            ? '週間'
-            : (todo.expectedDate!.isMonthBefore(state.today))
-                ? 'か月超'
-                : 'か月';
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              num,
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            Text(
-              suf,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: AppColor.emphasisColor),
-            ),
-          ],
-        );
-      }
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            (todo.time == null) ? '- ' : '${todo.time}',
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
-          Text('分', style: Theme.of(context).textTheme.bodyMedium),
-        ],
-      );
-    }
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -267,7 +229,12 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
                 ),
               ),
               child: Center(
-                child: timeWidget(),
+                child: TimeWidget(
+                  todo: todo,
+                  today: state.today,
+                  pageDate: pageDay,
+                  term: TermType.day,
+                ),
               ),
             ),
           ],

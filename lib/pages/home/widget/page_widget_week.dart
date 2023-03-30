@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/pages/home/widget/next_schedule.dart';
 import 'package:routine_app/pages/home/widget/next_schedule_state.dart';
+import 'package:routine_app/pages/home/widget/time_widget.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
@@ -87,6 +87,14 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
     }
     todoList.sort(compExp);
 
+    List<Todo> pastTodoList = [];
+    pastTodoList = ref
+        .watch(todoProvider)
+        .where((todo) => isBeforeDay(todo.expectedDate, pageWeekStart))
+        .toList();
+    pastTodoList.sort(compExp);
+    pastTodoList = pastTodoList.reversed.toList();
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -109,6 +117,22 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
                 return _taskItem(todo, context);
               },
             ),
+            if (pastTodoList.isNotEmpty && widget.index == 0) ...[
+              const SizedBox(height: 38),
+              Text(
+                '実施が遅れているゆるDOと遅延期間',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: pastTodoList.length,
+                itemBuilder: (context, index) {
+                  var todo = pastTodoList[index];
+                  return _taskItem(todo, context);
+                },
+              ),
+            ],
             const SizedBox(height: 100),
           ],
         ),
@@ -199,26 +223,22 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
               ),
             ),
             Container(
-              width: 70,
-              height: double.infinity,
-              margin: const EdgeInsets.only(left: 12),
-              decoration: const BoxDecoration(
-                color: AppColor.thirdColor,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  DateFormat('M/d').format(todo.expectedDate!),
-                  style: const TextStyle(
-                    color: AppColor.fontColor2,
-                    fontSize: 22,
+                width: 70,
+                height: double.infinity,
+                margin: const EdgeInsets.only(left: 12),
+                decoration: const BoxDecoration(
+                  color: AppColor.thirdColor,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
                   ),
                 ),
-              ),
-            ),
+                child: TimeWidget(
+                  todo: todo,
+                  today: state.today,
+                  pageDate: pageWeekStart,
+                  term: TermType.week,
+                )),
           ],
         ),
       ),
