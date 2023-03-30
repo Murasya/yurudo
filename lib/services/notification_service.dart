@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
@@ -42,17 +43,19 @@ class NotificationService {
 
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Asia/Tokyo'));
+
+    initializeDateFormatting('ja');
   }
 
   Future<void> requestPermissions() async {
     await _flnp
         .resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>()
+            IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   Future<void> registerMessage({
@@ -66,7 +69,7 @@ class NotificationService {
       day.day,
       notificationTime,
     );
-    DateFormat dateFormat = DateFormat('M/d(E)');
+    DateFormat dateFormat = DateFormat('M/d(E)', 'ja');
 
     _flnp.zonedSchedule(
       0,
@@ -111,7 +114,9 @@ class NotificationService {
     final tomorrow = today.add(const Duration(days: 1));
     final tomorrowTodo = todos
         .where((todo) =>
-            todo.expectedDate != null && todo.expectedDate!.isSameDay(tomorrow))
+            todo.expectedDate != null &&
+            todo.expectedDate!.isSameDay(tomorrow) &&
+            todo.remind)
         .toList();
     String message = '';
     for (var i = 0; i < min(3, tomorrowTodo.length); i++) {
@@ -119,10 +124,6 @@ class NotificationService {
           '${tomorrowTodo[i].name} [${tomorrowTodo[i].time.toTimeString()}]\n';
     }
     registerMessage(day: tomorrow, message: message);
-  }
-
-  bool isSameDay(DateTime a, DateTime b) {
-    return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
   void onDidReceiveLocalNotification(
