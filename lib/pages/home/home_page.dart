@@ -257,7 +257,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           PageView.builder(
             controller: _pageController,
             onPageChanged: (index) {
-              ref.read(provider.notifier).changeDay(index - 100);
+              ref.read(provider.notifier).setIndex(index);
             },
             itemBuilder: (context, index) {
               if (state.displayTerm == TermType.day) {
@@ -295,6 +295,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     return GestureDetector(
       onTap: () {
         ref.read(provider.notifier).changeTerm(term);
+        _pageController.jumpToPage(ref.read(provider).usingPageIndex);
       },
       child: Container(
         width: 32,

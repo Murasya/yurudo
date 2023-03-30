@@ -1,7 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:routine_app/utils/date.dart';
 
 part 'home_page_state.freezed.dart';
+
+const initialPage = 100;
 
 enum TermType {
   day('日', 1),
@@ -23,23 +26,14 @@ class HomePageStateNotifier extends StateNotifier<HomePageState> {
   HomePageStateNotifier()
       : super(
           HomePageState(
-            pageDate: DateTime.now(),
+            pageIndexDay: initialPage,
+            pageIndexWeek: initialPage,
             today: DateTime.now(),
           ),
         );
 
-  void changeDay(int index) {
-    state = state.copyWith(
-      pageDate: state.today.add(Duration(days: index * state.displayTerm.term)),
-    );
-  }
-
-  bool isSameDay(DateTime a, DateTime b) {
-    return a.year == b.year && a.month == b.month && a.day == b.day;
-  }
-
   void updateToday() {
-    if (!isSameDay(state.today, DateTime.now())) {
+    if (!state.today.isSameDay(DateTime.now())) {
       state = state.copyWith(today: DateTime.now());
     }
   }
@@ -49,18 +43,38 @@ class HomePageStateNotifier extends StateNotifier<HomePageState> {
       displayTerm: type,
     );
   }
+
+  void setIndex(index) {
+    switch (state.displayTerm) {
+      case TermType.day:
+        state = state.copyWith(pageIndexDay: index);
+        break;
+      case TermType.week:
+        state = state.copyWith(pageIndexWeek: index);
+        break;
+    }
+  }
 }
 
 @freezed
 class HomePageState with _$HomePageState {
-  factory HomePageState({
+  const HomePageState._();
+
+  const factory HomePageState({
     /// 表示期間
     @Default(TermType.day) TermType displayTerm,
 
     /// 今日
     required DateTime today,
 
-    /// 表示している日付
-    required DateTime pageDate,
+    /// 表示しているページ番号
+    required int pageIndexDay,
+    required int pageIndexWeek,
   }) = _HomePageState;
+
+  int get usingPageIndex =>
+      (displayTerm == TermType.day) ? pageIndexDay : pageIndexWeek;
+
+  DateTime get pageDate =>
+      today.add(Duration(days: (usingPageIndex - 100) * displayTerm.term));
 }

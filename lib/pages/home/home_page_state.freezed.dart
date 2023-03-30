@@ -22,8 +22,10 @@ mixin _$HomePageState {
   /// 今日
   DateTime get today => throw _privateConstructorUsedError;
 
-  /// 表示している日付
-  DateTime get pageDate => throw _privateConstructorUsedError;
+  /// 表示しているページ番号
+  int get pageIndexDay => throw _privateConstructorUsedError;
+
+  int get pageIndexWeek => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomePageStateCopyWith<HomePageState> get copyWith =>
@@ -35,8 +37,13 @@ abstract class $HomePageStateCopyWith<$Res> {
   factory $HomePageStateCopyWith(
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res, HomePageState>;
+
   @useResult
-  $Res call({TermType displayTerm, DateTime today, DateTime pageDate});
+  $Res call(
+      {TermType displayTerm,
+      DateTime today,
+      int pageIndexDay,
+      int pageIndexWeek});
 }
 
 /// @nodoc
@@ -54,7 +61,8 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
   $Res call({
     Object? displayTerm = null,
     Object? today = null,
-    Object? pageDate = null,
+    Object? pageIndexDay = null,
+    Object? pageIndexWeek = null,
   }) {
     return _then(_value.copyWith(
       displayTerm: null == displayTerm
@@ -65,10 +73,14 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
           ? _value.today
           : today // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      pageDate: null == pageDate
-          ? _value.pageDate
-          : pageDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      pageIndexDay: null == pageIndexDay
+          ? _value.pageIndexDay
+          : pageIndexDay // ignore: cast_nullable_to_non_nullable
+              as int,
+      pageIndexWeek: null == pageIndexWeek
+          ? _value.pageIndexWeek
+          : pageIndexWeek // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -82,7 +94,11 @@ abstract class _$$_HomePageStateCopyWith<$Res>
 
   @override
   @useResult
-  $Res call({TermType displayTerm, DateTime today, DateTime pageDate});
+  $Res call(
+      {TermType displayTerm,
+      DateTime today,
+      int pageIndexDay,
+      int pageIndexWeek});
 }
 
 /// @nodoc
@@ -98,7 +114,8 @@ class __$$_HomePageStateCopyWithImpl<$Res>
   $Res call({
     Object? displayTerm = null,
     Object? today = null,
-    Object? pageDate = null,
+    Object? pageIndexDay = null,
+    Object? pageIndexWeek = null,
   }) {
     return _then(_$_HomePageState(
       displayTerm: null == displayTerm
@@ -109,21 +126,27 @@ class __$$_HomePageStateCopyWithImpl<$Res>
           ? _value.today
           : today // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      pageDate: null == pageDate
-          ? _value.pageDate
-          : pageDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      pageIndexDay: null == pageIndexDay
+          ? _value.pageIndexDay
+          : pageIndexDay // ignore: cast_nullable_to_non_nullable
+              as int,
+      pageIndexWeek: null == pageIndexWeek
+          ? _value.pageIndexWeek
+          : pageIndexWeek // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_HomePageState implements _HomePageState {
-  _$_HomePageState(
+class _$_HomePageState extends _HomePageState {
+  const _$_HomePageState(
       {this.displayTerm = TermType.day,
       required this.today,
-      required this.pageDate});
+      required this.pageIndexDay,
+      required this.pageIndexWeek})
+      : super._();
 
   /// 表示期間
   @override
@@ -134,13 +157,15 @@ class _$_HomePageState implements _HomePageState {
   @override
   final DateTime today;
 
-  /// 表示している日付
+  /// 表示しているページ番号
   @override
-  final DateTime pageDate;
+  final int pageIndexDay;
+  @override
+  final int pageIndexWeek;
 
   @override
   String toString() {
-    return 'HomePageState(displayTerm: $displayTerm, today: $today, pageDate: $pageDate)';
+    return 'HomePageState(displayTerm: $displayTerm, today: $today, pageIndexDay: $pageIndexDay, pageIndexWeek: $pageIndexWeek)';
   }
 
   @override
@@ -151,12 +176,15 @@ class _$_HomePageState implements _HomePageState {
             (identical(other.displayTerm, displayTerm) ||
                 other.displayTerm == displayTerm) &&
             (identical(other.today, today) || other.today == today) &&
-            (identical(other.pageDate, pageDate) ||
-                other.pageDate == pageDate));
+            (identical(other.pageIndexDay, pageIndexDay) ||
+                other.pageIndexDay == pageIndexDay) &&
+            (identical(other.pageIndexWeek, pageIndexWeek) ||
+                other.pageIndexWeek == pageIndexWeek));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, displayTerm, today, pageDate);
+  int get hashCode =>
+      Object.hash(runtimeType, displayTerm, today, pageIndexDay, pageIndexWeek);
 
   @JsonKey(ignore: true)
   @override
@@ -165,24 +193,33 @@ class _$_HomePageState implements _HomePageState {
       __$$_HomePageStateCopyWithImpl<_$_HomePageState>(this, _$identity);
 }
 
-abstract class _HomePageState implements HomePageState {
-  factory _HomePageState(
+abstract class _HomePageState extends HomePageState {
+  const factory _HomePageState(
       {final TermType displayTerm,
       required final DateTime today,
-      required final DateTime pageDate}) = _$_HomePageState;
+      required final int pageIndexDay,
+      required final int pageIndexWeek}) = _$_HomePageState;
+
+  const _HomePageState._() : super._();
 
   @override
 
   /// 表示期間
   TermType get displayTerm;
+
   @override
 
   /// 今日
   DateTime get today;
+
   @override
 
-  /// 表示している日付
-  DateTime get pageDate;
+  /// 表示しているページ番号
+  int get pageIndexDay;
+
+  @override
+  int get pageIndexWeek;
+
   @override
   @JsonKey(ignore: true)
   _$$_HomePageStateCopyWith<_$_HomePageState> get copyWith =>
