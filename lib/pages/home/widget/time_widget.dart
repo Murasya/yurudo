@@ -24,12 +24,22 @@ class TimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (today.isSameDay(pageDate) && todo.expectedDate!.isBeforeDay(pageDate)) {
-      String num = (todo.expectedDate!.isMonthBefore(today)) ? '1' : '~1';
-      String suf = (today.inWeek(todo.expectedDate!))
-          ? '週間'
-          : (todo.expectedDate!.isMonthBefore(today))
-              ? 'か月超'
-              : 'か月';
+      String num;
+      String suf;
+      if (today.inWeek(todo.expectedDate!)) {
+        num = '~1';
+        suf = '週間';
+      } else if (todo.expectedDate!.isMonthBefore(today)) {
+        num = '1';
+        suf = 'か月超';
+      } else if (todo.expectedDate!
+          .isBeforeDay(today.add(const Duration(days: -13)))) {
+        num = '~1';
+        suf = 'か月';
+      } else {
+        num = '~2';
+        suf = '週間';
+      }
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
