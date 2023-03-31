@@ -208,16 +208,25 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                             readonly: true,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              DateDialog(
-                                onConfirm: (picker, value) {
-                                  final day =
-                                      (picker.adapter as DateTimePickerAdapter)
-                                          .value!;
-                                  ref.read(provider.notifier).setNextDay(day);
-                                  _nextDayController.text =
-                                      dateFormat.format(day);
-                                },
-                              ).showDialog(context);
+                              final orgTodo = ref
+                                  .read(todoProvider.notifier)
+                                  .getTodoFromId(widget.todo.id);
+                              if (state.nextDay
+                                  .isSameDay(orgTodo.expectedDate)) {
+                                DateDialog(
+                                  onConfirm: (picker, value) {
+                                    final day = (picker.adapter
+                                            as DateTimePickerAdapter)
+                                        .value!;
+                                    ref.read(provider.notifier).setNextDay(day);
+                                    _nextDayController.text =
+                                        dateFormat.format(day);
+                                  },
+                                ).showDialog(context);
+                              } else {
+                                context.showSnackBar(const SnackBar(
+                                    content: Text('この実施予定日は変更できません')));
+                              }
                             },
                           ),
                         ],

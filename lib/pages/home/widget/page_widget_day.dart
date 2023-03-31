@@ -90,11 +90,14 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
       pastTodoList.sort(compExp);
       pastTodoList = pastTodoList.reversed.toList();
     } else {
-      todoList = ref.watch(todoProvider).where((todo) {
-        if (todo.expectedDate == null) return false;
-        return todo.expectedDate!.isBefore(pageDay) &&
-            todo.expectedDate!.dateDiff(pageDay) % todo.span == 0;
-      }).toList();
+      todoList = [];
+      for (var todo in ref.watch(todoProvider)) {
+        if (todo.expectedDate == null) continue;
+        if (todo.expectedDate!.isBefore(pageDay) &&
+            todo.expectedDate!.dateDiff(pageDay) % todo.span == 0) {
+          todoList.add(todo.copyWith(expectedDate: () => pageDay));
+        }
+      }
       todoList.sort(compTime);
     }
 
