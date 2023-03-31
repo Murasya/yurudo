@@ -56,6 +56,10 @@ class NotificationService {
           badge: true,
           sound: true,
         );
+    await _flnp
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestPermission();
   }
 
   Future<void> registerMessage({
