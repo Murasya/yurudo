@@ -64,15 +64,10 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
   Widget build(BuildContext context) {
     late final List<Todo> todoList;
     List<Todo> pastTodoList = [];
-    final state = ref.watch(homePageStateProvider);
     if (widget.index < 0) {
       todoList = ref
           .watch(todoProvider)
-          .where((todo) =>
-              isContainDay(todo.completeDate, pageDay) ||
-              (todo.expectedDate != null &&
-                  todo.expectedDate!.dateDiff(pageDay) % todo.span == 0 &&
-                  state.today.dateDiff(pageDay) < todo.span))
+          .where((todo) => isContainDay(todo.completeDate, pageDay))
           .toList();
       todoList.sort(compTime);
     } else if (widget.index == 0) {
@@ -180,6 +175,11 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
                   context.showSnackBar(
                     const SnackBar(content: Text('未来のゆるDOは完了できません')),
                   );
+                  return;
+                }
+                if (widget.index < 0) {
+                  context.showSnackBar(
+                      const SnackBar(content: Text('過去のタスクを実施しなかったことにはできません')));
                   return;
                 }
                 if (!isContainDay(todo.completeDate, pageDay)) {
