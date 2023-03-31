@@ -27,7 +27,7 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
-  AppShared();
+  await AppShared.init();
   FlutterAppBadger.removeBadge();
 
   runApp(

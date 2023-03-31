@@ -14,6 +14,7 @@ import '../../../design/app_assets.dart';
 import '../../../design/app_color.dart';
 import '../../../model/todo.dart';
 import '../../../router.dart';
+import '../../../services/app_shared.dart';
 import '../../../viewModel/category_provider.dart';
 
 bool isSameDay(DateTime? a, DateTime? b) {
@@ -63,6 +64,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
   @override
   Widget build(BuildContext context) {
     late final List<Todo> todoList;
+    final List<int> pastTodoIds = AppShared.shared.getPastTodoIds(ref);
     List<Todo> pastTodoList = [];
     if (widget.index < 0) {
       todoList = ref
@@ -74,13 +76,14 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
       todoList = ref
           .watch(todoProvider)
           .where((todo) =>
-              isSameDay(todo.expectedDate, pageDay) ||
-              isContainDay(todo.completeDate, pageDay))
+              (isSameDay(todo.expectedDate, pageDay) ||
+                  isContainDay(todo.completeDate, pageDay)) &&
+              !pastTodoIds.contains(todo.id))
           .toList();
       todoList.sort(compTime);
       pastTodoList = ref
           .watch(todoProvider)
-          .where((todo) => isBeforeDay(todo.expectedDate, pageDay))
+          .where((todo) => pastTodoIds.contains(todo.id))
           .toList();
       pastTodoList.sort(compExp);
       pastTodoList = pastTodoList.reversed.toList();
