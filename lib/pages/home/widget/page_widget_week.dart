@@ -54,7 +54,9 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
   }
 
   int compExp(Todo a, Todo b) {
-    return a.expectedDate!.compareTo(b.expectedDate!);
+    int result = a.expectedDate!.compareTo(b.expectedDate!);
+    if (result != 0) return result;
+    return a.id.compareToEx(b.id);
   }
 
   int compTime(Todo a, Todo b) {
