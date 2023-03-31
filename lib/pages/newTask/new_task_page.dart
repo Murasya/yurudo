@@ -89,6 +89,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
               ref.read(provider.notifier).setHasError(true);
               return;
             }
+            if (state.remind) NotificationService().requestPermissions();
             await ref.read(todoProvider.notifier).create(
                   name: state.name,
                   span: state.span!,

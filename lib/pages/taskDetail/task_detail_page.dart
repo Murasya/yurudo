@@ -16,6 +16,7 @@ import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
 import '../../model/todo.dart';
+import '../../services/notification_service.dart';
 import '../widget/categoryDialog/category_dialog.dart';
 
 final isChangedProvider = Provider.autoDispose.family<bool, Todo>((ref, todo) {
@@ -284,6 +285,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
         onPressed: (isChanged)
             ? () {
                 FocusManager.instance.primaryFocus?.unfocus();
+                if (state.remind) NotificationService().requestPermissions();
                 Navigator.pop(context);
                 ref.read(todoProvider.notifier).update(widget.todo, state);
                 context.showSnackBar(
