@@ -91,7 +91,10 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
       todoList = [];
       for (var todo in ref.watch(todoProvider)) {
         if (todo.expectedDate == null) continue;
-        if (todo.expectedDate!.isBefore(pageDay) &&
+        if (todo.expectedDate!.isSameDay(pageDay)) {
+          todoList.add(todo);
+        }
+        if (todo.expectedDate!.isBeforeDay(pageDay) &&
             todo.expectedDate!.dateDiff(pageDay) % todo.span == 0) {
           todoList.add(todo.copyWith(expectedDate: () => pageDay));
         }
