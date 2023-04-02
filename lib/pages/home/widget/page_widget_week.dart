@@ -89,13 +89,13 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
     }
     todoList.sort(compExp);
 
-    List<Todo> pastTodoList = [];
-    pastTodoList = ref
-        .watch(todoProvider)
-        .where((todo) => isBeforeDay(todo.expectedDate, pageWeekStart))
-        .toList();
-    pastTodoList.sort(compExp);
-    pastTodoList = pastTodoList.reversed.toList();
+    // List<Todo> pastTodoList = [];
+    // pastTodoList = ref
+    //     .watch(todoProvider)
+    //     .where((todo) => isBeforeDay(todo.expectedDate, pageWeekStart))
+    //     .toList();
+    // pastTodoList.sort(compExp);
+    // pastTodoList = pastTodoList.reversed.toList();
 
     return SingleChildScrollView(
       child: Padding(
@@ -119,22 +119,6 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
                 return _taskItem(todo, context);
               },
             ),
-            if (pastTodoList.isNotEmpty && widget.index == 0) ...[
-              const SizedBox(height: 38),
-              Text(
-                '実施が遅れているゆるDOと遅延期間',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: pastTodoList.length,
-                itemBuilder: (context, index) {
-                  var todo = pastTodoList[index];
-                  return _taskItem(todo, context);
-                },
-              ),
-            ],
             const SizedBox(height: 100),
           ],
         ),
