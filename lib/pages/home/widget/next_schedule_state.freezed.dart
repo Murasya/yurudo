@@ -154,7 +154,6 @@ abstract class _NextScheduleArgs implements NextScheduleArgs {
 mixin _$NextScheduleState {
   DateTime get displayMonth => throw _privateConstructorUsedError;
   DateTime get selectDay => throw _privateConstructorUsedError;
-
   bool get hasError => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -167,7 +166,6 @@ abstract class $NextScheduleStateCopyWith<$Res> {
   factory $NextScheduleStateCopyWith(
           NextScheduleState value, $Res Function(NextScheduleState) then) =
       _$NextScheduleStateCopyWithImpl<$Res, NextScheduleState>;
-
   @useResult
   $Res call({DateTime displayMonth, DateTime selectDay, bool hasError});
 }
@@ -212,7 +210,6 @@ abstract class _$$_NextScheduleStateCopyWith<$Res>
   factory _$$_NextScheduleStateCopyWith(_$_NextScheduleState value,
           $Res Function(_$_NextScheduleState) then) =
       __$$_NextScheduleStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({DateTime displayMonth, DateTime selectDay, bool hasError});
@@ -304,13 +301,10 @@ abstract class _NextScheduleState implements NextScheduleState {
 
   @override
   DateTime get displayMonth;
-
   @override
   DateTime get selectDay;
-
   @override
   bool get hasError;
-
   @override
   @JsonKey(ignore: true)
   _$$_NextScheduleStateCopyWith<_$_NextScheduleState> get copyWith =>

@@ -43,8 +43,8 @@ class NewTaskPageStateNotifier extends StateNotifier<NewTaskPageState> {
     state = state.copyWith(remind: remind);
   }
 
-  void setHasError(bool error) {
-    state = state.copyWith(hasError: error);
+  void setHasError(bool error, String message) {
+    state = state.copyWith(hasError: error, errorMessage: message);
   }
 }
 
@@ -58,5 +58,6 @@ class NewTaskPageState with _$NewTaskPageState {
     @Default(null) int? time,
     required DateTime? firstDay,
     @Default(false) hasError,
+    @Default('') errorMessage,
   }) = _NewTaskPageState;
 }

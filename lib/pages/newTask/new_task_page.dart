@@ -11,6 +11,7 @@ import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/utils/contextEx.dart';
+import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
@@ -86,7 +87,13 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
             if (state.name.isEmpty ||
                 state.span == null ||
                 state.firstDay == null) {
-              ref.read(provider.notifier).setHasError(true);
+              ref.read(provider.notifier).setHasError(true, '必須項目が入力されていません');
+              return;
+            }
+            if (state.firstDay!.isBeforeDay(DateTime.now())) {
+              ref
+                  .read(provider.notifier)
+                  .setHasError(true, '実施予定日は今日以降しか選択できません');
               return;
             }
             if (state.remind) NotificationService().requestPermissions();
@@ -121,9 +128,9 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(bottom: 20),
-                    child: const Text(
-                      '必須項目が入力されていません',
-                      style: TextStyle(
+                    child: Text(
+                      state.errorMessage,
+                      style: const TextStyle(
                         color: AppColor.emphasisColor,
                       ),
                     ),

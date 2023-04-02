@@ -24,6 +24,8 @@ mixin _$NewTaskPageState {
   DateTime? get firstDay => throw _privateConstructorUsedError;
   dynamic get hasError => throw _privateConstructorUsedError;
 
+  dynamic get errorMessage => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $NewTaskPageStateCopyWith<NewTaskPageState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -34,6 +36,7 @@ abstract class $NewTaskPageStateCopyWith<$Res> {
   factory $NewTaskPageStateCopyWith(
           NewTaskPageState value, $Res Function(NewTaskPageState) then) =
       _$NewTaskPageStateCopyWithImpl<$Res, NewTaskPageState>;
+
   @useResult
   $Res call(
       {String name,
@@ -42,7 +45,8 @@ abstract class $NewTaskPageStateCopyWith<$Res> {
       Category? category,
       int? time,
       DateTime? firstDay,
-      dynamic hasError});
+      dynamic hasError,
+      dynamic errorMessage});
 
   $CategoryCopyWith<$Res>? get category;
 }
@@ -67,6 +71,7 @@ class _$NewTaskPageStateCopyWithImpl<$Res, $Val extends NewTaskPageState>
     Object? time = freezed,
     Object? firstDay = freezed,
     Object? hasError = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -97,6 +102,10 @@ class _$NewTaskPageStateCopyWithImpl<$Res, $Val extends NewTaskPageState>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 
@@ -119,6 +128,7 @@ abstract class _$$_NewTaskPageStateCopyWith<$Res>
   factory _$$_NewTaskPageStateCopyWith(
           _$_NewTaskPageState value, $Res Function(_$_NewTaskPageState) then) =
       __$$_NewTaskPageStateCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -128,7 +138,8 @@ abstract class _$$_NewTaskPageStateCopyWith<$Res>
       Category? category,
       int? time,
       DateTime? firstDay,
-      dynamic hasError});
+      dynamic hasError,
+      dynamic errorMessage});
 
   @override
   $CategoryCopyWith<$Res>? get category;
@@ -152,6 +163,7 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
     Object? time = freezed,
     Object? firstDay = freezed,
     Object? hasError = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_$_NewTaskPageState(
       name: null == name
@@ -179,6 +191,8 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
           : firstDay // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       hasError: freezed == hasError ? _value.hasError! : hasError,
+      errorMessage:
+          freezed == errorMessage ? _value.errorMessage! : errorMessage,
     ));
   }
 }
@@ -193,7 +207,8 @@ class _$_NewTaskPageState implements _NewTaskPageState {
       this.category = null,
       this.time = null,
       required this.firstDay,
-      this.hasError = false});
+      this.hasError = false,
+      this.errorMessage = ''});
 
   @override
   final String name;
@@ -212,10 +227,13 @@ class _$_NewTaskPageState implements _NewTaskPageState {
   @override
   @JsonKey()
   final dynamic hasError;
+  @override
+  @JsonKey()
+  final dynamic errorMessage;
 
   @override
   String toString() {
-    return 'NewTaskPageState(name: $name, span: $span, remind: $remind, category: $category, time: $time, firstDay: $firstDay, hasError: $hasError)';
+    return 'NewTaskPageState(name: $name, span: $span, remind: $remind, category: $category, time: $time, firstDay: $firstDay, hasError: $hasError, errorMessage: $errorMessage)';
   }
 
   @override
@@ -231,12 +249,22 @@ class _$_NewTaskPageState implements _NewTaskPageState {
             (identical(other.time, time) || other.time == time) &&
             (identical(other.firstDay, firstDay) ||
                 other.firstDay == firstDay) &&
-            const DeepCollectionEquality().equals(other.hasError, hasError));
+            const DeepCollectionEquality().equals(other.hasError, hasError) &&
+            const DeepCollectionEquality()
+                .equals(other.errorMessage, errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, span, remind, category,
-      time, firstDay, const DeepCollectionEquality().hash(hasError));
+  int get hashCode => Object.hash(
+      runtimeType,
+      name,
+      span,
+      remind,
+      category,
+      time,
+      firstDay,
+      const DeepCollectionEquality().hash(hasError),
+      const DeepCollectionEquality().hash(errorMessage));
 
   @JsonKey(ignore: true)
   @override
@@ -253,22 +281,32 @@ abstract class _NewTaskPageState implements NewTaskPageState {
       final Category? category,
       final int? time,
       required final DateTime? firstDay,
-      final dynamic hasError}) = _$_NewTaskPageState;
+      final dynamic hasError,
+      final dynamic errorMessage}) = _$_NewTaskPageState;
 
   @override
   String get name;
   @override
   int? get span;
+
   @override
   bool get remind;
+
   @override
   Category? get category;
+
   @override
   int? get time;
+
   @override
   DateTime? get firstDay;
+
   @override
   dynamic get hasError;
+
+  @override
+  dynamic get errorMessage;
+
   @override
   @JsonKey(ignore: true)
   _$$_NewTaskPageStateCopyWith<_$_NewTaskPageState> get copyWith =>
