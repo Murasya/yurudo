@@ -41,144 +41,148 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: IntrinsicWidth(
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Transform.translate(
-              offset: const Offset(0, -70),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  const Positioned(
-                    bottom: 10,
-                    child: CustomPaint(
-                      painter: HalfCircle(width: _width),
-                    ),
-                  ),
-                  SvgPicture.asset(
-                    AppAssets.uncheck,
-                    width: 90,
-                  ),
-                  const Text(
-                    'Congratulations!',
-                    style: TextStyle(
-                      color: AppColor.primaryColor,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        AlertDialog(
+          content: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Transform.translate(
+                offset: const Offset(0, -70),
+                child: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    Transform.translate(
-                      offset: const Offset(10, 0),
-                      child: IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () async {
-                          bool finish = await showDialog(
-                            context: context,
-                            builder: (_) => const NextScheduleClose(),
-                          );
-                          if (finish) {
-                            ref.read(todoProvider.notifier).complete(
-                                  todo: widget.args.todo,
-                                  completeDay: widget.args.completeDay,
-                                  nextDay: null,
-                                );
-                            if (!mounted) return;
-                            Navigator.pop(context);
-                          }
-                        },
+                    const Positioned(
+                      bottom: 10,
+                      child: CustomPaint(
+                        painter: HalfCircle(width: _width),
+                      ),
+                    ),
+                    SvgPicture.asset(
+                      AppAssets.uncheck,
+                      width: 90,
+                    ),
+                    const Text(
+                      'Congratulations!',
+                      style: TextStyle(
+                        color: AppColor.primaryColor,
+                        fontSize: 16,
                       ),
                     ),
                   ],
                 ),
-                Text(
-                  'ゆるDOを1つ達成しました！',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: AppColor.emphasisColor),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  '次の実施予定日を設定してください',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 6),
-                GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => NextScheduleComplete(
-                        args: widget.args,
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Transform.translate(
+                        offset: const Offset(10, 0),
+                        child: IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () async {
+                            bool finish = await showDialog(
+                              context: context,
+                              builder: (_) => const NextScheduleClose(),
+                            );
+                            if (finish) {
+                              ref.read(todoProvider.notifier).complete(
+                                    todo: widget.args.todo,
+                                    completeDay: widget.args.completeDay,
+                                    nextDay: null,
+                                  );
+                              if (!mounted) return;
+                              Navigator.pop(context);
+                            }
+                          },
+                        ),
                       ),
-                    );
-                  },
-                  child: Text(
-                    '達成日を今日以外に変更する',
-                    style: context.textTheme.bodyMedium!.copyWith(
-                      color: AppColor.fontColor3,
-                      decoration: TextDecoration.underline,
-                    ),
+                    ],
                   ),
-                ),
-                calendar(),
-                if (ref.watch(provider).hasError)
-                  const Text(
-                    '達成日以降の日付しか選べません',
-                    style: TextStyle(
-                      color: AppColor.emphasisColor,
-                    ),
+                  Text(
+                    'ゆるDOを1つ達成しました！',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: AppColor.emphasisColor),
                   ),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(top: 20),
-                  child: ElevatedButton(
-                    style: AppStyle.button,
-                    onPressed: () {
-                      if (!ref
-                          .read(provider)
-                          .selectDay
-                          .isAfterDay(widget.args.completeDay)) {
-                        ref.read(provider.notifier).setHasError(true);
-                        return;
-                      }
-                      ref.read(todoProvider.notifier).complete(
-                            todo: widget.args.todo,
-                            completeDay: widget.args.completeDay,
-                            nextDay: ref.read(provider).selectDay,
-                          );
-                      Navigator.pop(context);
+                  const SizedBox(height: 12),
+                  Text(
+                    '次の実施予定日を設定してください',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 6),
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => NextScheduleComplete(
+                          args: widget.args,
+                        ),
+                      );
                     },
-                    child: const Text('OK'),
+                    child: Text(
+                      '達成日を今日以外に変更する',
+                      style: context.textTheme.bodyMedium!.copyWith(
+                        color: AppColor.fontColor3,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Transform.translate(
-              offset: const Offset(0, 470),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.emphasisColor,
-                  textStyle: context.textTheme.bodyMedium!.copyWith(
-                    fontSize: 13,
+                  calendar(),
+                  if (ref.watch(provider).hasError)
+                    const Text(
+                      '達成日以降の日付しか選べません',
+                      style: TextStyle(
+                        color: AppColor.emphasisColor,
+                      ),
+                    ),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ElevatedButton(
+                      style: AppStyle.button,
+                      onPressed: () {
+                        if (!ref
+                            .read(provider)
+                            .selectDay
+                            .isAfterDay(widget.args.completeDay)) {
+                          ref.read(provider.notifier).setHasError(true);
+                          return;
+                        }
+                        ref.read(todoProvider.notifier).complete(
+                              todo: widget.args.todo,
+                              completeDay: widget.args.completeDay,
+                              nextDay: ref.read(provider).selectDay,
+                            );
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK'),
+                    ),
                   ),
-                ),
-                onPressed: () => Navigator.pop(context),
-                child: const Text('チェックを元に戻す'),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Transform.translate(
+          offset: const Offset(0, -15),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: AppColor.emphasisColor,
+              textStyle: context.textTheme.bodyMedium!.copyWith(
+                fontSize: 13,
               ),
             ),
-          ],
+            onPressed: () => Navigator.pop(context),
+            child: const Text('チェックを元に戻す'),
+          ),
         ),
-      ),
+      ],
     );
   }
 
