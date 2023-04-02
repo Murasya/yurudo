@@ -164,11 +164,10 @@ class _ListPageState extends ConsumerState<ListPage> {
                 AppAssets.plus,
               ),
               const SizedBox(width: 16),
-              const Text(
+              Text(
                 '新しいゆるDOを作成',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                style: context.textTheme.bodyLarge!.copyWith(
+                  color: Colors.white,
                 ),
               )
             ],
@@ -260,45 +259,46 @@ class _ListPageState extends ConsumerState<ListPage> {
         onTap: () {
           Navigator.pushNamed(context, AppRouter.detail, arguments: todo);
         },
-        child: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 65,
-              padding: const EdgeInsets.fromLTRB(25, 8, 10, 8),
-              decoration: BoxDecoration(
-                color: AppColor.secondaryColor,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                todo.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Positioned(
-                bottom: 7,
-                right: 10,
+        child: IntrinsicHeight(
+          child: Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                constraints: const BoxConstraints(
+                  minHeight: 60,
+                ),
+                padding: const EdgeInsets.fromLTRB(25, 8, 10, 20),
+                decoration: BoxDecoration(
+                  color: AppColor.secondaryColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Text(
-                  '${todo.span.toSpanString()} / ${todo.time.toTimeString()}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: AppColor.fontColor3,
-                  ),
-                )),
-            Container(
-              width: 12,
-              height: 60,
-              decoration: BoxDecoration(
-                color: categoryColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  bottomLeft: Radius.circular(8),
+                  todo.name,
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                  bottom: 7,
+                  right: 10,
+                  child: Text(
+                    '${todo.span.toSpanString()} / ${todo.time.toTimeString()}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: AppColor.fontColor3,
+                    ),
+                  )),
+              Container(
+                width: 12,
+                decoration: BoxDecoration(
+                  color: categoryColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomLeft: Radius.circular(8),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

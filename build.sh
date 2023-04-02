@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # TODO: タグの名前を変更すること
-MESSAGE=`git log ios\#12android\#14.. --oneline`
-MESSAGE=`echo ${MESSAGE} | sed -e "s/[\r\n]\+//g"`
+MESSAGE=`git log ios\#13android\#15.. --oneline`
 echo "$MESSAGE"
 
 echo "ios build..."
@@ -13,4 +12,4 @@ dg deploy build/ios/ipa/routine_app.ipa --message "$MESSAGE"
 echo "android build..."
 flutter build appbundle
 echo "android uploading..."
-dg deploy build/app/outputs/bundle/release/app-release.aab --message $MESSAGE
+dg deploy build/app/outputs/bundle/release/app-release.aab --message "$MESSAGE"
