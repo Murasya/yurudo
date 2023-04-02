@@ -345,6 +345,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                       onPressed: () {
                         ref.read(todoProvider.notifier).delete(widget.todo.id!);
                         Navigator.pop(context);
+                        Navigator.pop(context);
                         context.showSnackBar(
                           const SnackBar(
                             content: Text('削除しました'),
