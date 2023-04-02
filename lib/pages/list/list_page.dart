@@ -267,7 +267,7 @@ class _ListPageState extends ConsumerState<ListPage> {
                 constraints: const BoxConstraints(
                   minHeight: 60,
                 ),
-                padding: const EdgeInsets.fromLTRB(25, 8, 10, 20),
+                padding: const EdgeInsets.fromLTRB(25, 8, 10, 25),
                 decoration: BoxDecoration(
                   color: AppColor.secondaryColor,
                   borderRadius: BorderRadius.circular(8),
