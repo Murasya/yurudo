@@ -24,7 +24,6 @@ mixin _$HomePageState {
 
   /// 表示しているページ番号
   int get pageIndexDay => throw _privateConstructorUsedError;
-
   int get pageIndexWeek => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -37,7 +36,6 @@ abstract class $HomePageStateCopyWith<$Res> {
   factory $HomePageStateCopyWith(
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res, HomePageState>;
-
   @useResult
   $Res call(
       {TermType displayTerm,
@@ -91,7 +89,6 @@ abstract class _$$_HomePageStateCopyWith<$Res>
   factory _$$_HomePageStateCopyWith(
           _$_HomePageState value, $Res Function(_$_HomePageState) then) =
       __$$_HomePageStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -199,27 +196,22 @@ abstract class _HomePageState extends HomePageState {
       required final DateTime today,
       required final int pageIndexDay,
       required final int pageIndexWeek}) = _$_HomePageState;
-
   const _HomePageState._() : super._();
 
   @override
 
   /// 表示期間
   TermType get displayTerm;
-
   @override
 
   /// 今日
   DateTime get today;
-
   @override
 
   /// 表示しているページ番号
   int get pageIndexDay;
-
   @override
   int get pageIndexWeek;
-
   @override
   @JsonKey(ignore: true)
   _$$_HomePageStateCopyWith<_$_HomePageState> get copyWith =>

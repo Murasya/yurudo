@@ -34,6 +34,12 @@ class NextScheduleStateNotifier extends StateNotifier<NextScheduleState> {
       selectDay: date,
     );
   }
+
+  void setHasError(bool error) {
+    state = state.copyWith(
+      hasError: error,
+    );
+  }
 }
 
 @freezed
@@ -49,5 +55,6 @@ class NextScheduleState with _$NextScheduleState {
   const factory NextScheduleState({
     required DateTime displayMonth,
     required DateTime selectDay,
+    @Default(false) bool hasError,
   }) = _NextScheduleState;
 }

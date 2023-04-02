@@ -112,12 +112,26 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   calendar(),
+                  if (ref.watch(provider).hasError)
+                    const Text(
+                      '完了日以降の日付しか選べません',
+                      style: TextStyle(
+                        color: AppColor.emphasisColor,
+                      ),
+                    ),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
                       style: AppStyle.button,
                       onPressed: () {
+                        if (!ref
+                            .read(provider)
+                            .selectDay
+                            .isAfterDay(widget.args.completeDay)) {
+                          ref.read(provider.notifier).setHasError(true);
+                          return;
+                        }
                         ref.read(todoProvider.notifier).complete(
                               todo: widget.args.todo,
                               completeDay: widget.args.completeDay,
