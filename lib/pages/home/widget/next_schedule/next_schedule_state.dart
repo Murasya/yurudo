@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../model/todo.dart';
+import '../../../../model/todo.dart';
 
 part 'next_schedule_state.freezed.dart';
 

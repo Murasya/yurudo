@@ -7,13 +7,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_assets.dart';
 import 'package:routine_app/design/app_style.dart';
+import 'package:routine_app/pages/home/widget/next_schedule/next_schedule_state.dart';
 import 'package:routine_app/pages/home/widget/next_schedule_close.dart';
-import 'package:routine_app/pages/home/widget/next_schedule_state.dart';
+import 'package:routine_app/pages/home/widget/next_schedule_complete/next_schedule_complete.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 
-import '../../../design/app_color.dart';
-import '../../../viewModel/todo_provider.dart';
+import '../../../../design/app_color.dart';
+import '../../../../viewModel/todo_provider.dart';
 
 class NextSchedule extends ConsumerStatefulWidget {
   final NextScheduleArgs args;
@@ -111,10 +112,28 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                   '次の実施予定日を設定してください',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
+                const SizedBox(height: 6),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => NextScheduleComplete(
+                        args: widget.args,
+                      ),
+                    );
+                  },
+                  child: Text(
+                    '達成日を今日以外に変更する',
+                    style: context.textTheme.bodyMedium!.copyWith(
+                      color: AppColor.fontColor3,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
                 calendar(),
                 if (ref.watch(provider).hasError)
                   const Text(
-                    '完了日以降の日付しか選べません',
+                    '達成日以降の日付しか選べません',
                     style: TextStyle(
                       color: AppColor.emphasisColor,
                     ),
