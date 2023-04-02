@@ -9,7 +9,6 @@ import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
 import 'package:routine_app/pages/widget/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
-import 'package:routine_app/router.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
@@ -345,14 +344,10 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                       ),
                       onPressed: () {
                         ref.read(todoProvider.notifier).delete(widget.todo.id!);
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          AppRouter.home,
-                          (_) => false,
-                        );
+                        Navigator.pop(context);
                         context.showSnackBar(
                           const SnackBar(
-                            content: Text('変更しました'),
+                            content: Text('削除しました'),
                           ),
                         );
                       },
