@@ -242,30 +242,32 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                       ),
                     ),
                     Container(
-                      width: deviceWidth / 2 - 20,
-                      padding: const EdgeInsets.only(top: 25),
-                      child: CheckboxListTile(
-                        controlAffinity: ListTileControlAffinity.leading,
-                        value: state.remind,
-                        activeColor: AppColor.fontColor2,
-                        checkboxShape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        title: Transform.translate(
-                          offset: const Offset(-20, 0),
-                          child: const Text(
-                            'リマインドする',
-                            style: TextStyle(
-                              fontSize: 14,
+                        width: deviceWidth / 2 - 20,
+                        padding: const EdgeInsets.only(top: 25),
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 8),
+                            Checkbox(
+                              value: state.remind,
+                              activeColor: AppColor.fontColor2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              onChanged: (value) {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                ref
+                                    .read(provider.notifier)
+                                    .setRemind(value ?? false);
+                              },
                             ),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          ref.read(provider.notifier).setRemind(value ?? false);
-                        },
-                      ),
-                    ),
+                            const Text(
+                              'リマインドする',
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        )),
                   ],
                 ),
                 const SizedBox(height: 60),
