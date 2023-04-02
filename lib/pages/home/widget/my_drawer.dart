@@ -48,9 +48,9 @@ class MyDrawer extends StatelessWidget {
                 ],
               ),
             ),
-            drawerItem(
-              text: 'アプリの使い方',
-            ),
+            // drawerItem(
+            //   text: 'アプリの使い方',
+            // ),
             drawerItem(
               text: 'フィードバック / お問い合わせ',
               onTap: () => Navigator.pushNamed(context, AppRouter.feedback),
