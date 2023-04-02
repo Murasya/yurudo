@@ -264,13 +264,17 @@ class _ListPageState extends ConsumerState<ListPage> {
           children: [
             Container(
               width: double.infinity,
-              height: 60,
+              height: 65,
               padding: const EdgeInsets.fromLTRB(25, 8, 10, 8),
               decoration: BoxDecoration(
                 color: AppColor.secondaryColor,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Text(todo.name),
+              child: Text(
+                todo.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             Positioned(
                 bottom: 7,
