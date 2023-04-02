@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_assets.dart';
 import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/pages/home/widget/next_schedule/next_schedule_state.dart';
-import 'package:routine_app/pages/home/widget/next_schedule_close.dart';
 import 'package:routine_app/utils/date.dart';
 
 import '../../../../design/app_color.dart';
@@ -80,21 +79,7 @@ class _NextScheduleNextState extends ConsumerState<NextScheduleNext> {
                       offset: const Offset(10, 0),
                       child: IconButton(
                         icon: const Icon(Icons.close),
-                        onPressed: () async {
-                          bool finish = await showDialog(
-                            context: context,
-                            builder: (_) => const NextScheduleClose(),
-                          );
-                          if (finish) {
-                            ref.read(todoProvider.notifier).complete(
-                                  todo: widget.args.todo,
-                                  completeDay: widget.args.completeDay,
-                                  nextDay: null,
-                                );
-                            if (!mounted) return;
-                            Navigator.pop(context);
-                          }
-                        },
+                        onPressed: () => Navigator.pop(context),
                       ),
                     ),
                   ],
