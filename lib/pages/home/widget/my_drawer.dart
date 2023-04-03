@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routine_app/utils/contextEx.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../design/app_color.dart';
 import '../../../router.dart';
@@ -55,8 +56,18 @@ class MyDrawer extends StatelessWidget {
               text: 'フィードバック / お問い合わせ',
               onTap: () => Navigator.pushNamed(context, AppRouter.feedback),
             ),
-            drawerItem(text: '利用規約', hasIcon: true),
-            drawerItem(text: 'プライバシーポリシー', hasIcon: true),
+            drawerItem(
+              text: '利用規約',
+              hasIcon: true,
+              onTap: () => launchUrlString(
+                  "https://docs.google.com/document/d/1cUHk1Fe2MVvRZY0MNzgKhJCMityXPQiZ8lwAEgZoDWs/edit?usp=sharing"),
+            ),
+            drawerItem(
+              text: 'プライバシーポリシー',
+              hasIcon: true,
+              onTap: () => launchUrlString(
+                  "https://docs.google.com/document/d/15JC1IkhR7aRr59sCZ5BACsxsVu15Pd2umM8VIwZqWRE/edit?usp=sharing"),
+            ),
           ],
         ),
       ),
