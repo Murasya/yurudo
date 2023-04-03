@@ -84,11 +84,11 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                         child: IconButton(
                           icon: const Icon(Icons.close),
                           onPressed: () async {
-                            bool finish = await showDialog(
+                            bool? finish = await showDialog(
                               context: context,
                               builder: (_) => const NextScheduleClose(),
                             );
-                            if (finish) {
+                            if (finish != null && finish) {
                               ref.read(todoProvider.notifier).complete(
                                     todo: widget.args.todo,
                                     completeDay: widget.args.completeDay,
