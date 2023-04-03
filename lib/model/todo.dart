@@ -29,6 +29,9 @@ class Todo {
   /// 実施日
   final List<DateTime> completeDate;
 
+  /// 一つ前の実施予定日
+  final DateTime? preExpectedDate;
+
   /// 実施予定日
   final DateTime? expectedDate;
 
@@ -40,7 +43,7 @@ class Todo {
 
   @override
   String toString() {
-    return 'Todo{id: $id, name: $name, span: $span, remind: $remind, time: $time, count: $count, skipCount: $skipCount, skipConsecutive: $skipConsecutive, categoryId: $categoryId, completeDate: $completeDate, expectedDate: $expectedDate, createdAt: $createdAt, updatedAt: $updatedAt}';
+    return 'Todo{id: $id, name: $name, span: $span, remind: $remind, time: $time, count: $count, skipCount: $skipCount, skipConsecutive: $skipConsecutive, categoryId: $categoryId, completeDate: $completeDate, preExpectedDate: $preExpectedDate, expectedDate: $expectedDate, createdAt: $createdAt, updatedAt: $updatedAt}';
   }
 
   const Todo({
@@ -54,6 +57,7 @@ class Todo {
     this.skipConsecutive = 0,
     this.categoryId,
     this.completeDate = const [],
+    this.preExpectedDate,
     this.expectedDate,
     this.createdAt,
     this.updatedAt,
@@ -70,6 +74,7 @@ class Todo {
     int? skipConsecutive,
     int? categoryId,
     List<DateTime>? completeDate,
+    DateTime? preExpectedDate,
     DateTime? expectedDate,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -85,6 +90,7 @@ class Todo {
       skipConsecutive: skipConsecutive ?? this.skipConsecutive,
       categoryId: categoryId ?? this.categoryId,
       completeDate: completeDate ?? this.completeDate,
+      preExpectedDate: preExpectedDate ?? this.preExpectedDate,
       expectedDate: expectedDate ?? this.expectedDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -102,6 +108,7 @@ class Todo {
     int? skipConsecutive,
     int? categoryId,
     List<DateTime>? completeDate,
+    DateTime? Function()? preExpectedDate,
     DateTime? Function()? expectedDate,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -117,6 +124,8 @@ class Todo {
       skipConsecutive: skipConsecutive ?? this.skipConsecutive,
       categoryId: categoryId ?? this.categoryId,
       completeDate: completeDate ?? this.completeDate,
+      preExpectedDate:
+          preExpectedDate != null ? preExpectedDate() : this.preExpectedDate,
       expectedDate: expectedDate != null ? expectedDate() : this.expectedDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -134,6 +143,7 @@ class Todo {
       'skipConsecutive': skipConsecutive,
       'categoryId': categoryId,
       'completeDate': completeDate.map((e) => e.toIso8601String()).join(","),
+      'preExpectedDate': preExpectedDate?.toIso8601String(),
       'expectedDate': expectedDate?.toIso8601String(),
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
@@ -163,6 +173,7 @@ class Todo {
       skipConsecutive: map['skipConsecutive'] as int,
       categoryId: map['categoryId'],
       completeDate: completeDate,
+      preExpectedDate: DateTime.tryParse(map['preExpectedDate'] ?? ''),
       expectedDate: DateTime.tryParse(map['expectedDate'] ?? ''),
       createdAt: DateTime.parse(map['createdAt']),
       updatedAt: DateTime.parse(map['updatedAt']),

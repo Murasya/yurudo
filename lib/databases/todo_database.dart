@@ -26,6 +26,7 @@ class TodoDatabase {
           skipConsecutive INTEGER,
           categoryId INTEGER,
           completeDate TEXT,
+          preExpectedDate TEXT,
           expectedDate TEXT,
           createdAt TEXT,
           updatedAt TEXT)

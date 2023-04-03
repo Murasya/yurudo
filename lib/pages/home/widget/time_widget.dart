@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
+import 'package:routine_app/services/app_shared.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 
 import '../../../design/app_color.dart';
 import '../../../model/todo.dart';
 
-class TimeWidget extends StatelessWidget {
+bool isContainDay(List<DateTime> list, DateTime d) {
+  return list.any((e) => e.isSameDay(d));
+}
+
+class TimeWidget extends ConsumerWidget {
   const TimeWidget({
     Key? key,
     required this.todo,
@@ -22,20 +28,24 @@ class TimeWidget extends StatelessWidget {
   final TermType term;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (today.isSameDay(pageDate) &&
-        todo.expectedDate != null &&
-        todo.expectedDate!.isBeforeDay(pageDate)) {
+        AppShared.shared.getPastTodoIds(ref).contains(todo.id)) {
       String num;
       String suf;
-      if (today.inWeek(todo.expectedDate!)) {
+      DateTime date;
+      if (isContainDay(todo.completeDate, pageDate)) {
+        date = todo.preExpectedDate!;
+      } else {
+        date = todo.expectedDate!;
+      }
+      if (today.inWeek(date)) {
         num = '~1';
         suf = '週間';
-      } else if (todo.expectedDate!.isMonthBefore(today)) {
+      } else if (date.isMonthBefore(today)) {
         num = '1';
         suf = 'か月超';
-      } else if (todo.expectedDate!
-          .isBeforeDay(today.add(const Duration(days: -13)))) {
+      } else if (date.isBeforeDay(today.add(const Duration(days: -13)))) {
         num = '~1';
         suf = 'か月';
       } else {
