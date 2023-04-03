@@ -42,7 +42,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AlertDialog(
           content: Stack(
