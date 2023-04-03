@@ -119,7 +119,7 @@ class _NextScheduleNextState extends ConsumerState<NextScheduleNext> {
                       Navigator.pop(context);
                       Navigator.pop(context);
                     },
-                    child: const Text('次へ'),
+                    child: const Text('OK'),
                   ),
                 ),
                 Container(
