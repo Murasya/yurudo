@@ -251,10 +251,13 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                                   .setRemind(value ?? false);
                             },
                           ),
-                          const Text(
-                            'リマインドする',
-                            style: TextStyle(
-                              fontSize: 14,
+                          Transform.translate(
+                            offset: const Offset(-7, 0),
+                            child: const Text(
+                              'リマインドする',
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                         ],
