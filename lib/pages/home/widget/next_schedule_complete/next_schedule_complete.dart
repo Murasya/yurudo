@@ -90,12 +90,27 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 calendar(),
+                if (ref.watch(provider).hasError)
+                  const Text(
+                    '明日以降は選択できません',
+                    style: TextStyle(
+                      color: AppColor.emphasisColor,
+                    ),
+                  ),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.only(top: 20),
                   child: ElevatedButton(
                     style: AppStyle.button,
                     onPressed: () {
+                      if (ref
+                          .read(provider)
+                          .selectDay
+                          .isAfterDay(DateTime.now())) {
+                        ref.read(provider.notifier).setHasError(true);
+                        return;
+                      }
+                      ref.read(provider.notifier).setHasError(false);
                       showDialog(
                         context: context,
                         builder: (_) => NextScheduleNext(
