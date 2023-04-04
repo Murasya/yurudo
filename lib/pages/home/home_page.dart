@@ -15,7 +15,11 @@ import 'package:routine_app/pages/home/widget/page_widget_week.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/utils/contextEx.dart';
+import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
+
+import '../../services/app_shared.dart';
+import '../widget/dialog_common.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -31,6 +35,22 @@ class _HomePageState extends ConsumerState<HomePage> {
   final provider = homePageStateProvider;
   final _pageController = PageController(initialPage: 100);
 
+  /// 日付が変わった時にダイアログを表示
+  void _showDialogWhenChangedDate() {
+    showDialog(
+      context: context,
+      builder: (_) => DialogCommon(
+        title: "日付更新",
+        content: const Text('日付が変わったためリロードします。'),
+        onPressed: () {
+          AppShared.shared.updateLastLoginDate();
+          ref.watch(todoProvider.notifier).clearPreExpectedDate();
+          ref.watch(provider.notifier).updateToday();
+        },
+      ),
+    );
+  }
+
   @override
   void initState() {
     initializeDateFormatting('ja');
@@ -42,6 +62,11 @@ class _HomePageState extends ConsumerState<HomePage> {
     final state = ref.watch(provider);
     final todoList = ref.watch(todoProvider);
     NotificationService().setNotifications(todoList);
+
+    if (!AppShared.shared.lastLoginDate.isSameDay(DateTime.now())) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _showDialogWhenChangedDate());
+    }
 
     final DateTime weekEnd = state.pageDate.add(const Duration(days: 6));
     String month =

@@ -23,6 +23,15 @@ class AppShared {
     _instance = AppShared._(prefs);
   }
 
+  DateTime? get lastLoginDate {
+    final lastLoginDateStr = _prefs.getString(lastLoginDateKey);
+    return DateTime.tryParse(lastLoginDateStr ?? '');
+  }
+
+  void updateLastLoginDate() {
+    _prefs.setString(lastLoginDateKey, DateTime.now().toIso8601String());
+  }
+
   List<int> getPastTodoIds(WidgetRef ref) {
     final now = DateTime.now();
     final lastLoginDateStr = _prefs.getString(lastLoginDateKey);

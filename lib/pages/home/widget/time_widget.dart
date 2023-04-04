@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
-import 'package:routine_app/services/app_shared.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 
@@ -13,7 +11,7 @@ bool isContainDay(List<DateTime> list, DateTime d) {
   return list.any((e) => e.isSameDay(d));
 }
 
-class TimeWidget extends ConsumerWidget {
+class TimeWidget extends StatelessWidget {
   const TimeWidget({
     Key? key,
     required this.todo,
@@ -28,9 +26,10 @@ class TimeWidget extends ConsumerWidget {
   final TermType term;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    if (today.isSameDay(pageDate) &&
-        AppShared.shared.getPastTodoIds(ref).contains(todo.id)) {
+  Widget build(BuildContext context) {
+    if (today.isSameDay(pageDate) && todo.expectedDate!.isBeforeDay(pageDate) ||
+        todo.preExpectedDate != null &&
+            todo.preExpectedDate!.isBeforeDay(pageDate)) {
       String num;
       String suf;
       DateTime date;

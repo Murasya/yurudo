@@ -48,4 +48,9 @@ extension DateNullable on DateTime? {
         this!.month == date.month &&
         this!.day == date.day;
   }
+
+  bool isBeforeDay(DateTime? date) {
+    if (this == null || date == null) return false;
+    return this!.isBefore(date) && !isSameDay(date);
+  }
 }

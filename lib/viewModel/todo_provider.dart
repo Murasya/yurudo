@@ -16,6 +16,11 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     getAll();
   }
 
+  Future<void> clearPreExpectedDate() async {
+    _database.clearPreExpectedDate();
+    state = state.map((s) => s.copyWith(preExpectedDate: null)).toList();
+  }
+
   Future<void> complete({
     required Todo todo,
     required DateTime completeDay,

@@ -47,6 +47,11 @@ class TodoDatabase {
     );
   }
 
+  Future<void> clearPreExpectedDate() async {
+    final Database db = await database;
+    db.rawUpdate("UPDATE $tableName SET preExpectedDate = NULL");
+  }
+
   Future<void> delete(int id) async {
     final Database db = await database;
     db.delete(
