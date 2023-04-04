@@ -106,7 +106,7 @@ class Todo {
     int? count,
     int? skipCount,
     int? skipConsecutive,
-    int? categoryId,
+    int? Function()? categoryId,
     List<DateTime>? completeDate,
     DateTime? Function()? preExpectedDate,
     DateTime? Function()? expectedDate,
@@ -122,7 +122,7 @@ class Todo {
       count: count ?? this.count,
       skipCount: skipCount ?? this.skipCount,
       skipConsecutive: skipConsecutive ?? this.skipConsecutive,
-      categoryId: categoryId ?? this.categoryId,
+      categoryId: categoryId != null ? categoryId() : this.categoryId,
       completeDate: completeDate ?? this.completeDate,
       preExpectedDate:
           preExpectedDate != null ? preExpectedDate() : this.preExpectedDate,

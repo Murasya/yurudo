@@ -10,7 +10,7 @@ import '../../../viewModel/category_provider.dart';
 
 class CategoryDialog extends ConsumerStatefulWidget {
   final Category? defaultValue;
-  final void Function(Category value) onConfirm;
+  final void Function(Category? value) onConfirm;
 
   const CategoryDialog({
     required this.defaultValue,
@@ -55,6 +55,8 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
       onPressed: () {
         if (state.selectButtonNum != null) {
           widget.onConfirm(ref.read(categoryProvider)[state.selectButtonNum]);
+        } else {
+          widget.onConfirm(null);
         }
       },
       content: Column(children: [

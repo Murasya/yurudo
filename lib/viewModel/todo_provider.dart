@@ -60,7 +60,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     final newTodo = todo.copyWith(
       name: data.title,
       span: data.span,
-      categoryId: data.category?.id,
+      categoryId: () => data.category?.id,
       time: data.time,
       expectedDate: () => data.nextDay,
       updatedAt: DateTime.now(),
