@@ -7,10 +7,12 @@ import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:routine_app/databases/todo_database.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/services/app_shared.dart';
 import 'package:routine_app/services/notification_service.dart';
+import 'package:routine_app/utils/date.dart';
 
 import 'firebase_options.dart';
 
@@ -28,6 +30,11 @@ void main() async {
     return true;
   };
   await AppShared.init();
+  // 日付が変わっていたら初期化
+  if (!AppShared.shared.lastLoginDate.isSameDay(DateTime.now())) {
+    await TodoDatabase().clearPreExpectedDate();
+    AppShared.shared.updateLastLoginDate();
+  }
   FlutterAppBadger.removeBadge();
 
   runApp(
