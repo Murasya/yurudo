@@ -27,9 +27,9 @@ class TimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (today.isSameDay(pageDate) && todo.expectedDate!.isBeforeDay(pageDate) ||
-        todo.preExpectedDate != null &&
-            todo.preExpectedDate!.isBeforeDay(pageDate)) {
+    if (today.isSameDay(pageDate) &&
+        (todo.expectedDate.isBeforeDay(pageDate) ||
+            todo.preExpectedDate.isBeforeDay(pageDate))) {
       String num;
       String suf;
       DateTime date;
