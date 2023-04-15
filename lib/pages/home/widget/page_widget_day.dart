@@ -44,7 +44,13 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
   }
 
   int compExp(Todo a, Todo b) {
-    return a.expectedDate!.compareTo(b.expectedDate!);
+    DateTime? aComp = isContainDay(a.completeDate, pageDay)
+        ? a.preExpectedDate
+        : a.expectedDate;
+    DateTime? bComp = isContainDay(b.completeDate, pageDay)
+        ? b.preExpectedDate
+        : b.expectedDate;
+    return aComp!.compareTo(bComp!);
   }
 
   int compTime(Todo a, Todo b) {
