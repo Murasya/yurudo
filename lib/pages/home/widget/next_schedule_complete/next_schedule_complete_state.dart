@@ -35,9 +35,10 @@ class NextScheduleCompleteStateNotifier
     );
   }
 
-  void setHasError(bool error) {
+  void setError(bool error, {String msg = ''}) {
     state = state.copyWith(
       hasError: error,
+      errorMessage: msg,
     );
   }
 }

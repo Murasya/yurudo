@@ -35,9 +35,10 @@ class NextScheduleStateNotifier extends StateNotifier<NextScheduleState> {
     );
   }
 
-  void setHasError(bool error) {
+  void setError(bool error, {String msg = ''}) {
     state = state.copyWith(
       hasError: error,
+      errorMessage: msg,
     );
   }
 }
@@ -56,5 +57,6 @@ class NextScheduleState with _$NextScheduleState {
     required DateTime displayMonth,
     required DateTime selectDay,
     @Default(false) bool hasError,
+    @Default('') String errorMessage,
   }) = _NextScheduleState;
 }

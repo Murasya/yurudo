@@ -91,9 +91,9 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                 ),
                 calendar(),
                 if (ref.watch(provider).hasError)
-                  const Text(
-                    '明日以降は選択できません',
-                    style: TextStyle(
+                  Text(
+                    ref.watch(provider).errorMessage,
+                    style: const TextStyle(
                       color: AppColor.emphasisColor,
                     ),
                   ),
@@ -107,10 +107,22 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                           .read(provider)
                           .selectDay
                           .isAfterDay(DateTime.now())) {
-                        ref.read(provider.notifier).setHasError(true);
+                        ref
+                            .read(provider.notifier)
+                            .setError(true, msg: '明日以降は選択できません');
                         return;
                       }
-                      ref.read(provider.notifier).setHasError(false);
+                      final lastCompleteDate =
+                          widget.args.todo.completeDate.last;
+                      final lastCompDateStr =
+                          DateFormat("y/M/d").format(lastCompleteDate);
+                      if (ref.read(provider).selectDay.isBeforeDay(
+                          lastCompleteDate.add(const Duration(days: 1)))) {
+                        ref.read(provider.notifier).setError(true,
+                            msg: '前回の実施日以降しか選択できません（前回の実施日$lastCompDateStr）');
+                        return;
+                      }
+                      ref.read(provider.notifier).setError(false);
                       showDialog(
                         context: context,
                         builder: (_) => NextScheduleNext(

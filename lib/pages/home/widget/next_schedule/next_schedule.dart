@@ -134,9 +134,9 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                   ),
                   calendar(),
                   if (ref.watch(provider).hasError)
-                    const Text(
-                      '達成日以降の日付しか選べません',
-                      style: TextStyle(
+                    Text(
+                      ref.watch(provider).errorMessage,
+                      style: const TextStyle(
                         color: AppColor.emphasisColor,
                       ),
                     ),
@@ -150,7 +150,9 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                             .read(provider)
                             .selectDay
                             .isAfterDay(widget.args.completeDay)) {
-                          ref.read(provider.notifier).setHasError(true);
+                          ref
+                              .read(provider.notifier)
+                              .setError(true, msg: '達成日以降の日付しか選べません');
                           return;
                         }
                         ref.read(todoProvider.notifier).complete(

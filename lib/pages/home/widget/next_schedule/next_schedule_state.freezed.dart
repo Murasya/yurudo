@@ -156,6 +156,8 @@ mixin _$NextScheduleState {
   DateTime get selectDay => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
 
+  String get errorMessage => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $NextScheduleStateCopyWith<NextScheduleState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -166,8 +168,13 @@ abstract class $NextScheduleStateCopyWith<$Res> {
   factory $NextScheduleStateCopyWith(
           NextScheduleState value, $Res Function(NextScheduleState) then) =
       _$NextScheduleStateCopyWithImpl<$Res, NextScheduleState>;
+
   @useResult
-  $Res call({DateTime displayMonth, DateTime selectDay, bool hasError});
+  $Res call(
+      {DateTime displayMonth,
+      DateTime selectDay,
+      bool hasError,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -186,6 +193,7 @@ class _$NextScheduleStateCopyWithImpl<$Res, $Val extends NextScheduleState>
     Object? displayMonth = null,
     Object? selectDay = null,
     Object? hasError = null,
+    Object? errorMessage = null,
   }) {
     return _then(_value.copyWith(
       displayMonth: null == displayMonth
@@ -200,6 +208,10 @@ class _$NextScheduleStateCopyWithImpl<$Res, $Val extends NextScheduleState>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -210,9 +222,14 @@ abstract class _$$_NextScheduleStateCopyWith<$Res>
   factory _$$_NextScheduleStateCopyWith(_$_NextScheduleState value,
           $Res Function(_$_NextScheduleState) then) =
       __$$_NextScheduleStateCopyWithImpl<$Res>;
+
   @override
   @useResult
-  $Res call({DateTime displayMonth, DateTime selectDay, bool hasError});
+  $Res call(
+      {DateTime displayMonth,
+      DateTime selectDay,
+      bool hasError,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -229,6 +246,7 @@ class __$$_NextScheduleStateCopyWithImpl<$Res>
     Object? displayMonth = null,
     Object? selectDay = null,
     Object? hasError = null,
+    Object? errorMessage = null,
   }) {
     return _then(_$_NextScheduleState(
       displayMonth: null == displayMonth
@@ -243,6 +261,10 @@ class __$$_NextScheduleStateCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -253,7 +275,8 @@ class _$_NextScheduleState implements _NextScheduleState {
   const _$_NextScheduleState(
       {required this.displayMonth,
       required this.selectDay,
-      this.hasError = false});
+      this.hasError = false,
+      this.errorMessage = ''});
 
   @override
   final DateTime displayMonth;
@@ -262,10 +285,13 @@ class _$_NextScheduleState implements _NextScheduleState {
   @override
   @JsonKey()
   final bool hasError;
+  @override
+  @JsonKey()
+  final String errorMessage;
 
   @override
   String toString() {
-    return 'NextScheduleState(displayMonth: $displayMonth, selectDay: $selectDay, hasError: $hasError)';
+    return 'NextScheduleState(displayMonth: $displayMonth, selectDay: $selectDay, hasError: $hasError, errorMessage: $errorMessage)';
   }
 
   @override
@@ -278,12 +304,14 @@ class _$_NextScheduleState implements _NextScheduleState {
             (identical(other.selectDay, selectDay) ||
                 other.selectDay == selectDay) &&
             (identical(other.hasError, hasError) ||
-                other.hasError == hasError));
+                other.hasError == hasError) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, displayMonth, selectDay, hasError);
+      Object.hash(runtimeType, displayMonth, selectDay, hasError, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -297,14 +325,21 @@ abstract class _NextScheduleState implements NextScheduleState {
   const factory _NextScheduleState(
       {required final DateTime displayMonth,
       required final DateTime selectDay,
-      final bool hasError}) = _$_NextScheduleState;
+      final bool hasError,
+      final String errorMessage}) = _$_NextScheduleState;
 
   @override
   DateTime get displayMonth;
+
   @override
   DateTime get selectDay;
+
   @override
   bool get hasError;
+
+  @override
+  String get errorMessage;
+
   @override
   @JsonKey(ignore: true)
   _$$_NextScheduleStateCopyWith<_$_NextScheduleState> get copyWith =>
