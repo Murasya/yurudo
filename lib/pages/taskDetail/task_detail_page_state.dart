@@ -67,3 +67,11 @@ class TaskDetailPageState with _$TaskDetailPageState {
     required DateTime? nextDay,
   }) = _TaskDetailPageState;
 }
+
+@freezed
+class TaskDetailPageArgs with _$TaskDetailPageArgs {
+  const factory TaskDetailPageArgs({
+    required Todo todo,
+    required bool isCompleted,
+  }) = _TaskDetailPageArgs;
+}

@@ -155,7 +155,6 @@ mixin _$NextScheduleState {
   DateTime get displayMonth => throw _privateConstructorUsedError;
   DateTime get selectDay => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-
   String get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -168,7 +167,6 @@ abstract class $NextScheduleStateCopyWith<$Res> {
   factory $NextScheduleStateCopyWith(
           NextScheduleState value, $Res Function(NextScheduleState) then) =
       _$NextScheduleStateCopyWithImpl<$Res, NextScheduleState>;
-
   @useResult
   $Res call(
       {DateTime displayMonth,
@@ -222,7 +220,6 @@ abstract class _$$_NextScheduleStateCopyWith<$Res>
   factory _$$_NextScheduleStateCopyWith(_$_NextScheduleState value,
           $Res Function(_$_NextScheduleState) then) =
       __$$_NextScheduleStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -330,16 +327,12 @@ abstract class _NextScheduleState implements NextScheduleState {
 
   @override
   DateTime get displayMonth;
-
   @override
   DateTime get selectDay;
-
   @override
   bool get hasError;
-
   @override
   String get errorMessage;
-
   @override
   @JsonKey(ignore: true)
   _$$_NextScheduleStateCopyWith<_$_NextScheduleState> get copyWith =>

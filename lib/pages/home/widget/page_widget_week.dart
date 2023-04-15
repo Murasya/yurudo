@@ -5,6 +5,7 @@ import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/pages/home/widget/next_schedule/next_schedule.dart';
 import 'package:routine_app/pages/home/widget/next_schedule/next_schedule_state.dart';
 import 'package:routine_app/pages/home/widget/time_widget.dart';
+import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
@@ -128,6 +129,8 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
 
   Widget _taskItem(Todo todo, BuildContext context) {
     final state = ref.watch(homePageStateProvider);
+    final isCompleted = todo.expectedDate == null ||
+        isContainDay(todo.completeDate, todo.expectedDate!);
 
     return Container(
       decoration: BoxDecoration(
@@ -144,7 +147,11 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
           } else {
             t = todo;
           }
-          Navigator.pushNamed(context, AppRouter.detail, arguments: t);
+          Navigator.pushNamed(
+            context,
+            AppRouter.detail,
+            arguments: TaskDetailPageArgs(todo: t, isCompleted: isCompleted),
+          );
         },
         child: Row(
           children: [
@@ -168,8 +175,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
                   );
                   return;
                 }
-                if (todo.expectedDate == null ||
-                    isContainDay(todo.completeDate, todo.expectedDate!)) {
+                if (isCompleted) {
                   ref.read(todoProvider.notifier).unComplete(
                         todo: todo,
                         completeDay: state.today,

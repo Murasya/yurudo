@@ -5,6 +5,7 @@ import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/pages/home/widget/next_schedule/next_schedule.dart';
 import 'package:routine_app/pages/home/widget/next_schedule/next_schedule_state.dart';
 import 'package:routine_app/pages/home/widget/time_widget.dart';
+import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
@@ -139,6 +140,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
 
   Widget _taskItem(Todo todo, BuildContext context) {
     final state = ref.watch(homePageStateProvider);
+    final isCompleted = isContainDay(todo.completeDate, pageDay);
 
     return Container(
       decoration: BoxDecoration(
@@ -149,7 +151,11 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
       margin: const EdgeInsets.only(top: 12),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, AppRouter.detail, arguments: todo);
+          Navigator.pushNamed(
+            context,
+            AppRouter.detail,
+            arguments: TaskDetailPageArgs(todo: todo, isCompleted: isCompleted),
+          );
         },
         child: Row(
           children: [
@@ -199,9 +205,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: SvgPicture.asset(
-                  (isContainDay(todo.completeDate, pageDay))
-                      ? AppAssets.check
-                      : AppAssets.uncheck,
+                  (isCompleted) ? AppAssets.check : AppAssets.uncheck,
                   width: 24,
                 ),
               ),

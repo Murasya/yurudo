@@ -245,12 +245,158 @@ abstract class _TaskDetailPageState implements TaskDetailPageState {
   bool get remind;
   @override
   Category? get category;
+
   @override
   int? get time;
+
   @override
   DateTime? get nextDay;
+
   @override
   @JsonKey(ignore: true)
   _$$_TaskDetailPageStateCopyWith<_$_TaskDetailPageState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$TaskDetailPageArgs {
+  Todo get todo => throw _privateConstructorUsedError;
+
+  bool get isCompleted => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TaskDetailPageArgsCopyWith<TaskDetailPageArgs> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TaskDetailPageArgsCopyWith<$Res> {
+  factory $TaskDetailPageArgsCopyWith(
+          TaskDetailPageArgs value, $Res Function(TaskDetailPageArgs) then) =
+      _$TaskDetailPageArgsCopyWithImpl<$Res, TaskDetailPageArgs>;
+
+  @useResult
+  $Res call({Todo todo, bool isCompleted});
+}
+
+/// @nodoc
+class _$TaskDetailPageArgsCopyWithImpl<$Res, $Val extends TaskDetailPageArgs>
+    implements $TaskDetailPageArgsCopyWith<$Res> {
+  _$TaskDetailPageArgsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? todo = null,
+    Object? isCompleted = null,
+  }) {
+    return _then(_value.copyWith(
+      todo: null == todo
+          ? _value.todo
+          : todo // ignore: cast_nullable_to_non_nullable
+              as Todo,
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_TaskDetailPageArgsCopyWith<$Res>
+    implements $TaskDetailPageArgsCopyWith<$Res> {
+  factory _$$_TaskDetailPageArgsCopyWith(_$_TaskDetailPageArgs value,
+          $Res Function(_$_TaskDetailPageArgs) then) =
+      __$$_TaskDetailPageArgsCopyWithImpl<$Res>;
+
+  @override
+  @useResult
+  $Res call({Todo todo, bool isCompleted});
+}
+
+/// @nodoc
+class __$$_TaskDetailPageArgsCopyWithImpl<$Res>
+    extends _$TaskDetailPageArgsCopyWithImpl<$Res, _$_TaskDetailPageArgs>
+    implements _$$_TaskDetailPageArgsCopyWith<$Res> {
+  __$$_TaskDetailPageArgsCopyWithImpl(
+      _$_TaskDetailPageArgs _value, $Res Function(_$_TaskDetailPageArgs) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? todo = null,
+    Object? isCompleted = null,
+  }) {
+    return _then(_$_TaskDetailPageArgs(
+      todo: null == todo
+          ? _value.todo
+          : todo // ignore: cast_nullable_to_non_nullable
+              as Todo,
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TaskDetailPageArgs implements _TaskDetailPageArgs {
+  const _$_TaskDetailPageArgs({required this.todo, required this.isCompleted});
+
+  @override
+  final Todo todo;
+  @override
+  final bool isCompleted;
+
+  @override
+  String toString() {
+    return 'TaskDetailPageArgs(todo: $todo, isCompleted: $isCompleted)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TaskDetailPageArgs &&
+            (identical(other.todo, todo) || other.todo == todo) &&
+            (identical(other.isCompleted, isCompleted) ||
+                other.isCompleted == isCompleted));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, todo, isCompleted);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TaskDetailPageArgsCopyWith<_$_TaskDetailPageArgs> get copyWith =>
+      __$$_TaskDetailPageArgsCopyWithImpl<_$_TaskDetailPageArgs>(
+          this, _$identity);
+}
+
+abstract class _TaskDetailPageArgs implements TaskDetailPageArgs {
+  const factory _TaskDetailPageArgs(
+      {required final Todo todo,
+      required final bool isCompleted}) = _$_TaskDetailPageArgs;
+
+  @override
+  Todo get todo;
+
+  @override
+  bool get isCompleted;
+
+  @override
+  @JsonKey(ignore: true)
+  _$$_TaskDetailPageArgsCopyWith<_$_TaskDetailPageArgs> get copyWith =>
       throw _privateConstructorUsedError;
 }

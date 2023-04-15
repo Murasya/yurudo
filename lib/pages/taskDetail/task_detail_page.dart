@@ -29,10 +29,10 @@ final isChangedProvider = Provider.autoDispose.family<bool, Todo>((ref, todo) {
 });
 
 class TaskDetailPage extends ConsumerStatefulWidget {
-  final Todo todo;
+  final TaskDetailPageArgs args;
 
   const TaskDetailPage({
-    required this.todo,
+    required this.args,
     Key? key,
   }) : super(key: key);
 
@@ -51,7 +51,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
 
   @override
   void initState() {
-    provider = taskDetailPageStateProvider(widget.todo);
+    provider = taskDetailPageStateProvider(widget.args.todo);
     final TaskDetailPageState state = ref.read(provider);
     _titleController = TextEditingController(text: state.title);
     _spanController = TextEditingController(text: state.span.toSpanString());
@@ -210,9 +210,10 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                               FocusManager.instance.primaryFocus?.unfocus();
                               final orgTodo = ref
                                   .read(todoProvider.notifier)
-                                  .getTodoFromId(widget.todo.id);
+                                  .getTodoFromId(widget.args.todo.id);
                               if (state.nextDay
-                                  .isSameDay(orgTodo.expectedDate)) {
+                                      .isSameDay(orgTodo.expectedDate) &&
+                                  !widget.args.isCompleted) {
                                 DateDialog(
                                   onConfirm: (picker, value) {
                                     final day = (picker.adapter
@@ -276,7 +277,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
 
   Widget finishEditButton() {
     var state = ref.read(provider);
-    var isChanged = ref.watch(isChangedProvider(widget.todo));
+    var isChanged = ref.watch(isChangedProvider(widget.args.todo));
 
     return SizedBox(
       width: double.infinity,
@@ -289,10 +290,10 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
         ),
         onPressed: (isChanged)
             ? () {
-                FocusManager.instance.primaryFocus?.unfocus();
+          FocusManager.instance.primaryFocus?.unfocus();
                 if (state.remind) NotificationService().requestPermissions();
                 Navigator.pop(context);
-                ref.read(todoProvider.notifier).update(widget.todo, state);
+                ref.read(todoProvider.notifier).update(widget.args.todo, state);
                 context.showSnackBar(
                   const SnackBar(
                     content: Text('変更しました'),
@@ -332,7 +333,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                     ],
                   ),
                   Text(
-                    '${widget.todo.name}\nを本当に削除しますか？',
+                    '${widget.args.todo.name}\nを本当に削除しますか？',
                     textAlign: TextAlign.center,
                     style: context.textTheme.bodyMedium!.copyWith(
                       fontSize: 16,
@@ -349,7 +350,9 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                             context.textTheme.bodyLarge),
                       ),
                       onPressed: () {
-                        ref.read(todoProvider.notifier).delete(widget.todo.id!);
+                        ref
+                            .read(todoProvider.notifier)
+                            .delete(widget.args.todo.id!);
                         Navigator.pop(context);
                         Navigator.pop(context);
                         context.showSnackBar(

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:routine_app/design/app_assets.dart';
 import 'package:routine_app/pages/home/widget/my_drawer.dart';
 import 'package:routine_app/pages/list/list_page_state.dart';
+import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/viewModel/category_provider.dart';
@@ -257,7 +258,11 @@ class _ListPageState extends ConsumerState<ListPage> {
       padding: const EdgeInsets.only(bottom: 12),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, AppRouter.detail, arguments: todo);
+          Navigator.pushNamed(
+            context,
+            AppRouter.detail,
+            arguments: TaskDetailPageArgs(todo: todo, isCompleted: false),
+          );
         },
         child: IntrinsicHeight(
           child: Stack(
