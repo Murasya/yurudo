@@ -80,7 +80,8 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
           .watch(todoProvider)
           .where((todo) =>
               todo.expectedDate.isBeforeDay(pageDay) ||
-              todo.preExpectedDate.isBeforeDay(pageDay))
+              todo.preExpectedDate.isBeforeDay(pageDay) &&
+                  isContainDay(todo.completeDate, pageDay))
           .toList();
       pastTodoList.sort(compExp);
       pastTodoList = pastTodoList.reversed.toList();
