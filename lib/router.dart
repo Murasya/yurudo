@@ -5,6 +5,7 @@ import 'package:routine_app/pages/list/list_page.dart';
 import 'package:routine_app/pages/search_page.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
+import 'package:routine_app/services/analytics_service.dart';
 
 import 'pages/newTask/new_task_page.dart';
 
@@ -17,6 +18,7 @@ class AppRouter {
   static const feedback = '/feedback';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
+    AnalyticsService.logPage(settings.name ?? '');
     switch (settings.name) {
       case home:
         return MaterialPageRoute(

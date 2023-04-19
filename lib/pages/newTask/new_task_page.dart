@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/design/app_style.dart';
@@ -15,6 +14,7 @@ import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
+import '../../services/ad_service.dart';
 import '../../services/notification_service.dart';
 import '../widget/categoryDialog/category_dialog.dart';
 
@@ -33,13 +33,19 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   NotificationService ns = NotificationService();
   final provider = newTaskPageStateProvider;
   final dateFormat = DateFormat('y年M月d日');
-  InterstitialAd? _interstitialAd;
+  late final AdService ad;
 
   @override
   void initState() {
     super.initState();
     ns.initializeNotification();
-    adLoad();
+    ad = AdService();
+    ad.adLoad(onFinish: () {
+      Navigator.popUntil(
+        context,
+        (route) => route.settings.name == AppRouter.home,
+      );
+    });
   }
 
   @override
@@ -105,7 +111,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                   categoryId: state.category?.id,
                   time: state.time,
                 );
-            _interstitialAd?.show();
+            ad.showInterstitial();
             if (!mounted) return;
             Navigator.pop(context);
           },
@@ -278,38 +284,6 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  void adLoad() {
-    InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (InterstitialAd ad) {
-          ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdShowedFullScreenContent: (InterstitialAd ad) =>
-                debugPrint('$ad onAdShowedFullScreenContent.'),
-            onAdDismissedFullScreenContent: (InterstitialAd ad) {
-              debugPrint('$ad onAdDismissedFullScreenContent.');
-              ad.dispose();
-              Navigator.popUntil(
-                context,
-                (route) => route.settings.name == AppRouter.home,
-              );
-            },
-            onAdFailedToShowFullScreenContent:
-                (InterstitialAd ad, AdError error) {
-              debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
-              ad.dispose();
-            },
-            onAdImpression: (InterstitialAd ad) =>
-                debugPrint('$ad impression occurred.'),
-          );
-          _interstitialAd = ad;
-        },
-        onAdFailedToLoad: (LoadAdError error) {},
       ),
     );
   }

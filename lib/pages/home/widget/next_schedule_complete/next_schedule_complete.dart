@@ -112,15 +112,17 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                             .setError(true, msg: '明日以降は選択できません');
                         return;
                       }
-                      final lastCompleteDate =
-                          widget.args.todo.completeDate.last;
-                      final lastCompDateStr =
-                          DateFormat("y/M/d").format(lastCompleteDate);
-                      if (ref.read(provider).selectDay.isBeforeDay(
-                          lastCompleteDate.add(const Duration(days: 1)))) {
-                        ref.read(provider.notifier).setError(true,
-                            msg: '前回の実施日以降しか選択できません（前回の実施日$lastCompDateStr）');
-                        return;
+                      if (widget.args.todo.completeDate.isNotEmpty) {
+                        final lastCompleteDate =
+                            widget.args.todo.completeDate.last;
+                        final lastCompDateStr =
+                            DateFormat("y/M/d").format(lastCompleteDate);
+                        if (ref.read(provider).selectDay.isBeforeDay(
+                            lastCompleteDate.add(const Duration(days: 1)))) {
+                          ref.read(provider.notifier).setError(true,
+                              msg: '前回の実施日以降しか選択できません（前回の実施日$lastCompDateStr）');
+                          return;
+                        }
                       }
                       ref.read(provider.notifier).setError(false);
                       showDialog(

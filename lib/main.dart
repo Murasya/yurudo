@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:routine_app/databases/todo_database.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/router.dart';
+import 'package:routine_app/services/analytics_service.dart';
 import 'package:routine_app/services/app_shared.dart';
 import 'package:routine_app/services/notification_service.dart';
 import 'package:routine_app/utils/date.dart';
@@ -29,6 +31,8 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+  AnalyticsService.logAppOpen();
+
   await AppShared.init();
   // 日付が変わっていたら初期化
   if (!AppShared.shared.lastLoginDate.isSameDay(DateTime.now())) {
@@ -97,6 +101,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: AppRouter.home,
       onGenerateRoute: AppRouter.generateRoute,
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)
+      ],
     );
   }
 }
