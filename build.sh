@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # TODO: タグの名前を変更すること
-MESSAGE=`git log --oneline | head -n 4`
+MESSAGE=`git log --oneline | head -n 1`
 
 echo "ios build..."
 flutter build ipa --export-options-plist="ios/ExportOptions.plist"
