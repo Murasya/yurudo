@@ -110,24 +110,26 @@ class NotificationService {
         message: 'test message');
   }
 
-  /// 翌日の通知をセットする
+  /// 1週間分の通知をセットする
   Future<void> setNotifications(List<Todo> todos) async {
     await _cancelNotification();
 
     final today = DateTime.now();
-    final tomorrow = today.add(const Duration(days: 1));
-    final tomorrowTodo = todos
-        .where((todo) =>
-            todo.expectedDate != null &&
-            todo.expectedDate!.isSameDay(tomorrow) &&
-            todo.remind)
-        .toList();
-    String message = '';
-    for (var i = 0; i < min(3, tomorrowTodo.length); i++) {
-      message +=
-          '${tomorrowTodo[i].name} [${tomorrowTodo[i].time.toTimeString()}]\n';
+    for (int i = 1; i <= 7; i++) {
+      final tomorrow = today.add(Duration(days: i));
+      final tomorrowTodo = todos
+          .where((todo) =>
+              todo.expectedDate != null &&
+              todo.expectedDate!.isSameDay(tomorrow) &&
+              todo.remind)
+          .toList();
+      String message = '';
+      for (var i = 0; i < min(3, tomorrowTodo.length); i++) {
+        message +=
+            '${tomorrowTodo[i].name} [${tomorrowTodo[i].time.toTimeString()}]\n';
+      }
+      registerMessage(day: tomorrow, message: message);
     }
-    registerMessage(day: tomorrow, message: message);
   }
 
   void onDidReceiveLocalNotification(
