@@ -130,7 +130,8 @@ class _NextScheduleNextState extends ConsumerState<NextScheduleNext> {
                         return;
                       }
                       ref.read(todoProvider.notifier).complete(
-                            todo: widget.args.todo,
+                            todo: widget.args.todo
+                                .copyWith(expectedDate: () => null),
                             completeDay: widget.args.completeDay,
                             nextDay: ref.read(provider).selectDay,
                           );
