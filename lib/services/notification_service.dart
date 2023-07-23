@@ -63,6 +63,7 @@ class NotificationService {
   }
 
   Future<void> registerMessage({
+    int id = 0,
     required DateTime day,
     required String message,
   }) async {
@@ -76,7 +77,7 @@ class NotificationService {
     DateFormat dateFormat = DateFormat('M/d(E)', 'ja');
 
     _flnp.zonedSchedule(
-      0,
+      id,
       '${dateFormat.format(day)}のゆるDOを確認しましょう',
       message,
       scheduledDate,
@@ -124,11 +125,19 @@ class NotificationService {
               todo.remind)
           .toList();
       String message = '';
-      for (var i = 0; i < min(3, tomorrowTodo.length); i++) {
+      for (var j = 0; j < min(3, tomorrowTodo.length); j++) {
         message +=
-            '${tomorrowTodo[i].name} [${tomorrowTodo[i].time.toTimeString()}]\n';
+            '${tomorrowTodo[j].name} [${tomorrowTodo[j].time.toTimeString()}]\n';
       }
-      registerMessage(day: tomorrow, message: message);
+      registerMessage(id: i, day: tomorrow, message: message);
+    }
+    var list = await _flnp.getActiveNotifications();
+    // listを一覧表示
+    for (var item in list) {
+      debugPrint('id: ${item.id}');
+      debugPrint('title: ${item.title}');
+      debugPrint('body: ${item.body}');
+      debugPrint('payload: ${item.payload}');
     }
   }
 
