@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdService {
@@ -9,6 +12,10 @@ class AdService {
     await FirebaseAnalytics.instance.logAdImpression();
     _interstitialAd.show();
   }
+
+  final unitId = Platform.isAndroid ?
+      dotenv.env['ADMOB_ANDROID_UNITID']
+      : dotenv.env['ADMOB_IOS_UNITID'];
 
   void adLoad({
     required VoidCallback onFinish,
