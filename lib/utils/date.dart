@@ -38,6 +38,13 @@ extension Date on DateTime {
 
   int get lastDayOfMonth =>
       DateTime(year, month + 1, 1).add(const Duration(days: -1)).day;
+
+  int get weekInMonth {
+    final firstWeekDay = firstDayOfMonth.weekday;
+    final lastDay = lastDayOfMonth;
+    int totalDays = lastDay + firstWeekDay - 1;
+    return (totalDays / 7).ceil();
+  }
 }
 
 extension DateNullable on DateTime? {
