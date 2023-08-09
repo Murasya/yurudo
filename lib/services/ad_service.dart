@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdService {
@@ -13,15 +12,15 @@ class AdService {
     _interstitialAd.show();
   }
 
-  final unitId = Platform.isAndroid ?
-      dotenv.env['ADMOB_ANDROID_UNITID']
-      : dotenv.env['ADMOB_IOS_UNITID'];
+  final adUnitId = Platform.isAndroid
+      ? 'ca-app-pub-8657757436017103/7742696678'
+      : 'ca-app-pub-8657757436017103/1002028507';
 
   void adLoad({
     required VoidCallback onFinish,
   }) {
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      adUnitId: adUnitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
