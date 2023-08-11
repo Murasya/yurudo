@@ -200,7 +200,7 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
         const SizedBox(height: 20),
         Column(
           children: [
-            for (int week = 0; week < 5; week++)
+            for (int week = 0; week < state.displayMonth.weekInMonth; week++)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
