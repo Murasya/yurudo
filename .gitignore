@@ -49,6 +49,7 @@ app.*.map.json
 /android/app/release
 
 /ios/ExportOptions.plist
+/ios/cert
 
 # Firebase
 /lib/firebase_options.dart

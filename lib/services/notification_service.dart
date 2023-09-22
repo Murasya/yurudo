@@ -95,9 +95,9 @@ class NotificationService {
           badgeNumber: 1,
         ),
       ),
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
     );
   }
 
