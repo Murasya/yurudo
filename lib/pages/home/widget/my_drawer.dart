@@ -79,7 +79,7 @@ class MyDrawer extends StatelessWidget {
     VoidCallback? onTap,
   }) {
     return Builder(builder: (context) {
-      return GestureDetector(
+      return InkWell(
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -116,21 +116,23 @@ class MyDrawer extends StatelessWidget {
     return Builder(builder: (context) {
       return Column(
         children: [
-          GestureDetector(
+          InkWell(
             onTap: onTap,
-            child: Row(
-              children: [
-                const SizedBox(width: 40),
-                Text(
-                  text,
-                  style: context.textTheme.bodySmall,
-                ),
-                const SizedBox(width: 4),
-                if (hasIcon) const Icon(Icons.open_in_new),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Row(
+                children: [
+                  const SizedBox(width: 40),
+                  Text(
+                    text,
+                    style: context.textTheme.bodySmall,
+                  ),
+                  const SizedBox(width: 4),
+                  if (hasIcon) const Icon(Icons.open_in_new),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 35),
         ],
       );
     });
