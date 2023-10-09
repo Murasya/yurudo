@@ -233,35 +233,41 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                         ],
                       ),
                     ),
-                    Container(
+                    Ink(
                       width: deviceWidth / 2 - 20,
-                      padding: const EdgeInsets.only(top: 25),
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 8),
-                          Checkbox(
-                            value: state.remind,
-                            activeColor: AppColor.fontColor2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
+                      padding: const EdgeInsets.only(top: 25, left: 12),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          ref.read(provider.notifier).setRemind(!state.remind);
+                        },
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              value: state.remind,
+                              activeColor: AppColor.fontColor2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              onChanged: (value) {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                ref
+                                    .read(provider.notifier)
+                                    .setRemind(value ?? false);
+                              },
                             ),
-                            onChanged: (value) {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              ref
-                                  .read(provider.notifier)
-                                  .setRemind(value ?? false);
-                            },
-                          ),
-                          Transform.translate(
-                            offset: const Offset(-7, 0),
-                            child: const Text(
-                              'リマインドする',
-                              style: TextStyle(
-                                fontSize: 14,
+                            Transform.translate(
+                              offset: const Offset(-7, 0),
+                              child: const Text(
+                                'リマインドする',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
