@@ -256,54 +256,60 @@ class _ListPageState extends ConsumerState<ListPage> {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            AppRouter.detail,
-            arguments: TaskDetailPageArgs(todo: todo, isCompleted: false),
-          );
-        },
-        child: IntrinsicHeight(
-          child: Stack(
-            children: [
-              Container(
-                width: double.infinity,
-                constraints: const BoxConstraints(
-                  minHeight: 60,
-                ),
-                padding: const EdgeInsets.fromLTRB(25, 8, 10, 25),
-                decoration: BoxDecoration(
-                  color: AppColor.secondaryColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
+      child: IntrinsicHeight(
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              constraints: const BoxConstraints(
+                minHeight: 60,
+              ),
+              padding: const EdgeInsets.fromLTRB(25, 8, 10, 25),
+              child: Text(
+                todo.name,
+              ),
+            ),
+            Positioned(
+                bottom: 7,
+                right: 10,
                 child: Text(
-                  todo.name,
-                ),
-              ),
-              Positioned(
-                  bottom: 7,
-                  right: 10,
-                  child: Text(
-                    '${todo.span.toSpanString()} / ${todo.time.toTimeString()}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                      color: AppColor.fontColor3,
-                    ),
-                  )),
-              Container(
-                width: 12,
-                decoration: BoxDecoration(
-                  color: categoryColor,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    bottomLeft: Radius.circular(8),
+                  '${todo.span.toSpanString()} / ${todo.time.toTimeString()}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: AppColor.fontColor3,
                   ),
+                )),
+            Container(
+              width: 12,
+              decoration: BoxDecoration(
+                color: categoryColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  bottomLeft: Radius.circular(8),
                 ),
               ),
-            ],
-          ),
+            ),
+            Ink(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColor.secondaryColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppRouter.detail,
+                    arguments:
+                        TaskDetailPageArgs(todo: todo, isCompleted: false),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
