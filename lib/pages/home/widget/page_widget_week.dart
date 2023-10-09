@@ -117,7 +117,14 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
               itemCount: todoList.length,
               itemBuilder: (context, index) {
                 var todo = todoList[index];
-                return _taskItem(todo, context);
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    _taskItem(todo, context)
+                  ],
+                );
               },
             ),
             const SizedBox(height: 100),
@@ -132,14 +139,15 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
     final isCompleted = todo.expectedDate == null ||
         isContainDay(todo.completeDate, todo.expectedDate!);
 
-    return Container(
+    return Ink(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: AppColor.secondaryColor,
       ),
       height: 60,
-      margin: const EdgeInsets.only(top: 12),
-      child: GestureDetector(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        highlightColor: AppColor.secondaryColor.withOpacity(0.5),
         onTap: () {
           late final Todo t;
           if (isContainDay(todo.completeDate, todo.expectedDate!)) {
@@ -218,9 +226,9 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
                 width: 70,
                 height: double.infinity,
                 margin: const EdgeInsets.only(left: 12),
-                decoration: const BoxDecoration(
-                  color: AppColor.thirdColor,
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: AppColor.thirdColor.withOpacity(0.6),
+                  borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(8),
                     bottomRight: Radius.circular(8),
                   ),

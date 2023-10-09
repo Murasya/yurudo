@@ -152,13 +152,15 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
     final state = ref.watch(homePageStateProvider);
     final isCompleted = isContainDay(todo.completeDate, pageDay);
 
-    return Container(
+    return Ink(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: AppColor.secondaryColor,
       ),
       height: 60,
-      child: GestureDetector(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        highlightColor: AppColor.secondaryColor.withOpacity(0.5),
         onTap: () {
           Navigator.pushNamed(
             context,
@@ -233,9 +235,9 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
               width: 70,
               height: double.infinity,
               margin: const EdgeInsets.only(left: 12),
-              decoration: const BoxDecoration(
-                color: AppColor.thirdColor,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: AppColor.thirdColor.withOpacity(0.6),
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(8),
                   bottomRight: Radius.circular(8),
                 ),
