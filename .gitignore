@@ -9,8 +9,9 @@
 .history
 .svn/
 migrate_working_dir/
-.env
-build.sh
+assets/env/.env
+dev-build.sh
+flavor/prod.json
 
 # IntelliJ related
 *.iml
@@ -33,6 +34,7 @@ build.sh
 .pub-cache/
 .pub/
 /build/
+.fvm/flutter_sdk
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -56,3 +58,5 @@ app.*.map.json
 /android/app/google-services.json
 /ios/firebase_app_id_file.json
 /ios/Runner/GoogleService-Info.plist
+
+/other_data

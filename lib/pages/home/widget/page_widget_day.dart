@@ -119,7 +119,10 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
               itemCount: todoList.length,
               itemBuilder: (context, index) {
                 var todo = todoList[index];
-                return _taskItem(todo, context);
+                return Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: _taskItem(todo, context),
+                );
               },
             ),
             if (pastTodoList.isNotEmpty) ...[
@@ -155,7 +158,6 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
         color: AppColor.secondaryColor,
       ),
       height: 60,
-      margin: const EdgeInsets.only(top: 12),
       child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(

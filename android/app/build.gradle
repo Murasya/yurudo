@@ -57,10 +57,12 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "io.github.murasya.routine.routine_app"
+        applicationIdSuffix appIdSuffix
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        resValue "string", "app_name", appName
     }
 
     signingConfigs {

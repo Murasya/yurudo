@@ -79,23 +79,29 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: GestureDetector(
+                  Ink(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(8),
                       onTap: () => _pageController.previousPage(
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.ease),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          const SizedBox(width: 12),
                           if (state.displayTerm == TermType.day)
-                            Text(
-                              dateFormat.format(state.pageDate
-                                  .subtract(const Duration(days: 1))),
-                              style: GoogleFonts.harmattan(
-                                color: AppColor.fontColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Text(
+                                dateFormat.format(state.pageDate
+                                    .subtract(const Duration(days: 1))),
+                                style: GoogleFonts.harmattan(
+                                  color: AppColor.fontColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                ),
                               ),
                             ),
                           if (state.displayTerm != TermType.day)
@@ -107,7 +113,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                             ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 24),
+                            padding: const EdgeInsets.fromLTRB(16, 12, 12, 12),
                             child: SvgPicture.asset(
                               AppAssets.triangle,
                               width: 14,
@@ -171,15 +177,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: GestureDetector(
+                  Ink(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(8),
                       onTap: () => _pageController.nextPage(
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.ease),
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 24, right: 16),
+                            padding: const EdgeInsets.fromLTRB(12, 16, 12, 12),
                             child: Transform.rotate(
                               angle: pi,
                               child: SvgPicture.asset(
@@ -189,13 +197,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ),
                           ),
                           if (state.displayTerm == TermType.day)
-                            Text(
-                              dateFormat.format(
-                                  state.pageDate.add(const Duration(days: 1))),
-                              style: GoogleFonts.harmattan(
-                                color: AppColor.fontColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Text(
+                                dateFormat.format(state.pageDate
+                                    .add(const Duration(days: 1))),
+                                style: GoogleFonts.harmattan(
+                                  color: AppColor.fontColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                ),
                               ),
                             ),
                           if (state.displayTerm != TermType.day)
@@ -206,6 +217,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 fontSize: 14,
                               ),
                             ),
+                          const SizedBox(width: 12),
                         ],
                       ),
                     ),
@@ -313,18 +325,20 @@ class _HomePageState extends ConsumerState<HomePage> {
     required TermType term,
     bool isActive = false,
   }) {
-    return GestureDetector(
-      onTap: () {
-        ref.read(provider.notifier).changeTerm(term);
-        _pageController.jumpToPage(ref.read(provider).usingPageIndex);
-      },
-      child: Container(
-        width: 32,
-        height: 32,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: isActive ? AppColor.primaryColor : AppColor.secondaryColor,
-        ),
+    return Ink(
+      width: 32,
+      height: 32,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isActive ? AppColor.primaryColor : AppColor.secondaryColor,
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        highlightColor: AppColor.primaryColor.withOpacity(0.2),
+        onTap: () {
+          ref.read(provider.notifier).changeTerm(term);
+          _pageController.jumpToPage(ref.read(provider).usingPageIndex);
+        },
         child: Center(
           child: Text(
             term.displayName,

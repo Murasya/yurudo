@@ -13,8 +13,8 @@ class AdService {
   }
 
   final adUnitId = Platform.isAndroid
-      ? 'ca-app-pub-8657757436017103/7742696678'
-      : 'ca-app-pub-8657757436017103/1002028507';
+      ? const String.fromEnvironment("androidAdUnitId")
+      : const String.fromEnvironment("iosAdUnitId");
 
   void adLoad({
     required VoidCallback onFinish,
