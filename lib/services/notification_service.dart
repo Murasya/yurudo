@@ -13,7 +13,7 @@ import '../model/todo.dart';
 
 class NotificationService {
   late final FlutterLocalNotificationsPlugin _flnp;
-  final int notificationTime = 9;
+  static const int notificationTime = 9;
 
   static final NotificationService _instance = NotificationService._internal();
 
@@ -66,14 +66,22 @@ class NotificationService {
     int id = 0,
     required DateTime day,
     required String message,
+    DateTime? dateTime, // test用
   }) async {
-    tz.TZDateTime scheduledDate = tz.TZDateTime(
-      tz.local,
-      day.year,
-      day.month,
-      day.day,
-      notificationTime,
-    );
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, day.year, day.month, day.day, notificationTime);
+
+    if (dateTime != null) {
+      scheduledDate = tz.TZDateTime(
+        tz.local,
+        dateTime.year,
+        dateTime.month,
+        dateTime.day,
+        dateTime.hour,
+        dateTime.minute,
+        dateTime.second,
+      );
+    }
     DateFormat dateFormat = DateFormat('M/d(E)', 'ja');
 
     _flnp.zonedSchedule(
@@ -83,13 +91,10 @@ class NotificationService {
       scheduledDate,
       NotificationDetails(
         android: AndroidNotificationDetails(
-          'channel id',
-          'channel name',
-          importance: Importance.max,
-          priority: Priority.high,
+          'daily notification',
+          '今日のゆるDO',
           ongoing: true,
           styleInformation: BigTextStyleInformation(message),
-          icon: 'ic_notification',
         ),
         iOS: const DarwinNotificationDetails(
           badgeNumber: 1,
@@ -105,10 +110,16 @@ class NotificationService {
     await _flnp.cancelAll();
   }
 
+  @Deprecated('test用')
   Future<void> testNotification() async {
+    var time = DateTime.now().add(const Duration(minutes: 1));
     registerMessage(
-        day: DateTime.now().add(const Duration(minutes: 1)),
-        message: 'test message');
+      id: 1000,
+      day: time,
+      message: 'test message',
+      dateTime: time,
+    );
+    debugPrint("test notification time$time");
   }
 
   /// 1週間分の通知をセットする
