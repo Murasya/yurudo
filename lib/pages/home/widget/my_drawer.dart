@@ -46,6 +46,16 @@ class MyDrawer extends StatelessWidget {
                       );
                     },
                   ),
+                  if (const String.fromEnvironment("flavor") == "dev")
+                    drawerMain(
+                      text: 'デバッグメニュー',
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRouter.debug,
+                        );
+                      },
+                    ),
                 ],
               ),
             ),

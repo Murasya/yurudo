@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routine_app/pages/debug/debug_page.dart';
 import 'package:routine_app/pages/feedback/feedback_page.dart';
 import 'package:routine_app/pages/home/home_page.dart';
 import 'package:routine_app/pages/list/list_page.dart';
@@ -16,6 +17,7 @@ class AppRouter {
   static const search = '/search';
   static const detail = '/detail';
   static const feedback = '/feedback';
+  static const debug = '/debug';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     AnalyticsService.logPage(settings.name ?? '');
@@ -54,6 +56,11 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) => const FeedbackPage(),
+        );
+      case AppRouter.debug:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const DebugPage(),
         );
     }
     return null;
