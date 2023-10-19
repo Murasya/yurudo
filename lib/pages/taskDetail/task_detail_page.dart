@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/design/app_text_field.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
-import 'package:routine_app/pages/widget/date_dialog.dart';
+import 'package:routine_app/pages/widget/dateDialog/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/utils/contextEx.dart';
@@ -214,16 +213,20 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                               if (state.nextDay
                                       .isSameDay(orgTodo.expectedDate) &&
                                   !widget.args.isCompleted) {
-                                DateDialog(
-                                  onConfirm: (picker, value) {
-                                    final day = (picker.adapter
-                                            as DateTimePickerAdapter)
-                                        .value!;
-                                    ref.read(provider.notifier).setNextDay(day);
-                                    _nextDayController.text =
-                                        dateFormat.format(day);
-                                  },
-                                ).showDialog(context);
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => DateDialog(
+                                    onConfirm: (DateTime date) {
+                                      ref
+                                          .read(provider.notifier)
+                                          .setNextDay(date);
+                                      _nextDayController.text =
+                                          dateFormat.format(date);
+                                      Navigator.pop(context);
+                                    },
+                                    onCancel: () => Navigator.pop(context),
+                                  ),
+                                );
                               } else {
                                 context.showSnackBar(const SnackBar(
                                     content: Text('この実施予定日は変更できません')));

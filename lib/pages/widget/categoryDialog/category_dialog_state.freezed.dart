@@ -58,22 +58,23 @@ class _$CategoryDialogStateCopyWithImpl<$Res, $Val extends CategoryDialogState>
 }
 
 /// @nodoc
-abstract class _$$_CategoryDialogStateCopyWith<$Res>
+abstract class _$$CategoryDialogStateImplCopyWith<$Res>
     implements $CategoryDialogStateCopyWith<$Res> {
-  factory _$$_CategoryDialogStateCopyWith(_$_CategoryDialogState value,
-          $Res Function(_$_CategoryDialogState) then) =
-      __$$_CategoryDialogStateCopyWithImpl<$Res>;
+  factory _$$CategoryDialogStateImplCopyWith(_$CategoryDialogStateImpl value,
+          $Res Function(_$CategoryDialogStateImpl) then) =
+      __$$CategoryDialogStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({int? selectButtonNum});
 }
 
 /// @nodoc
-class __$$_CategoryDialogStateCopyWithImpl<$Res>
-    extends _$CategoryDialogStateCopyWithImpl<$Res, _$_CategoryDialogState>
-    implements _$$_CategoryDialogStateCopyWith<$Res> {
-  __$$_CategoryDialogStateCopyWithImpl(_$_CategoryDialogState _value,
-      $Res Function(_$_CategoryDialogState) _then)
+class __$$CategoryDialogStateImplCopyWithImpl<$Res>
+    extends _$CategoryDialogStateCopyWithImpl<$Res, _$CategoryDialogStateImpl>
+    implements _$$CategoryDialogStateImplCopyWith<$Res> {
+  __$$CategoryDialogStateImplCopyWithImpl(_$CategoryDialogStateImpl _value,
+      $Res Function(_$CategoryDialogStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -81,7 +82,7 @@ class __$$_CategoryDialogStateCopyWithImpl<$Res>
   $Res call({
     Object? selectButtonNum = freezed,
   }) {
-    return _then(_$_CategoryDialogState(
+    return _then(_$CategoryDialogStateImpl(
       selectButtonNum: freezed == selectButtonNum
           ? _value.selectButtonNum
           : selectButtonNum // ignore: cast_nullable_to_non_nullable
@@ -92,8 +93,8 @@ class __$$_CategoryDialogStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CategoryDialogState implements _CategoryDialogState {
-  const _$_CategoryDialogState({this.selectButtonNum = null});
+class _$CategoryDialogStateImpl implements _CategoryDialogState {
+  const _$CategoryDialogStateImpl({this.selectButtonNum = null});
 
   /// 選んでいるボタンの数字
   @override
@@ -109,7 +110,7 @@ class _$_CategoryDialogState implements _CategoryDialogState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CategoryDialogState &&
+            other is _$CategoryDialogStateImpl &&
             (identical(other.selectButtonNum, selectButtonNum) ||
                 other.selectButtonNum == selectButtonNum));
   }
@@ -120,21 +121,22 @@ class _$_CategoryDialogState implements _CategoryDialogState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryDialogStateCopyWith<_$_CategoryDialogState> get copyWith =>
-      __$$_CategoryDialogStateCopyWithImpl<_$_CategoryDialogState>(
+  _$$CategoryDialogStateImplCopyWith<_$CategoryDialogStateImpl> get copyWith =>
+      __$$CategoryDialogStateImplCopyWithImpl<_$CategoryDialogStateImpl>(
           this, _$identity);
 }
 
 abstract class _CategoryDialogState implements CategoryDialogState {
   const factory _CategoryDialogState({final int? selectButtonNum}) =
-      _$_CategoryDialogState;
+      _$CategoryDialogStateImpl;
 
   @override
 
   /// 選んでいるボタンの数字
   int? get selectButtonNum;
+
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryDialogStateCopyWith<_$_CategoryDialogState> get copyWith =>
+  _$$CategoryDialogStateImplCopyWith<_$CategoryDialogStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

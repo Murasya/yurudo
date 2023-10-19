@@ -63,22 +63,23 @@ class _$ListPageStateCopyWithImpl<$Res, $Val extends ListPageState>
 }
 
 /// @nodoc
-abstract class _$$_ListPageStateCopyWith<$Res>
+abstract class _$$ListPageStateImplCopyWith<$Res>
     implements $ListPageStateCopyWith<$Res> {
-  factory _$$_ListPageStateCopyWith(
-          _$_ListPageState value, $Res Function(_$_ListPageState) then) =
-      __$$_ListPageStateCopyWithImpl<$Res>;
+  factory _$$ListPageStateImplCopyWith(
+          _$ListPageStateImpl value, $Res Function(_$ListPageStateImpl) then) =
+      __$$ListPageStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({SortType sortType, List<int> filterType});
 }
 
 /// @nodoc
-class __$$_ListPageStateCopyWithImpl<$Res>
-    extends _$ListPageStateCopyWithImpl<$Res, _$_ListPageState>
-    implements _$$_ListPageStateCopyWith<$Res> {
-  __$$_ListPageStateCopyWithImpl(
-      _$_ListPageState _value, $Res Function(_$_ListPageState) _then)
+class __$$ListPageStateImplCopyWithImpl<$Res>
+    extends _$ListPageStateCopyWithImpl<$Res, _$ListPageStateImpl>
+    implements _$$ListPageStateImplCopyWith<$Res> {
+  __$$ListPageStateImplCopyWithImpl(
+      _$ListPageStateImpl _value, $Res Function(_$ListPageStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +88,7 @@ class __$$_ListPageStateCopyWithImpl<$Res>
     Object? sortType = null,
     Object? filterType = null,
   }) {
-    return _then(_$_ListPageState(
+    return _then(_$ListPageStateImpl(
       sortType: null == sortType
           ? _value.sortType
           : sortType // ignore: cast_nullable_to_non_nullable
@@ -102,8 +103,8 @@ class __$$_ListPageStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ListPageState implements _ListPageState {
-  const _$_ListPageState(
+class _$ListPageStateImpl implements _ListPageState {
+  const _$ListPageStateImpl(
       {this.sortType = SortType.addDayAsc,
       final List<int> filterType = const []})
       : _filterType = filterType;
@@ -112,6 +113,7 @@ class _$_ListPageState implements _ListPageState {
   @JsonKey()
   final SortType sortType;
   final List<int> _filterType;
+
   @override
   @JsonKey()
   List<int> get filterType {
@@ -129,7 +131,7 @@ class _$_ListPageState implements _ListPageState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ListPageState &&
+            other is _$ListPageStateImpl &&
             (identical(other.sortType, sortType) ||
                 other.sortType == sortType) &&
             const DeepCollectionEquality()
@@ -143,20 +145,23 @@ class _$_ListPageState implements _ListPageState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ListPageStateCopyWith<_$_ListPageState> get copyWith =>
-      __$$_ListPageStateCopyWithImpl<_$_ListPageState>(this, _$identity);
+  _$$ListPageStateImplCopyWith<_$ListPageStateImpl> get copyWith =>
+      __$$ListPageStateImplCopyWithImpl<_$ListPageStateImpl>(this, _$identity);
 }
 
 abstract class _ListPageState implements ListPageState {
   const factory _ListPageState(
-      {final SortType sortType, final List<int> filterType}) = _$_ListPageState;
+      {final SortType sortType,
+      final List<int> filterType}) = _$ListPageStateImpl;
 
   @override
   SortType get sortType;
+
   @override
   List<int> get filterType;
+
   @override
   @JsonKey(ignore: true)
-  _$$_ListPageStateCopyWith<_$_ListPageState> get copyWith =>
+  _$$ListPageStateImplCopyWith<_$ListPageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

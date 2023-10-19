@@ -5,7 +5,7 @@ import 'package:routine_app/design/app_color.dart';
 import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/design/app_text_field.dart';
 import 'package:routine_app/pages/newTask/new_task_page_state.dart';
-import 'package:routine_app/pages/widget/date_dialog.dart';
+import 'package:routine_app/pages/widget/dateDialog/date_dialog.dart';
 import 'package:routine_app/pages/widget/span_dialog.dart';
 import 'package:routine_app/pages/widget/time_dialog.dart';
 import 'package:routine_app/router.dart';
@@ -233,15 +233,18 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                             readonly: true,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              DateDialog(
-                                onConfirm: (picker, value) {
-                                  DateTime date =
-                                      DateTime.parse(picker.adapter.toString());
-                                  ref.read(provider.notifier).setDate(date);
-                                  _dateController.text =
-                                      dateFormat.format(date);
-                                },
-                              ).showDialog(context);
+                              showDialog(
+                                context: context,
+                                builder: (context) => DateDialog(
+                                  onConfirm: (DateTime date) {
+                                    ref.read(provider.notifier).setDate(date);
+                                    _dateController.text =
+                                        dateFormat.format(date);
+                                    Navigator.pop(context);
+                                  },
+                                  onCancel: () => Navigator.pop(context),
+                                ),
+                              );
                             },
                           ),
                         ],

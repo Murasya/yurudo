@@ -1,5 +1,7 @@
 extension Date on DateTime {
-  void addMonth(int m) {}
+  DateTime addMonth(int m) {
+    return DateTime(year, month + m, day);
+  }
 
   bool isSameDay(DateTime day) {
     return year == day.year && month == day.month && this.day == day.day;

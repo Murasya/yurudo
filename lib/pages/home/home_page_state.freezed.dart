@@ -84,11 +84,12 @@ class _$HomePageStateCopyWithImpl<$Res, $Val extends HomePageState>
 }
 
 /// @nodoc
-abstract class _$$_HomePageStateCopyWith<$Res>
+abstract class _$$HomePageStateImplCopyWith<$Res>
     implements $HomePageStateCopyWith<$Res> {
-  factory _$$_HomePageStateCopyWith(
-          _$_HomePageState value, $Res Function(_$_HomePageState) then) =
-      __$$_HomePageStateCopyWithImpl<$Res>;
+  factory _$$HomePageStateImplCopyWith(
+          _$HomePageStateImpl value, $Res Function(_$HomePageStateImpl) then) =
+      __$$HomePageStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -99,11 +100,11 @@ abstract class _$$_HomePageStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_HomePageStateCopyWithImpl<$Res>
-    extends _$HomePageStateCopyWithImpl<$Res, _$_HomePageState>
-    implements _$$_HomePageStateCopyWith<$Res> {
-  __$$_HomePageStateCopyWithImpl(
-      _$_HomePageState _value, $Res Function(_$_HomePageState) _then)
+class __$$HomePageStateImplCopyWithImpl<$Res>
+    extends _$HomePageStateCopyWithImpl<$Res, _$HomePageStateImpl>
+    implements _$$HomePageStateImplCopyWith<$Res> {
+  __$$HomePageStateImplCopyWithImpl(
+      _$HomePageStateImpl _value, $Res Function(_$HomePageStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -114,7 +115,7 @@ class __$$_HomePageStateCopyWithImpl<$Res>
     Object? pageIndexDay = null,
     Object? pageIndexWeek = null,
   }) {
-    return _then(_$_HomePageState(
+    return _then(_$HomePageStateImpl(
       displayTerm: null == displayTerm
           ? _value.displayTerm
           : displayTerm // ignore: cast_nullable_to_non_nullable
@@ -137,8 +138,8 @@ class __$$_HomePageStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_HomePageState extends _HomePageState {
-  const _$_HomePageState(
+class _$HomePageStateImpl extends _HomePageState {
+  const _$HomePageStateImpl(
       {this.displayTerm = TermType.day,
       required this.today,
       required this.pageIndexDay,
@@ -169,7 +170,7 @@ class _$_HomePageState extends _HomePageState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HomePageState &&
+            other is _$HomePageStateImpl &&
             (identical(other.displayTerm, displayTerm) ||
                 other.displayTerm == displayTerm) &&
             (identical(other.today, today) || other.today == today) &&
@@ -186,8 +187,8 @@ class _$_HomePageState extends _HomePageState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HomePageStateCopyWith<_$_HomePageState> get copyWith =>
-      __$$_HomePageStateCopyWithImpl<_$_HomePageState>(this, _$identity);
+  _$$HomePageStateImplCopyWith<_$HomePageStateImpl> get copyWith =>
+      __$$HomePageStateImplCopyWithImpl<_$HomePageStateImpl>(this, _$identity);
 }
 
 abstract class _HomePageState extends HomePageState {
@@ -195,7 +196,7 @@ abstract class _HomePageState extends HomePageState {
       {final TermType displayTerm,
       required final DateTime today,
       required final int pageIndexDay,
-      required final int pageIndexWeek}) = _$_HomePageState;
+      required final int pageIndexWeek}) = _$HomePageStateImpl;
   const _HomePageState._() : super._();
 
   @override
@@ -210,10 +211,12 @@ abstract class _HomePageState extends HomePageState {
 
   /// 表示しているページ番号
   int get pageIndexDay;
+
   @override
   int get pageIndexWeek;
+
   @override
   @JsonKey(ignore: true)
-  _$$_HomePageStateCopyWith<_$_HomePageState> get copyWith =>
+  _$$HomePageStateImplCopyWith<_$HomePageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

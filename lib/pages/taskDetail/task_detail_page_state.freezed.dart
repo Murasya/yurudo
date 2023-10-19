@@ -107,11 +107,12 @@ class _$TaskDetailPageStateCopyWithImpl<$Res, $Val extends TaskDetailPageState>
 }
 
 /// @nodoc
-abstract class _$$_TaskDetailPageStateCopyWith<$Res>
+abstract class _$$TaskDetailPageStateImplCopyWith<$Res>
     implements $TaskDetailPageStateCopyWith<$Res> {
-  factory _$$_TaskDetailPageStateCopyWith(_$_TaskDetailPageState value,
-          $Res Function(_$_TaskDetailPageState) then) =
-      __$$_TaskDetailPageStateCopyWithImpl<$Res>;
+  factory _$$TaskDetailPageStateImplCopyWith(_$TaskDetailPageStateImpl value,
+          $Res Function(_$TaskDetailPageStateImpl) then) =
+      __$$TaskDetailPageStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -127,11 +128,11 @@ abstract class _$$_TaskDetailPageStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TaskDetailPageStateCopyWithImpl<$Res>
-    extends _$TaskDetailPageStateCopyWithImpl<$Res, _$_TaskDetailPageState>
-    implements _$$_TaskDetailPageStateCopyWith<$Res> {
-  __$$_TaskDetailPageStateCopyWithImpl(_$_TaskDetailPageState _value,
-      $Res Function(_$_TaskDetailPageState) _then)
+class __$$TaskDetailPageStateImplCopyWithImpl<$Res>
+    extends _$TaskDetailPageStateCopyWithImpl<$Res, _$TaskDetailPageStateImpl>
+    implements _$$TaskDetailPageStateImplCopyWith<$Res> {
+  __$$TaskDetailPageStateImplCopyWithImpl(_$TaskDetailPageStateImpl _value,
+      $Res Function(_$TaskDetailPageStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -144,7 +145,7 @@ class __$$_TaskDetailPageStateCopyWithImpl<$Res>
     Object? time = freezed,
     Object? nextDay = freezed,
   }) {
-    return _then(_$_TaskDetailPageState(
+    return _then(_$TaskDetailPageStateImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -175,8 +176,8 @@ class __$$_TaskDetailPageStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TaskDetailPageState implements _TaskDetailPageState {
-  const _$_TaskDetailPageState(
+class _$TaskDetailPageStateImpl implements _TaskDetailPageState {
+  const _$TaskDetailPageStateImpl(
       {required this.title,
       required this.span,
       required this.remind,
@@ -206,7 +207,7 @@ class _$_TaskDetailPageState implements _TaskDetailPageState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TaskDetailPageState &&
+            other is _$TaskDetailPageStateImpl &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.span, span) || other.span == span) &&
             (identical(other.remind, remind) || other.remind == remind) &&
@@ -223,8 +224,8 @@ class _$_TaskDetailPageState implements _TaskDetailPageState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TaskDetailPageStateCopyWith<_$_TaskDetailPageState> get copyWith =>
-      __$$_TaskDetailPageStateCopyWithImpl<_$_TaskDetailPageState>(
+  _$$TaskDetailPageStateImplCopyWith<_$TaskDetailPageStateImpl> get copyWith =>
+      __$$TaskDetailPageStateImplCopyWithImpl<_$TaskDetailPageStateImpl>(
           this, _$identity);
 }
 
@@ -235,7 +236,7 @@ abstract class _TaskDetailPageState implements TaskDetailPageState {
       required final bool remind,
       required final Category? category,
       required final int? time,
-      required final DateTime? nextDay}) = _$_TaskDetailPageState;
+      required final DateTime? nextDay}) = _$TaskDetailPageStateImpl;
 
   @override
   String get title;
@@ -245,7 +246,6 @@ abstract class _TaskDetailPageState implements TaskDetailPageState {
   bool get remind;
   @override
   Category? get category;
-
   @override
   int? get time;
 
@@ -254,14 +254,13 @@ abstract class _TaskDetailPageState implements TaskDetailPageState {
 
   @override
   @JsonKey(ignore: true)
-  _$$_TaskDetailPageStateCopyWith<_$_TaskDetailPageState> get copyWith =>
+  _$$TaskDetailPageStateImplCopyWith<_$TaskDetailPageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$TaskDetailPageArgs {
   Todo get todo => throw _privateConstructorUsedError;
-
   bool get isCompleted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -274,7 +273,6 @@ abstract class $TaskDetailPageArgsCopyWith<$Res> {
   factory $TaskDetailPageArgsCopyWith(
           TaskDetailPageArgs value, $Res Function(TaskDetailPageArgs) then) =
       _$TaskDetailPageArgsCopyWithImpl<$Res, TaskDetailPageArgs>;
-
   @useResult
   $Res call({Todo todo, bool isCompleted});
 }
@@ -286,7 +284,6 @@ class _$TaskDetailPageArgsCopyWithImpl<$Res, $Val extends TaskDetailPageArgs>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -310,11 +307,11 @@ class _$TaskDetailPageArgsCopyWithImpl<$Res, $Val extends TaskDetailPageArgs>
 }
 
 /// @nodoc
-abstract class _$$_TaskDetailPageArgsCopyWith<$Res>
+abstract class _$$TaskDetailPageArgsImplCopyWith<$Res>
     implements $TaskDetailPageArgsCopyWith<$Res> {
-  factory _$$_TaskDetailPageArgsCopyWith(_$_TaskDetailPageArgs value,
-          $Res Function(_$_TaskDetailPageArgs) then) =
-      __$$_TaskDetailPageArgsCopyWithImpl<$Res>;
+  factory _$$TaskDetailPageArgsImplCopyWith(_$TaskDetailPageArgsImpl value,
+          $Res Function(_$TaskDetailPageArgsImpl) then) =
+      __$$TaskDetailPageArgsImplCopyWithImpl<$Res>;
 
   @override
   @useResult
@@ -322,11 +319,11 @@ abstract class _$$_TaskDetailPageArgsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TaskDetailPageArgsCopyWithImpl<$Res>
-    extends _$TaskDetailPageArgsCopyWithImpl<$Res, _$_TaskDetailPageArgs>
-    implements _$$_TaskDetailPageArgsCopyWith<$Res> {
-  __$$_TaskDetailPageArgsCopyWithImpl(
-      _$_TaskDetailPageArgs _value, $Res Function(_$_TaskDetailPageArgs) _then)
+class __$$TaskDetailPageArgsImplCopyWithImpl<$Res>
+    extends _$TaskDetailPageArgsCopyWithImpl<$Res, _$TaskDetailPageArgsImpl>
+    implements _$$TaskDetailPageArgsImplCopyWith<$Res> {
+  __$$TaskDetailPageArgsImplCopyWithImpl(_$TaskDetailPageArgsImpl _value,
+      $Res Function(_$TaskDetailPageArgsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -335,7 +332,7 @@ class __$$_TaskDetailPageArgsCopyWithImpl<$Res>
     Object? todo = null,
     Object? isCompleted = null,
   }) {
-    return _then(_$_TaskDetailPageArgs(
+    return _then(_$TaskDetailPageArgsImpl(
       todo: null == todo
           ? _value.todo
           : todo // ignore: cast_nullable_to_non_nullable
@@ -350,8 +347,9 @@ class __$$_TaskDetailPageArgsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TaskDetailPageArgs implements _TaskDetailPageArgs {
-  const _$_TaskDetailPageArgs({required this.todo, required this.isCompleted});
+class _$TaskDetailPageArgsImpl implements _TaskDetailPageArgs {
+  const _$TaskDetailPageArgsImpl(
+      {required this.todo, required this.isCompleted});
 
   @override
   final Todo todo;
@@ -367,7 +365,7 @@ class _$_TaskDetailPageArgs implements _TaskDetailPageArgs {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TaskDetailPageArgs &&
+            other is _$TaskDetailPageArgsImpl &&
             (identical(other.todo, todo) || other.todo == todo) &&
             (identical(other.isCompleted, isCompleted) ||
                 other.isCompleted == isCompleted));
@@ -379,15 +377,15 @@ class _$_TaskDetailPageArgs implements _TaskDetailPageArgs {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TaskDetailPageArgsCopyWith<_$_TaskDetailPageArgs> get copyWith =>
-      __$$_TaskDetailPageArgsCopyWithImpl<_$_TaskDetailPageArgs>(
+  _$$TaskDetailPageArgsImplCopyWith<_$TaskDetailPageArgsImpl> get copyWith =>
+      __$$TaskDetailPageArgsImplCopyWithImpl<_$TaskDetailPageArgsImpl>(
           this, _$identity);
 }
 
 abstract class _TaskDetailPageArgs implements TaskDetailPageArgs {
   const factory _TaskDetailPageArgs(
       {required final Todo todo,
-      required final bool isCompleted}) = _$_TaskDetailPageArgs;
+      required final bool isCompleted}) = _$TaskDetailPageArgsImpl;
 
   @override
   Todo get todo;
@@ -397,6 +395,6 @@ abstract class _TaskDetailPageArgs implements TaskDetailPageArgs {
 
   @override
   @JsonKey(ignore: true)
-  _$$_TaskDetailPageArgsCopyWith<_$_TaskDetailPageArgs> get copyWith =>
+  _$$TaskDetailPageArgsImplCopyWith<_$TaskDetailPageArgsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

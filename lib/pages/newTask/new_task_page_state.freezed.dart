@@ -121,11 +121,12 @@ class _$NewTaskPageStateCopyWithImpl<$Res, $Val extends NewTaskPageState>
 }
 
 /// @nodoc
-abstract class _$$_NewTaskPageStateCopyWith<$Res>
+abstract class _$$NewTaskPageStateImplCopyWith<$Res>
     implements $NewTaskPageStateCopyWith<$Res> {
-  factory _$$_NewTaskPageStateCopyWith(
-          _$_NewTaskPageState value, $Res Function(_$_NewTaskPageState) then) =
-      __$$_NewTaskPageStateCopyWithImpl<$Res>;
+  factory _$$NewTaskPageStateImplCopyWith(_$NewTaskPageStateImpl value,
+          $Res Function(_$NewTaskPageStateImpl) then) =
+      __$$NewTaskPageStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -143,11 +144,11 @@ abstract class _$$_NewTaskPageStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NewTaskPageStateCopyWithImpl<$Res>
-    extends _$NewTaskPageStateCopyWithImpl<$Res, _$_NewTaskPageState>
-    implements _$$_NewTaskPageStateCopyWith<$Res> {
-  __$$_NewTaskPageStateCopyWithImpl(
-      _$_NewTaskPageState _value, $Res Function(_$_NewTaskPageState) _then)
+class __$$NewTaskPageStateImplCopyWithImpl<$Res>
+    extends _$NewTaskPageStateCopyWithImpl<$Res, _$NewTaskPageStateImpl>
+    implements _$$NewTaskPageStateImplCopyWith<$Res> {
+  __$$NewTaskPageStateImplCopyWithImpl(_$NewTaskPageStateImpl _value,
+      $Res Function(_$NewTaskPageStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -162,7 +163,7 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
     Object? hasError = freezed,
     Object? errorMessage = freezed,
   }) {
-    return _then(_$_NewTaskPageState(
+    return _then(_$NewTaskPageStateImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -196,8 +197,8 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NewTaskPageState implements _NewTaskPageState {
-  const _$_NewTaskPageState(
+class _$NewTaskPageStateImpl implements _NewTaskPageState {
+  const _$NewTaskPageStateImpl(
       {required this.name,
       required this.span,
       required this.remind,
@@ -237,7 +238,7 @@ class _$_NewTaskPageState implements _NewTaskPageState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NewTaskPageState &&
+            other is _$NewTaskPageStateImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.span, span) || other.span == span) &&
             (identical(other.remind, remind) || other.remind == remind) &&
@@ -266,8 +267,9 @@ class _$_NewTaskPageState implements _NewTaskPageState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NewTaskPageStateCopyWith<_$_NewTaskPageState> get copyWith =>
-      __$$_NewTaskPageStateCopyWithImpl<_$_NewTaskPageState>(this, _$identity);
+  _$$NewTaskPageStateImplCopyWith<_$NewTaskPageStateImpl> get copyWith =>
+      __$$NewTaskPageStateImplCopyWithImpl<_$NewTaskPageStateImpl>(
+          this, _$identity);
 }
 
 abstract class _NewTaskPageState implements NewTaskPageState {
@@ -279,7 +281,7 @@ abstract class _NewTaskPageState implements NewTaskPageState {
       final int? time,
       required final DateTime? firstDay,
       final dynamic hasError,
-      final dynamic errorMessage}) = _$_NewTaskPageState;
+      final dynamic errorMessage}) = _$NewTaskPageStateImpl;
 
   @override
   String get name;
@@ -295,10 +297,12 @@ abstract class _NewTaskPageState implements NewTaskPageState {
   DateTime? get firstDay;
   @override
   dynamic get hasError;
+
   @override
   dynamic get errorMessage;
+
   @override
   @JsonKey(ignore: true)
-  _$$_NewTaskPageStateCopyWith<_$_NewTaskPageState> get copyWith =>
+  _$$NewTaskPageStateImplCopyWith<_$NewTaskPageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

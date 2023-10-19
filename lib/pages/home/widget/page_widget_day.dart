@@ -94,7 +94,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
         }
         if (todo.expectedDate!.isBeforeDay(pageDay) &&
             todo.expectedDate!.dateDiff(pageDay) % todo.span == 0) {
-          todoList.add(todo.copyWith(expectedDate: () => pageDay));
+          todoList.add(todo);
         }
       }
       todoList.sort(compTime);
@@ -185,6 +185,13 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
             GestureDetector(
               onTap: () {
                 if (state.today.isBeforeDay(pageDay)) {
+                  debugPrint(todo.toString());
+                  if (todo.expectedDate != null &&
+                      todo.expectedDate!.isBeforeDay(pageDay)) {
+                    debugPrint("can");
+                  } else {
+                    debugPrint("can't");
+                  }
                   context.showSnackBar(
                     const SnackBar(content: Text('未来のゆるDOは完了できません')),
                   );

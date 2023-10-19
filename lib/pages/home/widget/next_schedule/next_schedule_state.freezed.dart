@@ -63,22 +63,23 @@ class _$NextScheduleArgsCopyWithImpl<$Res, $Val extends NextScheduleArgs>
 }
 
 /// @nodoc
-abstract class _$$_NextScheduleArgsCopyWith<$Res>
+abstract class _$$NextScheduleArgsImplCopyWith<$Res>
     implements $NextScheduleArgsCopyWith<$Res> {
-  factory _$$_NextScheduleArgsCopyWith(
-          _$_NextScheduleArgs value, $Res Function(_$_NextScheduleArgs) then) =
-      __$$_NextScheduleArgsCopyWithImpl<$Res>;
+  factory _$$NextScheduleArgsImplCopyWith(_$NextScheduleArgsImpl value,
+          $Res Function(_$NextScheduleArgsImpl) then) =
+      __$$NextScheduleArgsImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({Todo todo, DateTime completeDay});
 }
 
 /// @nodoc
-class __$$_NextScheduleArgsCopyWithImpl<$Res>
-    extends _$NextScheduleArgsCopyWithImpl<$Res, _$_NextScheduleArgs>
-    implements _$$_NextScheduleArgsCopyWith<$Res> {
-  __$$_NextScheduleArgsCopyWithImpl(
-      _$_NextScheduleArgs _value, $Res Function(_$_NextScheduleArgs) _then)
+class __$$NextScheduleArgsImplCopyWithImpl<$Res>
+    extends _$NextScheduleArgsCopyWithImpl<$Res, _$NextScheduleArgsImpl>
+    implements _$$NextScheduleArgsImplCopyWith<$Res> {
+  __$$NextScheduleArgsImplCopyWithImpl(_$NextScheduleArgsImpl _value,
+      $Res Function(_$NextScheduleArgsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +88,7 @@ class __$$_NextScheduleArgsCopyWithImpl<$Res>
     Object? todo = null,
     Object? completeDay = null,
   }) {
-    return _then(_$_NextScheduleArgs(
+    return _then(_$NextScheduleArgsImpl(
       todo: null == todo
           ? _value.todo
           : todo // ignore: cast_nullable_to_non_nullable
@@ -102,8 +103,8 @@ class __$$_NextScheduleArgsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NextScheduleArgs implements _NextScheduleArgs {
-  const _$_NextScheduleArgs({required this.todo, required this.completeDay});
+class _$NextScheduleArgsImpl implements _NextScheduleArgs {
+  const _$NextScheduleArgsImpl({required this.todo, required this.completeDay});
 
   @override
   final Todo todo;
@@ -119,7 +120,7 @@ class _$_NextScheduleArgs implements _NextScheduleArgs {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NextScheduleArgs &&
+            other is _$NextScheduleArgsImpl &&
             (identical(other.todo, todo) || other.todo == todo) &&
             (identical(other.completeDay, completeDay) ||
                 other.completeDay == completeDay));
@@ -131,22 +132,25 @@ class _$_NextScheduleArgs implements _NextScheduleArgs {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NextScheduleArgsCopyWith<_$_NextScheduleArgs> get copyWith =>
-      __$$_NextScheduleArgsCopyWithImpl<_$_NextScheduleArgs>(this, _$identity);
+  _$$NextScheduleArgsImplCopyWith<_$NextScheduleArgsImpl> get copyWith =>
+      __$$NextScheduleArgsImplCopyWithImpl<_$NextScheduleArgsImpl>(
+          this, _$identity);
 }
 
 abstract class _NextScheduleArgs implements NextScheduleArgs {
   const factory _NextScheduleArgs(
       {required final Todo todo,
-      required final DateTime completeDay}) = _$_NextScheduleArgs;
+      required final DateTime completeDay}) = _$NextScheduleArgsImpl;
 
   @override
   Todo get todo;
+
   @override
   DateTime get completeDay;
+
   @override
   @JsonKey(ignore: true)
-  _$$_NextScheduleArgsCopyWith<_$_NextScheduleArgs> get copyWith =>
+  _$$NextScheduleArgsImplCopyWith<_$NextScheduleArgsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -215,11 +219,12 @@ class _$NextScheduleStateCopyWithImpl<$Res, $Val extends NextScheduleState>
 }
 
 /// @nodoc
-abstract class _$$_NextScheduleStateCopyWith<$Res>
+abstract class _$$NextScheduleStateImplCopyWith<$Res>
     implements $NextScheduleStateCopyWith<$Res> {
-  factory _$$_NextScheduleStateCopyWith(_$_NextScheduleState value,
-          $Res Function(_$_NextScheduleState) then) =
-      __$$_NextScheduleStateCopyWithImpl<$Res>;
+  factory _$$NextScheduleStateImplCopyWith(_$NextScheduleStateImpl value,
+          $Res Function(_$NextScheduleStateImpl) then) =
+      __$$NextScheduleStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -230,11 +235,11 @@ abstract class _$$_NextScheduleStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NextScheduleStateCopyWithImpl<$Res>
-    extends _$NextScheduleStateCopyWithImpl<$Res, _$_NextScheduleState>
-    implements _$$_NextScheduleStateCopyWith<$Res> {
-  __$$_NextScheduleStateCopyWithImpl(
-      _$_NextScheduleState _value, $Res Function(_$_NextScheduleState) _then)
+class __$$NextScheduleStateImplCopyWithImpl<$Res>
+    extends _$NextScheduleStateCopyWithImpl<$Res, _$NextScheduleStateImpl>
+    implements _$$NextScheduleStateImplCopyWith<$Res> {
+  __$$NextScheduleStateImplCopyWithImpl(_$NextScheduleStateImpl _value,
+      $Res Function(_$NextScheduleStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -245,7 +250,7 @@ class __$$_NextScheduleStateCopyWithImpl<$Res>
     Object? hasError = null,
     Object? errorMessage = null,
   }) {
-    return _then(_$_NextScheduleState(
+    return _then(_$NextScheduleStateImpl(
       displayMonth: null == displayMonth
           ? _value.displayMonth
           : displayMonth // ignore: cast_nullable_to_non_nullable
@@ -268,8 +273,8 @@ class __$$_NextScheduleStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NextScheduleState implements _NextScheduleState {
-  const _$_NextScheduleState(
+class _$NextScheduleStateImpl implements _NextScheduleState {
+  const _$NextScheduleStateImpl(
       {required this.displayMonth,
       required this.selectDay,
       this.hasError = false,
@@ -295,7 +300,7 @@ class _$_NextScheduleState implements _NextScheduleState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NextScheduleState &&
+            other is _$NextScheduleStateImpl &&
             (identical(other.displayMonth, displayMonth) ||
                 other.displayMonth == displayMonth) &&
             (identical(other.selectDay, selectDay) ||
@@ -313,8 +318,8 @@ class _$_NextScheduleState implements _NextScheduleState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NextScheduleStateCopyWith<_$_NextScheduleState> get copyWith =>
-      __$$_NextScheduleStateCopyWithImpl<_$_NextScheduleState>(
+  _$$NextScheduleStateImplCopyWith<_$NextScheduleStateImpl> get copyWith =>
+      __$$NextScheduleStateImplCopyWithImpl<_$NextScheduleStateImpl>(
           this, _$identity);
 }
 
@@ -323,7 +328,7 @@ abstract class _NextScheduleState implements NextScheduleState {
       {required final DateTime displayMonth,
       required final DateTime selectDay,
       final bool hasError,
-      final String errorMessage}) = _$_NextScheduleState;
+      final String errorMessage}) = _$NextScheduleStateImpl;
 
   @override
   DateTime get displayMonth;
@@ -331,10 +336,12 @@ abstract class _NextScheduleState implements NextScheduleState {
   DateTime get selectDay;
   @override
   bool get hasError;
+
   @override
   String get errorMessage;
+
   @override
   @JsonKey(ignore: true)
-  _$$_NextScheduleStateCopyWith<_$_NextScheduleState> get copyWith =>
+  _$$NextScheduleStateImplCopyWith<_$NextScheduleStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -73,21 +73,23 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
 }
 
 /// @nodoc
-abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
-  factory _$$_CategoryCopyWith(
-          _$_Category value, $Res Function(_$_Category) then) =
-      __$$_CategoryCopyWithImpl<$Res>;
+abstract class _$$CategoryImplCopyWith<$Res>
+    implements $CategoryCopyWith<$Res> {
+  factory _$$CategoryImplCopyWith(
+          _$CategoryImpl value, $Res Function(_$CategoryImpl) then) =
+      __$$CategoryImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({int id, Color color, String name});
 }
 
 /// @nodoc
-class __$$_CategoryCopyWithImpl<$Res>
-    extends _$CategoryCopyWithImpl<$Res, _$_Category>
-    implements _$$_CategoryCopyWith<$Res> {
-  __$$_CategoryCopyWithImpl(
-      _$_Category _value, $Res Function(_$_Category) _then)
+class __$$CategoryImplCopyWithImpl<$Res>
+    extends _$CategoryCopyWithImpl<$Res, _$CategoryImpl>
+    implements _$$CategoryImplCopyWith<$Res> {
+  __$$CategoryImplCopyWithImpl(
+      _$CategoryImpl _value, $Res Function(_$CategoryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -97,7 +99,7 @@ class __$$_CategoryCopyWithImpl<$Res>
     Object? color = null,
     Object? name = null,
   }) {
-    return _then(_$_Category(
+    return _then(_$CategoryImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -116,8 +118,8 @@ class __$$_CategoryCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Category implements _Category {
-  const _$_Category({required this.id, required this.color, this.name = ''});
+class _$CategoryImpl implements _Category {
+  const _$CategoryImpl({required this.id, required this.color, this.name = ''});
 
   /// カテゴリNo.
   @override
@@ -141,7 +143,7 @@ class _$_Category implements _Category {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Category &&
+            other is _$CategoryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.color, color) || other.color == color) &&
             (identical(other.name, name) || other.name == name));
@@ -153,15 +155,15 @@ class _$_Category implements _Category {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryCopyWith<_$_Category> get copyWith =>
-      __$$_CategoryCopyWithImpl<_$_Category>(this, _$identity);
+  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
+      __$$CategoryImplCopyWithImpl<_$CategoryImpl>(this, _$identity);
 }
 
 abstract class _Category implements Category {
   const factory _Category(
       {required final int id,
       required final Color color,
-      final String name}) = _$_Category;
+      final String name}) = _$CategoryImpl;
 
   @override
 
@@ -171,12 +173,14 @@ abstract class _Category implements Category {
 
   /// カラー
   Color get color;
+
   @override
 
   /// カテゴリ名
   String get name;
+
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryCopyWith<_$_Category> get copyWith =>
+  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
