@@ -59,7 +59,7 @@ class NotificationService {
     await _flnp
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestPermission();
+        ?.requestNotificationsPermission();
   }
 
   Future<void> registerMessage({
@@ -83,6 +83,10 @@ class NotificationService {
       );
     }
     DateFormat dateFormat = DateFormat('M/d(E)', 'ja');
+
+    if (scheduledDate.isBefore(DateTime.now())) {
+      return;
+    }
 
     _flnp.zonedSchedule(
       id,

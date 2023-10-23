@@ -354,10 +354,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_local_notifications
-      sha256: "501ed9d54f1c8c0535b7991bade36f9e7e3b45a2346401f03775c1ec7a3c06ae"
+      sha256: "6d11ea777496061e583623aaf31923f93a9409ef8fcaeeefdd6cd78bf4fe5bb3"
       url: "https://pub.dev"
     source: hosted
-    version: "15.1.2"
+    version: "16.1.0"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -374,14 +374,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0+1"
-  flutter_native_timezone:
-    dependency: "direct main"
-    description:
-      name: flutter_native_timezone
-      sha256: ed7bfb982f036243de1c068e269182a877100c994f05143c8b26a325e28c1b02
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   flutter_picker:
     dependency: "direct main"
     description:
