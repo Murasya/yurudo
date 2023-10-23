@@ -137,7 +137,10 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
                 itemCount: pastTodoList.length,
                 itemBuilder: (context, index) {
                   var todo = pastTodoList[index];
-                  return _taskItem(todo, context);
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: _taskItem(todo, context),
+                  );
                 },
               ),
             ],
