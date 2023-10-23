@@ -10,6 +10,7 @@ class AppTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final VoidCallback? onTap;
   final bool readonly;
+  final int maxLines;
 
   const AppTextField({
     Key? key,
@@ -20,6 +21,7 @@ class AppTextField extends StatelessWidget {
     this.onChanged,
     this.onTap,
     this.readonly = false,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
@@ -66,6 +68,7 @@ class AppTextField extends StatelessWidget {
             fontSize: 14,
             color: AppColor.fontColor,
           ),
+          maxLines: maxLines,
           readOnly: readonly,
           focusNode: readonly ? DisableFocusNode() : null,
         ),

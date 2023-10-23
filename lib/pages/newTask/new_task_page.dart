@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -34,6 +36,26 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   final provider = newTaskPageStateProvider;
   final dateFormat = DateFormat('y年M月d日');
   late final AdService ad;
+
+  static const List<String> titleList = [
+    "お風呂で明日やることを考える(1日に1回)",
+    "【腹筋重視】筋トレをする(2日に1回)",
+    "【必ず】彼氏の誕生日のプランを少し考える(3日に1回)",
+    "最低でも20ページ分は〇〇の本を読む(3日に1回)",
+    "お風呂掃除をする(5日に1回)",
+    "金魚鉢の水換えをする(1週に1回)",
+    "【掃除機はマスト】部屋の掃除をする(2週に1回)",
+    "コンタクトレンズの交換(2週に1回)",
+    "行って見たいお店をインスタで探す(3週に1回)",
+    "家族と電話する(1か月に1回)",
+    "洗剤の残量確認(1か月に1回)",
+    "将来のためにやること検討(1か月に1回)",
+    "【国内】行って見たい旅行先を考える(2か月に1回)",
+    "温泉に行きたいかどうかを考えてみる(3か月に1回)",
+    "サブスクを本当に必要かどうか見直す(4か月に1回)",
+    "クローゼットの防虫剤を交換する(6か月に1回)",
+  ];
+  final titleNum = Random().nextInt(titleList.length);
 
   @override
   void initState() {
@@ -86,7 +108,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
         child: ElevatedButton(
           style: AppStyle.button.copyWith(
             backgroundColor:
-                const MaterialStatePropertyAll(AppColor.primaryColor),
+            const MaterialStatePropertyAll(AppColor.primaryColor),
           ),
           onPressed: () async {
             FocusManager.instance.primaryFocus?.unfocus();
@@ -104,13 +126,13 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
             }
             if (state.remind) NotificationService().requestPermissions();
             await ref.read(todoProvider.notifier).create(
-                  name: state.name,
-                  span: state.span!,
-                  firstDay: state.firstDay!,
-                  remind: state.remind,
-                  categoryId: state.category?.id,
-                  time: state.time,
-                );
+              name: state.name,
+              span: state.span!,
+              firstDay: state.firstDay!,
+              remind: state.remind,
+              categoryId: state.category?.id,
+              time: state.time,
+            );
             ad.showInterstitial();
             if (!mounted) return;
             Navigator.pop(context);
@@ -143,11 +165,12 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                   ),
                 AppTextField(
                   label: 'タイトル',
-                  placeholder: '入力してください',
+                  placeholder: "例）${titleList[titleNum]}",
                   isRequired: true,
                   onChanged: (value) {
                     ref.read(provider.notifier).setName(value);
                   },
+                  maxLines: 2,
                 ),
                 const SizedBox(height: 38),
                 Row(
