@@ -188,16 +188,28 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
             GestureDetector(
               onTap: () {
                 if (state.today.isBeforeDay(pageDay)) {
-                  debugPrint(todo.toString());
                   if (todo.expectedDate != null &&
+                      todo.expectedDate!.isBeforeDay(state.today)) {
+                    context.showSnackBar(
+                      const SnackBar(
+                          content: Text('実施が遅れているゆるDOからタスクを実施してください')),
+                    );
+                  } else if (todo.expectedDate != null &&
                       todo.expectedDate!.isBeforeDay(pageDay)) {
-                    debugPrint("can");
+                    context.showSnackBar(
+                      const SnackBar(content: Text('本日のゆるDOからタスクを実施してください')),
+                    );
                   } else {
-                    debugPrint("can't");
+                    showDialog(
+                      context: context,
+                      builder: (_) => NextSchedule(
+                        args: NextScheduleArgs(
+                          todo: todo,
+                          completeDay: state.today,
+                        ),
+                      ),
+                    );
                   }
-                  context.showSnackBar(
-                    const SnackBar(content: Text('未来のゆるDOは完了できません')),
-                  );
                   return;
                 }
                 if (widget.index < 0) {
