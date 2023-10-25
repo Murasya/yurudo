@@ -117,4 +117,49 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   Todo getTodoFromId(int? id) {
     return state.firstWhere((todo) => todo.id == id);
   }
+
+  /// 過去のゆるDOを取得
+  List<Todo> getTodosFromDate(DateTime date) {
+    List<Todo> list = state
+        .where((todo) => todo.completeDate.any((d) => d.isSameDay(date)))
+        .toList();
+    list.sort(Todo.compareByTime);
+    return list;
+  }
+
+  /// 今日のゆるDOを取得
+  List<Todo> getTodayTodos(DateTime date) {
+    List<Todo> list = state
+        .where((todo) =>
+            (todo.expectedDate.isSameDay(date) ||
+                todo.completeDate.any((d) => d.isSameDay(date))) &&
+            !todo.preExpectedDate.isBeforeDay(date))
+        .toList();
+    list.sort(Todo.compareByTime);
+    return list;
+  }
+
+  /// 実施が遅れているゆるDOを取得
+  List<Todo> getPastTodos(DateTime date) {
+    List<Todo> list = state
+        .where((todo) =>
+            todo.expectedDate.isBeforeDay(date) ||
+            todo.preExpectedDate.isBeforeDay(date) &&
+                todo.completeDate.any((d) => d.isSameDay(date)))
+        .toList();
+    list.sort(Todo.compareByTime);
+    return list.reversed.toList();
+  }
+
+  /// 未来のゆるDOを取得
+  List<Todo> getFutureTodos(DateTime date) {
+    List<Todo> list = state
+        .where((todo) =>
+            todo.expectedDate.isSameDay(date) ||
+            todo.expectedDate!.isBeforeDay(date) &&
+                todo.expectedDate!.dateDiff(date) % todo.span == 0)
+        .toList();
+    list.sort(Todo.compareByTime);
+    return list;
+  }
 }

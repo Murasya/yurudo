@@ -17,10 +17,6 @@ import '../../../model/todo.dart';
 import '../../../router.dart';
 import '../../../viewModel/category_provider.dart';
 
-bool isContainDay(List<DateTime> list, DateTime d) {
-  return list.any((e) => e.isSameDay(d));
-}
-
 class PageWidgetDay extends ConsumerStatefulWidget {
   const PageWidgetDay({
     required this.index,
@@ -62,42 +58,12 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
     late final List<Todo> todoList;
     List<Todo> pastTodoList = [];
     if (widget.index < 0) {
-      todoList = ref
-          .watch(todoProvider)
-          .where((todo) => isContainDay(todo.completeDate, pageDay))
-          .toList();
-      todoList.sort(compTime);
+      todoList = ref.read(todoProvider.notifier).getTodosFromDate(pageDay);
     } else if (widget.index == 0) {
-      todoList = ref
-          .watch(todoProvider)
-          .where((todo) =>
-              (todo.expectedDate.isSameDay(pageDay) ||
-                  isContainDay(todo.completeDate, pageDay)) &&
-              !todo.preExpectedDate.isBeforeDay(pageDay))
-          .toList();
-      todoList.sort(compTime);
-      pastTodoList = ref
-          .watch(todoProvider)
-          .where((todo) =>
-              todo.expectedDate.isBeforeDay(pageDay) ||
-              todo.preExpectedDate.isBeforeDay(pageDay) &&
-                  isContainDay(todo.completeDate, pageDay))
-          .toList();
-      pastTodoList.sort(compExp);
-      pastTodoList = pastTodoList.reversed.toList();
+      todoList = ref.read(todoProvider.notifier).getTodayTodos(pageDay);
+      pastTodoList = ref.read(todoProvider.notifier).getPastTodos(pageDay);
     } else {
-      todoList = [];
-      for (var todo in ref.watch(todoProvider)) {
-        if (todo.expectedDate == null) continue;
-        if (todo.expectedDate!.isSameDay(pageDay)) {
-          todoList.add(todo);
-        }
-        if (todo.expectedDate!.isBeforeDay(pageDay) &&
-            todo.expectedDate!.dateDiff(pageDay) % todo.span == 0) {
-          todoList.add(todo);
-        }
-      }
-      todoList.sort(compTime);
+      todoList = ref.read(todoProvider.notifier).getFutureTodos(pageDay);
     }
 
     return SingleChildScrollView(
@@ -188,14 +154,12 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
             GestureDetector(
               onTap: () {
                 if (state.today.isBeforeDay(pageDay)) {
-                  if (todo.expectedDate != null &&
-                      todo.expectedDate!.isBeforeDay(state.today)) {
+                  if (todo.isBeforeDay(state.today)) {
                     context.showSnackBar(
                       const SnackBar(
                           content: Text('実施が遅れているゆるDOからタスクを実施してください')),
                     );
-                  } else if (todo.expectedDate != null &&
-                      todo.expectedDate!.isBeforeDay(pageDay)) {
+                  } else if (todo.isBeforeDay(pageDay)) {
                     context.showSnackBar(
                       const SnackBar(content: Text('本日のゆるDOからタスクを実施してください')),
                     );
@@ -211,13 +175,12 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
                     );
                   }
                   return;
-                }
-                if (widget.index < 0) {
+                } else if (widget.index < 0) {
                   context.showSnackBar(
                       const SnackBar(content: Text('過去のタスクを実施しなかったことにはできません')));
                   return;
-                }
-                if (!isContainDay(todo.completeDate, pageDay)) {
+                } else if (!todo.completeDate
+                    .any((e) => e.isSameDay(pageDay))) {
                   debugPrint('complete!');
                   showDialog(
                     context: context,

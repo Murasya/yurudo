@@ -1,3 +1,5 @@
+import 'package:routine_app/utils/date.dart';
+
 class Todo {
   /// 管理ID
   final int? id;
@@ -125,7 +127,7 @@ class Todo {
       categoryId: categoryId != null ? categoryId() : this.categoryId,
       completeDate: completeDate ?? this.completeDate,
       preExpectedDate:
-          preExpectedDate != null ? preExpectedDate() : this.preExpectedDate,
+      preExpectedDate != null ? preExpectedDate() : this.preExpectedDate,
       expectedDate: expectedDate != null ? expectedDate() : this.expectedDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -178,5 +180,26 @@ class Todo {
       createdAt: DateTime.parse(map['createdAt']),
       updatedAt: DateTime.parse(map['updatedAt']),
     );
+  }
+
+  /// 実行時間が短い順にソート
+  static int compareByTime(Todo a, Todo b) {
+    if (a.time == null) {
+      if (b.time == null) {
+        return 0;
+      } else {
+        return 1;
+      }
+    } else {
+      if (b.time == null) {
+        return -1;
+      } else {
+        return a.time!.compareTo(b.time!);
+      }
+    }
+  }
+
+  bool isBeforeDay(DateTime date) {
+    return expectedDate != null && expectedDate!.isBeforeDay(date);
   }
 }
