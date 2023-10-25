@@ -10,7 +10,7 @@ class AppTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final VoidCallback? onTap;
   final bool readonly;
-  final int maxLines;
+  final int? maxLines;
 
   const AppTextField({
     Key? key,

@@ -96,9 +96,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
         foregroundColor: AppColor.fontColor,
         title: const Text(
           '新しいゆるDOを作成',
-          style: TextStyle(
-            fontSize: 14,
-          ),
+          style: TextStyle(fontSize: 14),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -170,7 +168,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                   onChanged: (value) {
                     ref.read(provider.notifier).setName(value);
                   },
-                  maxLines: 2,
+                  maxLines: null,
                 ),
                 const SizedBox(height: 38),
                 Row(
