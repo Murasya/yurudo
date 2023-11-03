@@ -35,10 +35,10 @@ class DebugPage extends ConsumerWidget {
             },
           ),
           ListTile(
-            title: const Text('前日のタスクを作る'),
+            title: const Text('実施が遅れているゆるDOを作る'),
             onTap: () {
               ref.read(todoProvider.notifier).create(
-                    name: '前日のタスク',
+                    name: '実施が遅れているゆるDO',
                     span: 1,
                     firstDay: DateTime.now().add(const Duration(days: -1)),
                     remind: true,
@@ -47,7 +47,7 @@ class DebugPage extends ConsumerWidget {
                   );
               context.showSnackBar(
                 const SnackBar(
-                  content: Text('前日のタスクを作りました'),
+                  content: Text('実施が遅れているゆるDOを作りました'),
                 ),
               );
             },
