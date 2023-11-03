@@ -151,7 +151,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
                 ),
               ),
             ),
-            GestureDetector(
+            InkWell(
               onTap: () {
                 // 未来
                 if (state.today.isBeforeDay(pageDay)) {
@@ -204,8 +204,9 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
                       );
                 }
               },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+              borderRadius: BorderRadius.circular(100),
+              child: Container(
+                padding: const EdgeInsets.all(12),
                 child: SvgPicture.asset(
                   (isCompleted) ? AppAssets.check : AppAssets.uncheck,
                   width: 24,
