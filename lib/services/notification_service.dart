@@ -27,7 +27,6 @@ class NotificationService {
   }
 
   Future<void> initializeNotification() async {
-    // android/app/src/main/res/drawable をフォルダーに追加する必要あり
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('ic_notification');
     final DarwinInitializationSettings initializationSettingsIOS =
@@ -68,8 +67,13 @@ class NotificationService {
     required String message,
     DateTime? dateTime, // test用
   }) async {
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, day.year, day.month, day.day, notificationTime);
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      day.year,
+      day.month,
+      day.day,
+      notificationTime,
+    );
 
     if (dateTime != null) {
       scheduledDate = tz.TZDateTime(
@@ -93,14 +97,14 @@ class NotificationService {
       '${dateFormat.format(day)}のゆるDOを確認しましょう',
       message,
       scheduledDate,
-      NotificationDetails(
+      const NotificationDetails(
         android: AndroidNotificationDetails(
           'daily notification',
           '今日のゆるDO',
-          ongoing: true,
-          styleInformation: BigTextStyleInformation(message),
+          channelDescription: "毎日のゆるDOを通知します",
+          icon: 'ic_notification',
         ),
-        iOS: const DarwinNotificationDetails(
+        iOS: DarwinNotificationDetails(
           badgeNumber: 1,
         ),
       ),
