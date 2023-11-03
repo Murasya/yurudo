@@ -202,4 +202,8 @@ class Todo {
   bool isBeforeDay(DateTime date) {
     return expectedDate != null && expectedDate!.isBeforeDay(date);
   }
+
+  bool isContainComplete(DateTime date) {
+    return completeDate.any((e) => e.isSameDay(date));
+  }
 }

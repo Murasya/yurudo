@@ -153,7 +153,9 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
             ),
             GestureDetector(
               onTap: () {
+                // 未来
                 if (state.today.isBeforeDay(pageDay)) {
+                  debugPrint(todo.toString());
                   if (todo.isBeforeDay(state.today)) {
                     context.showSnackBar(
                       const SnackBar(
@@ -162,6 +164,10 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
                   } else if (todo.isBeforeDay(pageDay)) {
                     context.showSnackBar(
                       const SnackBar(content: Text('本日のゆるDOからタスクを実施してください')),
+                    );
+                  } else if (todo.isContainComplete(state.today)) {
+                    context.showSnackBar(
+                      const SnackBar(content: Text('1日に同一タスクは2度実施できません')),
                     );
                   } else {
                     showDialog(
