@@ -52,6 +52,27 @@ class DebugPage extends ConsumerWidget {
               );
             },
           ),
+          ListTile(
+            title: const Text('前日に実施されたタスク(2日に1回)を作る'),
+            onTap: () {
+              ref.read(todoProvider.notifier).create(
+                    name: '前日に実施済みのタスク(2日に1回)',
+                    span: 2,
+                    firstDay: DateTime.now().add(const Duration(days: 1)),
+                    remind: true,
+                    categoryId: 0,
+                    completeDate: [
+                      DateTime.now().add(const Duration(days: -1))
+                    ],
+                    time: 5,
+                  );
+              context.showSnackBar(
+                const SnackBar(
+                  content: Text('前日に実施済みのタスク(2日に1回)を作りました'),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
