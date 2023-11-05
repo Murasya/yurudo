@@ -62,4 +62,9 @@ extension DateNullable on DateTime? {
     if (this == null || date == null) return false;
     return this!.isBefore(date) && !isSameDay(date);
   }
+
+  bool isAfterDay(DateTime? date) {
+    if (this == null || date == null) return false;
+    return this!.isAfter(date) && !isSameDay(date);
+  }
 }

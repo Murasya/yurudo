@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
-import 'package:routine_app/pages/home/widget/next_schedule/next_schedule.dart';
-import 'package:routine_app/pages/home/widget/next_schedule/next_schedule_state.dart';
 import 'package:routine_app/pages/home/widget/time_widget.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
-import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
@@ -90,14 +87,6 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
     }
     todoList.sort(compExp);
 
-    // List<Todo> pastTodoList = [];
-    // pastTodoList = ref
-    //     .watch(todoProvider)
-    //     .where((todo) => isBeforeDay(todo.expectedDate, pageWeekStart))
-    //     .toList();
-    // pastTodoList.sort(compExp);
-    // pastTodoList = pastTodoList.reversed.toList();
-
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -175,34 +164,18 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
                 ),
               ),
             ),
-            GestureDetector(
+            InkWell(
               onTap: () {
-                if (state.today.isBeforeDay(todo.expectedDate!)) {
-                  context.showSnackBar(
-                    const SnackBar(content: Text('未来のゆるDOは完了できません')),
-                  );
-                  return;
-                }
-                if (isCompleted) {
-                  ref.read(todoProvider.notifier).unComplete(
-                        todo: todo,
-                        completeDay: state.today,
-                      );
-                } else {
-                  debugPrint('complete!');
-                  showDialog(
-                    context: context,
-                    builder: (_) => NextSchedule(
-                      args: NextScheduleArgs(
-                        todo: todo,
-                        completeDay: state.today,
-                      ),
-                    ),
-                  );
-                }
+                ref.read(todoProvider.notifier).onTapWeeklyCheckBox(
+                      context: context,
+                      today: state.today,
+                      pageIndex: widget.index,
+                      todo: todo,
+                    );
               },
+              borderRadius: BorderRadius.circular(100),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.all(12),
                 child: SvgPicture.asset(
                   (todo.expectedDate == null ||
                           isContainDay(todo.completeDate, todo.expectedDate!))

@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
-import 'package:routine_app/pages/home/widget/next_schedule/next_schedule.dart';
-import 'package:routine_app/pages/home/widget/next_schedule/next_schedule_state.dart';
 import 'package:routine_app/pages/home/widget/time_widget.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
-import 'package:routine_app/utils/contextEx.dart';
-import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
 import 'package:routine_app/viewModel/todo_provider.dart';
 
@@ -153,56 +149,12 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
             ),
             InkWell(
               onTap: () {
-                // 未来
-                if (state.today.isBeforeDay(pageDay)) {
-                  debugPrint(todo.toString());
-                  if (todo.isBeforeDay(state.today)) {
-                    context.showSnackBar(
-                      const SnackBar(
-                          content: Text('実施が遅れているゆるDOからタスクを実施してください')),
-                    );
-                  } else if (todo.isBeforeDay(pageDay)) {
-                    context.showSnackBar(
-                      const SnackBar(content: Text('本日のゆるDOからタスクを実施してください')),
-                    );
-                  } else if (todo.isContainComplete(state.today)) {
-                    context.showSnackBar(
-                      const SnackBar(content: Text('1日に同一タスクは2度実施できません')),
-                    );
-                  } else {
-                    showDialog(
+                ref.read(todoProvider.notifier).onTapDailyCheckBox(
                       context: context,
-                      builder: (_) => NextSchedule(
-                        args: NextScheduleArgs(
-                          todo: todo,
-                          completeDay: state.today,
-                        ),
-                      ),
+                      today: state.today,
+                      pageIndex: widget.index,
+                      todo: todo,
                     );
-                  }
-                  return;
-                } else if (widget.index < 0) {
-                  context.showSnackBar(
-                      const SnackBar(content: Text('過去のタスクを実施しなかったことにはできません')));
-                  return;
-                } else if (!todo.completeDate
-                    .any((e) => e.isSameDay(pageDay))) {
-                  debugPrint('complete!');
-                  showDialog(
-                    context: context,
-                    builder: (_) => NextSchedule(
-                      args: NextScheduleArgs(
-                        todo: todo,
-                        completeDay: pageDay,
-                      ),
-                    ),
-                  );
-                } else {
-                  ref.read(todoProvider.notifier).unComplete(
-                        todo: todo,
-                        completeDay: pageDay,
-                      );
-                }
               },
               borderRadius: BorderRadius.circular(100),
               child: Container(

@@ -1,9 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routine_app/databases/todo_database.dart';
 import 'package:routine_app/model/todo.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
+import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
+
+import '../pages/home/widget/next_schedule/next_schedule.dart';
+import '../pages/home/widget/next_schedule/next_schedule_state.dart';
 
 final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
   return TodoNotifier(TodoDatabase());
@@ -163,5 +167,120 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
         .toList();
     list.sort(Todo.compareByTime);
     return list;
+  }
+
+  /// チェックボックスを押した時の処理
+  void onTapDailyCheckBox({
+    required BuildContext context,
+    required DateTime today,
+    required int pageIndex,
+    required Todo todo,
+  }) {
+    if (pageIndex > 0) {
+      if (todo.isBeforeDay(today)) {
+        context.showSnackBar(
+          const SnackBar(content: Text('実施が遅れているゆるDOからタスクを実施してください')),
+        );
+      } else if (todo.expectedDate.isSameDay(today)) {
+        context.showSnackBar(
+          const SnackBar(content: Text('本日のゆるDOからタスクを実施してください')),
+        );
+      } else if (todo.isContainComplete(today)) {
+        context.showSnackBar(
+          const SnackBar(content: Text('1日に同一タスクは2度実施できません')),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (_) => NextSchedule(
+            args: NextScheduleArgs(
+              todo: todo,
+              completeDay: today,
+            ),
+          ),
+        );
+      }
+      return;
+    } else if (pageIndex < 0) {
+      context.showSnackBar(
+          const SnackBar(content: Text('過去のタスクを実施しなかったことにはできません')));
+      return;
+    } else if (!todo.isContainComplete(today)) {
+      debugPrint('complete!');
+      showDialog(
+        context: context,
+        builder: (_) => NextSchedule(
+          args: NextScheduleArgs(
+            todo: todo,
+            completeDay: today,
+          ),
+        ),
+      );
+    } else {
+      unComplete(
+        todo: todo,
+        completeDay: today,
+      );
+    }
+  }
+
+  /// チェックボックスを押した時の処理
+  void onTapWeeklyCheckBox({
+    required BuildContext context,
+    required DateTime today,
+    required int pageIndex,
+    required Todo todo,
+  }) {
+    if (pageIndex < 0) {
+      context.showSnackBar(
+          const SnackBar(content: Text('過去のタスクを実施しなかったことにはできません')));
+      return;
+    } else if (todo.expectedDate.isAfterDay(today)) {
+      if (_getTodayTodo(today).any((t) => t.id == todo.id)) {
+        context.showSnackBar(
+          const SnackBar(content: Text('本日のゆるDOからタスクを実施してください')),
+        );
+      } else if (todo.isContainComplete(today)) {
+        context.showSnackBar(
+          const SnackBar(content: Text('1日に同一タスクは2度実施できません')),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (_) => NextSchedule(
+            args: NextScheduleArgs(
+              todo: todo,
+              completeDay: today,
+            ),
+          ),
+        );
+      }
+      return;
+    } else if (!todo.isContainComplete(today)) {
+      debugPrint('complete!');
+      showDialog(
+        context: context,
+        builder: (_) => NextSchedule(
+          args: NextScheduleArgs(
+            todo: todo,
+            completeDay: today,
+          ),
+        ),
+      );
+    } else {
+      unComplete(
+        todo: todo,
+        completeDay: today,
+      );
+    }
+  }
+
+  /// 今日のタスクと実施が遅れているタスク
+  List<Todo> _getTodayTodo(DateTime today) {
+    return state
+        .where((todo) =>
+            !today.isBeforeDay(todo.expectedDate!) &&
+            todo.expectedDate!.dateDiff(today) % todo.span == 0)
+        .toList();
   }
 }
