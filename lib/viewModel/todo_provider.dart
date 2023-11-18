@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:routine_app/databases/todo_database.dart';
 import 'package:routine_app/model/todo.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
@@ -15,6 +16,7 @@ final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
 
 class TodoNotifier extends StateNotifier<List<Todo>> {
   final TodoDatabase _database;
+  final dateFormat = DateFormat('M/d');
 
   TodoNotifier(this._database) : super([]) {
     getAll();
@@ -188,6 +190,13 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       } else if (todo.isContainComplete(today)) {
         context.showSnackBar(
           const SnackBar(content: Text('1日に同一タスクは2度実施できません')),
+        );
+      } else if (!todo.expectedDate
+          .isSameDay(today.add(Duration(days: pageIndex)))) {
+        context.showSnackBar(
+          SnackBar(
+              content: Text(
+                  '直近の同一タスク(${dateFormat.format(todo.expectedDate!)})から実施してください')),
         );
       } else {
         showDialog(
