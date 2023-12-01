@@ -89,7 +89,6 @@ abstract class _$$HomePageStateImplCopyWith<$Res>
   factory _$$HomePageStateImplCopyWith(
           _$HomePageStateImpl value, $Res Function(_$HomePageStateImpl) then) =
       __$$HomePageStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -211,10 +210,8 @@ abstract class _HomePageState extends HomePageState {
 
   /// 表示しているページ番号
   int get pageIndexDay;
-
   @override
   int get pageIndexWeek;
-
   @override
   @JsonKey(ignore: true)
   _$$HomePageStateImplCopyWith<_$HomePageStateImpl> get copyWith =>

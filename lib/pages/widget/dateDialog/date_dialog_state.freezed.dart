@@ -29,7 +29,6 @@ abstract class $DateDialogStateCopyWith<$Res> {
   factory $DateDialogStateCopyWith(
           DateDialogState value, $Res Function(DateDialogState) then) =
       _$DateDialogStateCopyWithImpl<$Res, DateDialogState>;
-
   @useResult
   $Res call({DateTime selectDate});
 }
@@ -41,7 +40,6 @@ class _$DateDialogStateCopyWithImpl<$Res, $Val extends DateDialogState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -65,7 +63,6 @@ abstract class _$$DateDialogStateImplCopyWith<$Res>
   factory _$$DateDialogStateImplCopyWith(_$DateDialogStateImpl value,
           $Res Function(_$DateDialogStateImpl) then) =
       __$$DateDialogStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({DateTime selectDate});
@@ -135,7 +132,6 @@ abstract class _DateDialogState implements DateDialogState {
 
   /// 選んでいる日にち
   DateTime get selectDate;
-
   @override
   @JsonKey(ignore: true)
   _$$DateDialogStateImplCopyWith<_$DateDialogStateImpl> get copyWith =>

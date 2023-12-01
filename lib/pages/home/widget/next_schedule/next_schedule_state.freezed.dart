@@ -68,7 +68,6 @@ abstract class _$$NextScheduleArgsImplCopyWith<$Res>
   factory _$$NextScheduleArgsImplCopyWith(_$NextScheduleArgsImpl value,
           $Res Function(_$NextScheduleArgsImpl) then) =
       __$$NextScheduleArgsImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({Todo todo, DateTime completeDay});
@@ -144,10 +143,8 @@ abstract class _NextScheduleArgs implements NextScheduleArgs {
 
   @override
   Todo get todo;
-
   @override
   DateTime get completeDay;
-
   @override
   @JsonKey(ignore: true)
   _$$NextScheduleArgsImplCopyWith<_$NextScheduleArgsImpl> get copyWith =>
@@ -224,7 +221,6 @@ abstract class _$$NextScheduleStateImplCopyWith<$Res>
   factory _$$NextScheduleStateImplCopyWith(_$NextScheduleStateImpl value,
           $Res Function(_$NextScheduleStateImpl) then) =
       __$$NextScheduleStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -336,10 +332,8 @@ abstract class _NextScheduleState implements NextScheduleState {
   DateTime get selectDay;
   @override
   bool get hasError;
-
   @override
   String get errorMessage;
-
   @override
   @JsonKey(ignore: true)
   _$$NextScheduleStateImplCopyWith<_$NextScheduleStateImpl> get copyWith =>

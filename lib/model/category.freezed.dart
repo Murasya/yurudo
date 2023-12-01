@@ -78,7 +78,6 @@ abstract class _$$CategoryImplCopyWith<$Res>
   factory _$$CategoryImplCopyWith(
           _$CategoryImpl value, $Res Function(_$CategoryImpl) then) =
       __$$CategoryImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({int id, Color color, String name});
@@ -173,12 +172,10 @@ abstract class _Category implements Category {
 
   /// カラー
   Color get color;
-
   @override
 
   /// カテゴリ名
   String get name;
-
   @override
   @JsonKey(ignore: true)
   _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>

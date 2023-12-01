@@ -112,7 +112,6 @@ abstract class _$$TaskDetailPageStateImplCopyWith<$Res>
   factory _$$TaskDetailPageStateImplCopyWith(_$TaskDetailPageStateImpl value,
           $Res Function(_$TaskDetailPageStateImpl) then) =
       __$$TaskDetailPageStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -248,10 +247,8 @@ abstract class _TaskDetailPageState implements TaskDetailPageState {
   Category? get category;
   @override
   int? get time;
-
   @override
   DateTime? get nextDay;
-
   @override
   @JsonKey(ignore: true)
   _$$TaskDetailPageStateImplCopyWith<_$TaskDetailPageStateImpl> get copyWith =>
@@ -312,7 +309,6 @@ abstract class _$$TaskDetailPageArgsImplCopyWith<$Res>
   factory _$$TaskDetailPageArgsImplCopyWith(_$TaskDetailPageArgsImpl value,
           $Res Function(_$TaskDetailPageArgsImpl) then) =
       __$$TaskDetailPageArgsImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({Todo todo, bool isCompleted});
@@ -389,10 +385,8 @@ abstract class _TaskDetailPageArgs implements TaskDetailPageArgs {
 
   @override
   Todo get todo;
-
   @override
   bool get isCompleted;
-
   @override
   @JsonKey(ignore: true)
   _$$TaskDetailPageArgsImplCopyWith<_$TaskDetailPageArgsImpl> get copyWith =>

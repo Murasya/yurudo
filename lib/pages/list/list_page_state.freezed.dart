@@ -68,7 +68,6 @@ abstract class _$$ListPageStateImplCopyWith<$Res>
   factory _$$ListPageStateImplCopyWith(
           _$ListPageStateImpl value, $Res Function(_$ListPageStateImpl) then) =
       __$$ListPageStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({SortType sortType, List<int> filterType});
@@ -113,7 +112,6 @@ class _$ListPageStateImpl implements _ListPageState {
   @JsonKey()
   final SortType sortType;
   final List<int> _filterType;
-
   @override
   @JsonKey()
   List<int> get filterType {
@@ -156,10 +154,8 @@ abstract class _ListPageState implements ListPageState {
 
   @override
   SortType get sortType;
-
   @override
   List<int> get filterType;
-
   @override
   @JsonKey(ignore: true)
   _$$ListPageStateImplCopyWith<_$ListPageStateImpl> get copyWith =>

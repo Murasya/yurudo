@@ -1,18 +1,28 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:routine_app/model/todo.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TodoDatabase {
-  final tableName = 'yurudo';
+  static const tableName = 'yurudo';
+
+  static Future<String> get databasePath async {
+    Directory dbDir = await getApplicationSupportDirectory();
+    return join(dbDir.path, '${tableName}_database.db');
+  }
+
+  static Future restoreDatabase(DownloadTask writeToFile) async {
+    await deleteDatabase(await databasePath);
+    await writeToFile;
+    await openDatabase(await databasePath);
+  }
 
   Future<Database> get database async {
-    Directory dbDir = await getApplicationSupportDirectory();
-    String dbPath = dbDir.path;
     final Future<Database> database = openDatabase(
-      join(dbPath, '${tableName}_database.db'),
+      await databasePath,
       onCreate: (db, version) {
         return db.execute('''
           CREATE TABLE $tableName (

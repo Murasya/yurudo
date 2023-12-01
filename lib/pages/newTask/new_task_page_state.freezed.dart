@@ -126,7 +126,6 @@ abstract class _$$NewTaskPageStateImplCopyWith<$Res>
   factory _$$NewTaskPageStateImplCopyWith(_$NewTaskPageStateImpl value,
           $Res Function(_$NewTaskPageStateImpl) then) =
       __$$NewTaskPageStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -297,10 +296,8 @@ abstract class _NewTaskPageState implements NewTaskPageState {
   DateTime? get firstDay;
   @override
   dynamic get hasError;
-
   @override
   dynamic get errorMessage;
-
   @override
   @JsonKey(ignore: true)
   _$$NewTaskPageStateImplCopyWith<_$NewTaskPageStateImpl> get copyWith =>
