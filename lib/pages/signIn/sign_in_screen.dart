@@ -38,8 +38,16 @@ class SignInScreen extends ConsumerWidget {
             ),
             SignInButton(
               Buttons.google,
-              onPressed: () {
-                notifier.onTapSignIn();
+              onPressed: () async {
+                try {
+                  await notifier.onTapSignIn();
+                } on Exception catch (ex) {
+                  context.showSnackBar(
+                    SnackBar(
+                      content: Text(ex.toString()),
+                    ),
+                  );
+                }
               },
             )
           ],

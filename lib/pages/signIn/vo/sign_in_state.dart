@@ -21,9 +21,7 @@ class SignInNotifier extends StateNotifier<SignInState> {
   }
 
   Future<void> onTapSignIn() async {
-    state = state.copyWith(isLoading: true);
     await _signInWithGoogle();
-    state = state.copyWith(isLoading: false);
   }
 
   Future<void> onTapSignOut() async {
@@ -42,7 +40,7 @@ class SignInNotifier extends StateNotifier<SignInState> {
       await dbRef.putFile(file);
       state = state.copyWith(isLoading: false);
       return true;
-    } on Exception catch (e) {
+    } on Exception {
       return false;
     }
   }
@@ -61,13 +59,12 @@ class SignInNotifier extends StateNotifier<SignInState> {
 
       state = state.copyWith(isLoading: false);
       return true;
-    } on Exception catch (e) {
+    } on Exception {
       return false;
     }
   }
 
   Future<UserCredential> _signInWithGoogle() async {
-    state = state.copyWith(isLoading: true);
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -75,16 +72,19 @@ class SignInNotifier extends StateNotifier<SignInState> {
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
 
+    if (googleAuth == null) {
+      throw LoginException('ログインに失敗しました');
+    }
+
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
     );
 
     // Once signed in, return the UserCredential
     final result = await FirebaseAuth.instance.signInWithCredential(credential);
 
-    state = state.copyWith(isLoading: false);
     return result;
   }
 }
@@ -95,4 +95,13 @@ class SignInState with _$SignInState {
     @Default(false) bool isLoading,
     @Default(null) User? user,
   }) = _SignInState;
+}
+
+class LoginException implements Exception {
+  final String message;
+
+  LoginException(this.message);
+
+  @override
+  String toString() => message;
 }
