@@ -45,6 +45,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AlertDialog(
+          surfaceTintColor: Colors.transparent,
           content: Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -66,7 +67,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                     const Text(
                       'Congratulations!',
                       style: TextStyle(
-                        color: AppColor.primaryColor,
+                        color: AppColor.primary,
                         fontSize: 16,
                       ),
                     ),
@@ -251,7 +252,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
     DateTime day =
         DateTime(state.displayMonth.year, state.displayMonth.month, intDay);
     Color backColor = state.selectDay.isSameDay(day)
-        ? AppColor.primaryColor
+        ? AppColor.primary
         : widget.args.completeDay.isSameDay(day)
             ? AppColor.secondaryColor
             : Colors.transparent;

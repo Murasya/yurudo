@@ -163,8 +163,8 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   List<Todo> getFutureTodos(DateTime date) {
     List<Todo> list = state
         .where((todo) =>
-            todo.expectedDate.isSameDay(date) ||
-            todo.expectedDate!.isBeforeDay(date) &&
+            todo.expectedDate != null && todo.expectedDate.isSameDay(date) ||
+            todo.expectedDate.isBeforeDay(date) &&
                 todo.expectedDate!.dateDiff(date) % todo.span == 0)
         .toList();
     list.sort(Todo.compareByTime);
@@ -288,6 +288,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   List<Todo> _getTodayTodo(DateTime today) {
     return state
         .where((todo) =>
+            todo.expectedDate != null &&
             !today.isBeforeDay(todo.expectedDate!) &&
             todo.expectedDate!.dateDiff(today) % todo.span == 0)
         .toList();

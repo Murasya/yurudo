@@ -118,7 +118,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                   backgroundColor: (state.selectButtonNum == null ||
                           state.selectButtonNum != i)
                       ? AppColor.secondaryColor
-                      : AppColor.primaryColor,
+                      : AppColor.primary,
                 ),
                 onPressed: () {
                   if (state.selectButtonNum == i) {
@@ -134,7 +134,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                       fontWeight: FontWeight.w500,
                       color: (state.selectButtonNum == null ||
                               state.selectButtonNum != i)
-                          ? AppColor.primaryColor
+                          ? AppColor.primary
                           : AppColor.backgroundColor),
                 ),
               ),

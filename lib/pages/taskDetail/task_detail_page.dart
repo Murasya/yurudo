@@ -293,7 +293,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
       child: ElevatedButton(
         style: AppStyle.button.copyWith(
           backgroundColor: (isChanged)
-              ? const MaterialStatePropertyAll(AppColor.primaryColor)
+              ? const MaterialStatePropertyAll(AppColor.primary)
               : const MaterialStatePropertyAll(AppColor.disableColor),
           foregroundColor: const MaterialStatePropertyAll(Colors.white),
         ),

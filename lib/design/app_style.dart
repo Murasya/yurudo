@@ -9,7 +9,8 @@ class AppStyle {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      backgroundColor: AppColor.primaryColor,
+      foregroundColor: AppColor.onPrimary,
+      backgroundColor: AppColor.primary,
       textStyle: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,

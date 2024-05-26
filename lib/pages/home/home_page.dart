@@ -128,7 +128,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: AppColor.primaryColor,
+                      color: AppColor.primary,
                     ),
                     child: Transform.translate(
                       offset: const Offset(0, -2),
@@ -262,7 +262,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         height: 60,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primaryColor,
+            backgroundColor: AppColor.primary,
           ),
           onPressed: () {
             Navigator.pushNamed(context, AppRouter.newTask);
@@ -330,11 +330,11 @@ class _HomePageState extends ConsumerState<HomePage> {
       height: 32,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isActive ? AppColor.primaryColor : AppColor.secondaryColor,
+        color: isActive ? AppColor.primary : AppColor.secondaryColor,
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        highlightColor: AppColor.primaryColor.withOpacity(0.2),
+        highlightColor: AppColor.primary.withOpacity(0.2),
         onTap: () {
           ref.read(provider.notifier).changeTerm(term);
           _pageController.jumpToPage(ref.read(provider).usingPageIndex);
@@ -345,8 +345,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color:
-                  isActive ? AppColor.backgroundColor : AppColor.primaryColor,
+              color: isActive ? AppColor.backgroundColor : AppColor.primary,
             ),
           ),
         ),

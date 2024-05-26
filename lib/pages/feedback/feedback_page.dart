@@ -55,7 +55,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
                 child: ElevatedButton(
                   style: AppStyle.button.copyWith(
                     backgroundColor:
-                        const MaterialStatePropertyAll(AppColor.primaryColor),
+                        const MaterialStatePropertyAll(AppColor.primary),
                   ),
                   onPressed: () {
                     _sendEmail(context);
@@ -73,8 +73,8 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
   Widget contentWidget() {
     return Column(
       children: [
-        Row(
-          children: const [
+        const Row(
+          children: [
             Text(
               '内容',
               style: TextStyle(
@@ -122,8 +122,8 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
   Widget mailWidget() {
     return Column(
       children: [
-        Row(
-          children: const [
+        const Row(
+          children: [
             Text(
               'メールアドレス',
               style: TextStyle(
@@ -249,7 +249,7 @@ ${_contentController.text}
                       'Thank you very much !',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: AppColor.primaryColor,
+                        color: AppColor.primary,
                         fontSize: 26,
                       ),
                     ),
@@ -261,7 +261,7 @@ ${_contentController.text}
                   child: ElevatedButton(
                     style: AppStyle.button.copyWith(
                       backgroundColor:
-                          const MaterialStatePropertyAll(AppColor.primaryColor),
+                          const MaterialStatePropertyAll(AppColor.primary),
                     ),
                     onPressed: () {
                       Navigator.pushNamedAndRemoveUntil(

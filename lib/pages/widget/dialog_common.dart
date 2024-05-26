@@ -50,7 +50,7 @@ class DialogCommon extends StatelessWidget {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 elevation: 0,
-                backgroundColor: AppColor.primaryColor,
+                backgroundColor: AppColor.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),

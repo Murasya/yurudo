@@ -31,7 +31,7 @@ Widget calendar({
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isSelectDay ? AppColor.primaryColor : Colors.transparent,
+            color: isSelectDay ? AppColor.primary : Colors.transparent,
           ),
           child: Text(
             intDay.toString(),

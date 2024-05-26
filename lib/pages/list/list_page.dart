@@ -117,8 +117,8 @@ class _ListPageState extends ConsumerState<ListPage> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return Stack(
-                      children: const [
+                    return const Stack(
+                      children: [
                         Positioned(
                           top: 30,
                           right: 0,
@@ -153,7 +153,7 @@ class _ListPageState extends ConsumerState<ListPage> {
         height: 60,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primaryColor,
+            backgroundColor: AppColor.primary,
           ),
           onPressed: () {
             Navigator.pushNamed(context, AppRouter.newTask);

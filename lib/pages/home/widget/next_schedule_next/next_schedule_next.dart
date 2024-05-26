@@ -64,7 +64,7 @@ class _NextScheduleNextState extends ConsumerState<NextScheduleNext> {
                   const Text(
                     'Congratulations!',
                     style: TextStyle(
-                      color: AppColor.primaryColor,
+                      color: AppColor.primary,
                       fontSize: 16,
                     ),
                   ),
@@ -229,7 +229,7 @@ class _NextScheduleNextState extends ConsumerState<NextScheduleNext> {
     DateTime day =
         DateTime(state.displayMonth.year, state.displayMonth.month, intDay);
     Color backColor = state.selectDay.isSameDay(day)
-        ? AppColor.primaryColor
+        ? AppColor.primary
         : widget.args.completeDay.isSameDay(day)
             ? AppColor.secondaryColor
             : Colors.transparent;

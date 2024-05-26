@@ -14,7 +14,7 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         title: const Text('絞り込み/表示変更'),
       ),
-      body: Column(
+      body: const Column(
         children: [
           Text('絞り込み'),
           Text('色'),

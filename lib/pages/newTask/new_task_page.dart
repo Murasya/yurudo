@@ -105,8 +105,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ElevatedButton(
           style: AppStyle.button.copyWith(
-            backgroundColor:
-            const MaterialStatePropertyAll(AppColor.primaryColor),
+            backgroundColor: const MaterialStatePropertyAll(AppColor.primary),
           ),
           onPressed: () async {
             FocusManager.instance.primaryFocus?.unfocus();

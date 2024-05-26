@@ -62,7 +62,7 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                   const Text(
                     'Congratulations!',
                     style: TextStyle(
-                      color: AppColor.primaryColor,
+                      color: AppColor.primary,
                       fontSize: 16,
                     ),
                   ),
@@ -224,9 +224,7 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
     }
     DateTime day =
         DateTime(state.displayMonth.year, state.displayMonth.month, intDay);
-    Color backColor = state.selectDay.isSameDay(day)
-        ? AppColor.primaryColor
-        : Colors.transparent;
+    Color backColor = state.selectDay.isSameDay(day) ? AppColor.primary : Colors.transparent;
 
     return GestureDetector(
       onTap: () {
