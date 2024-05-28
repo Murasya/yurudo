@@ -41,7 +41,7 @@ class NextScheduleClose extends ConsumerWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              style: AppStyle.button.copyWith(
+              style: AppStyle.primaryButton.copyWith(
                 textStyle: WidgetStatePropertyAll(context.textTheme.bodyLarge),
               ),
               onPressed: () {
@@ -54,7 +54,7 @@ class NextScheduleClose extends ConsumerWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              style: AppStyle.button.copyWith(
+              style: AppStyle.primaryButton.copyWith(
                 textStyle: WidgetStatePropertyAll(
                   context.textTheme.bodyMedium!.copyWith(
                     fontSize: 16,

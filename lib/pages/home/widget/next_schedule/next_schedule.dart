@@ -108,7 +108,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
-                        .copyWith(color: AppColor.emphasisColor),
+                        .copyWith(color: AppColor.emphasis),
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -138,14 +138,14 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                     Text(
                       ref.watch(provider).errorMessage,
                       style: const TextStyle(
-                        color: AppColor.emphasisColor,
+                        color: AppColor.emphasis,
                       ),
                     ),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
-                      style: AppStyle.button,
+                      style: AppStyle.primaryButton,
                       onPressed: () {
                         if (!ref
                             .read(provider)
@@ -176,7 +176,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              foregroundColor: AppColor.emphasisColor,
+              foregroundColor: AppColor.emphasis,
               textStyle: context.textTheme.bodyMedium!.copyWith(
                 fontSize: 13,
               ),

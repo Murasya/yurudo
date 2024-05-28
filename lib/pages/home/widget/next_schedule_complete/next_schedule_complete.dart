@@ -94,14 +94,14 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                   Text(
                     ref.watch(provider).errorMessage,
                     style: const TextStyle(
-                      color: AppColor.emphasisColor,
+                      color: AppColor.emphasis,
                     ),
                   ),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.only(top: 20),
                   child: ElevatedButton(
-                    style: AppStyle.button,
+                    style: AppStyle.primaryButton,
                     onPressed: () {
                       if (ref
                           .read(provider)
@@ -142,7 +142,7 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                   width: double.infinity,
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(
-                    style: AppStyle.button.copyWith(
+                    style: AppStyle.primaryButton.copyWith(
                       backgroundColor:
                           const WidgetStatePropertyAll(AppColor.secondaryColor),
                       foregroundColor:

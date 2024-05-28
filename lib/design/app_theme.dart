@@ -5,7 +5,7 @@ import 'app_color.dart';
 class AppTheme {
   static final ThemeData theme = ThemeData(
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColor.backgroundColor,
+      backgroundColor: AppColor.secondaryColor,
       centerTitle: true,
       toolbarTextStyle: TextStyle(
         color: AppColor.fontColor,
@@ -23,22 +23,6 @@ class AppTheme {
       behavior: SnackBarBehavior.floating,
     ),
     fontFamily: 'NotoSansJP',
-    textTheme: const TextTheme(
-      bodySmall: TextStyle(
-        color: AppColor.fontColor,
-        fontWeight: FontWeight.w400,
-        fontSize: 14,
-      ),
-      bodyMedium: TextStyle(
-        color: AppColor.fontColor,
-        fontWeight: FontWeight.w500,
-        fontSize: 14,
-      ),
-      bodyLarge: TextStyle(
-        color: AppColor.fontColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
-      ),
-    ),
+    textTheme: const TextTheme(),
   );
 }

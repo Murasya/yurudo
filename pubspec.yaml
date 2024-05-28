@@ -56,6 +56,7 @@ dependencies:
   google_sign_in: ^6.1.6
   sign_in_button: ^3.2.0
   firebase_storage: ^11.5.3
+  logger: ^2.3.0
 
 dev_dependencies:
   flutter_test:

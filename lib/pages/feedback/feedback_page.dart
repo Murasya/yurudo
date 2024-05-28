@@ -53,7 +53,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
                 width: double.infinity,
                 height: 40,
                 child: ElevatedButton(
-                  style: AppStyle.button.copyWith(
+                  style: AppStyle.primaryButton.copyWith(
                     backgroundColor:
                         const WidgetStatePropertyAll(AppColor.primary),
                   ),
@@ -89,7 +89,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
-                color: AppColor.emphasisColor,
+                color: AppColor.emphasis,
               ),
             ),
           ],
@@ -138,7 +138,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
-                color: AppColor.emphasisColor,
+                color: AppColor.emphasis,
               ),
             ),
           ],
@@ -164,7 +164,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
               errorMessage,
               style: const TextStyle(
                 fontSize: 14,
-                color: AppColor.emphasisColor,
+                color: AppColor.emphasis,
               ),
             ),
           ),
@@ -259,7 +259,7 @@ ${_contentController.text}
                   width: double.infinity,
                   height: 40,
                   child: ElevatedButton(
-                    style: AppStyle.button.copyWith(
+                    style: AppStyle.primaryButton.copyWith(
                       backgroundColor:
                           const WidgetStatePropertyAll(AppColor.primary),
                     ),

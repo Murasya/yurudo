@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/pages/home/home_page_state.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 
-import '../../../design/app_color.dart';
 import '../../../model/todo.dart';
 
 bool isContainDay(List<DateTime> list, DateTime d) {
@@ -54,37 +54,37 @@ class TimeWidget extends StatelessWidget {
       }
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
         children: [
           Text(
             num,
-            style: context.textTheme.labelLarge,
+            style: context.textTheme.bodyLarge.emphasis,
           ),
           Text(
             suf,
-            style: context.textTheme.bodyMedium!
-                .copyWith(color: AppColor.emphasisColor),
+            style: context.textTheme.bodySmall.emphasis,
           ),
         ],
       );
     } else if (term == TermType.day) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
         children: [
           Text(
             (todo.time == null) ? '- ' : '${todo.time}',
-            style: context.textTheme.labelMedium,
+            style: context.textTheme.bodyLarge,
           ),
-          Text('分', style: context.textTheme.bodyMedium),
+          Text('分', style: context.textTheme.bodySmall),
         ],
       );
     } else {
       return Center(
         child: Text(
           DateFormat('M/d').format(todo.expectedDate!),
-          style: const TextStyle(
-            color: AppColor.fontColor2,
-            fontSize: 22,
-          ),
+          style: context.textTheme.bodyLarge,
         ),
       );
     }

@@ -12,7 +12,7 @@ class AppColor {
   static const Color thirdColor = Color(0xFFF4EFE2);
   static const Color buttonSecondary = Color(0xFFF0EBDE);
   static const Color bannerColor = Color(0xFFF3EFE3);
-  static const Color emphasisColor = Color(0xFFB15F00);
+  static const Color emphasis = Color(0xFFB15F00);
   static const Color lineColor = Color(0xFF40402F);
   static const Color disableColor = Color(0xFFBEBEBE);
   static const Color category1 = Color(0xFFC3DEEA);

@@ -99,11 +99,13 @@ class SignInScreen extends ConsumerWidget {
             ListTile(
               title: const Text('ログアウト'),
               onTap: () {
-                notifier.onTapSignOut().then((value) => context.showSnackBar(
-                      const SnackBar(
-                        content: Text('ログアウトしました'),
+                notifier.onTapSignOut().then(
+                      (value) => context.showSnackBar(
+                        const SnackBar(
+                          content: Text('ログアウトしました'),
+                        ),
                       ),
-                    ));
+                    );
               },
             ),
           ],
@@ -113,15 +115,11 @@ class SignInScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'バックアップ',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
+          style: context.textTheme.titleMedium,
         ),
         backgroundColor: AppColor.secondaryColor,
-        foregroundColor: AppColor.fontColor,
         leading: IconButton(
           iconSize: 30,
           icon: const Icon(Icons.chevron_left),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routine_app/design/app_style.dart';
 
 import '../../design/app_color.dart';
 
@@ -46,15 +47,8 @@ class DialogCommon extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(top: 20),
             width: double.infinity,
-            height: 40,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                backgroundColor: AppColor.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
+              style: AppStyle.primaryButton,
               onPressed: () {
                 onPressed();
                 Navigator.pop(context);

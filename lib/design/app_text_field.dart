@@ -44,7 +44,7 @@ class AppTextField extends StatelessWidget {
                 child: Text(
                   '※必須',
                   style: TextStyle(
-                    color: AppColor.emphasisColor,
+                    color: AppColor.emphasis,
                     fontSize: 12,
                   ),
                 ),

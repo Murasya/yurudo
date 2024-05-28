@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
 import 'package:routine_app/databases/todo_database.dart';
 
 part 'sign_in_state.freezed.dart';
@@ -20,28 +21,38 @@ class SignInNotifier extends StateNotifier<SignInState> {
     });
   }
 
+  var logger = Logger();
+
   Future<void> onTapSignIn() async {
     await _signInWithGoogle();
   }
 
   Future<void> onTapSignOut() async {
     state = state.copyWith(isLoading: true);
-    await FirebaseAuth.instance.signOut();
-    state = state.copyWith(isLoading: false);
+    try {
+      await FirebaseAuth.instance.signOut();
+    } catch (e) {
+      logger.e(e);
+    } finally {
+      state = state.copyWith(isLoading: false);
+    }
   }
 
   Future<bool> onTapBackup() async {
     state = state.copyWith(isLoading: true);
-    final storageRef = FirebaseStorage.instance.ref();
-    final dbRef = storageRef.child('${state.user!.uid}.db');
-
-    File file = File(await TodoDatabase.databasePath);
     try {
+      final storageRef = FirebaseStorage.instance.ref();
+      final dbRef = storageRef.child('${state.user!.uid}.db');
+
+      File file = File(await TodoDatabase.databasePath);
+
       await dbRef.putFile(file);
-      state = state.copyWith(isLoading: false);
       return true;
-    } on Exception {
+    } catch (e) {
+      logger.e(e);
       return false;
+    } finally {
+      state = state.copyWith(isLoading: false);
     }
   }
 
@@ -49,18 +60,21 @@ class SignInNotifier extends StateNotifier<SignInState> {
     required VoidCallback refresh,
   }) async {
     state = state.copyWith(isLoading: true);
-    final storageRef = FirebaseStorage.instance.ref();
-    final dbRef = storageRef.child('${state.user!.uid}.db');
-
-    File file = File(await TodoDatabase.databasePath);
     try {
+      final storageRef = FirebaseStorage.instance.ref();
+      final dbRef = storageRef.child('${state.user!.uid}.db');
+
+      File file = File(await TodoDatabase.databasePath);
+
       await TodoDatabase.restoreDatabase(dbRef.writeToFile(file));
       refresh();
 
-      state = state.copyWith(isLoading: false);
       return true;
-    } on Exception {
+    } catch (e) {
+      logger.e(e);
       return false;
+    } finally {
+      state = state.copyWith(isLoading: false);
     }
   }
 

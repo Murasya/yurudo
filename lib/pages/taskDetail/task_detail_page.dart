@@ -286,12 +286,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        style: AppStyle.button.copyWith(
-          backgroundColor: (isChanged)
-              ? const WidgetStatePropertyAll(AppColor.primary)
-              : const WidgetStatePropertyAll(AppColor.disableColor),
-          foregroundColor: const WidgetStatePropertyAll(Colors.white),
-        ),
+        style: AppStyle.primaryButton,
         onPressed: (isChanged)
             ? () {
                 FocusManager.instance.primaryFocus?.unfocus();
@@ -314,7 +309,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        style: AppStyle.button.copyWith(
+        style: AppStyle.primaryButton.copyWith(
           backgroundColor:
               const WidgetStatePropertyAll(AppColor.secondaryColor),
           foregroundColor: const WidgetStatePropertyAll(AppColor.fontColor2),
@@ -347,9 +342,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      style: AppStyle.button.copyWith(
-                        backgroundColor: const WidgetStatePropertyAll(
-                            AppColor.emphasisColor),
+                      style: AppStyle.primaryButton.copyWith(
+                        backgroundColor: const WidgetStatePropertyAll(AppColor.emphasis),
                         textStyle:
                             WidgetStatePropertyAll(context.textTheme.bodyLarge),
                       ),
@@ -372,7 +366,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      style: AppStyle.button.copyWith(
+                      style: AppStyle.primaryButton.copyWith(
                         backgroundColor: const WidgetStatePropertyAll(
                             AppColor.secondaryColor),
                         foregroundColor:

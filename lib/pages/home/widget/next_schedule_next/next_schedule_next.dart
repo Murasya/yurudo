@@ -113,14 +113,14 @@ class _NextScheduleNextState extends ConsumerState<NextScheduleNext> {
                   const Text(
                     '達成日以降の日付しか選べません',
                     style: TextStyle(
-                      color: AppColor.emphasisColor,
+                      color: AppColor.emphasis,
                     ),
                   ),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.only(top: 20),
                   child: ElevatedButton(
-                    style: AppStyle.button,
+                    style: AppStyle.primaryButton,
                     onPressed: () {
                       if (!ref
                           .read(provider)
@@ -146,7 +146,7 @@ class _NextScheduleNextState extends ConsumerState<NextScheduleNext> {
                   width: double.infinity,
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(
-                    style: AppStyle.button.copyWith(
+                    style: AppStyle.primaryButton.copyWith(
                       backgroundColor:
                           const WidgetStatePropertyAll(AppColor.secondaryColor),
                       foregroundColor:

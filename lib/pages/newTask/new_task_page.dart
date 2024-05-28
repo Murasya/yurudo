@@ -104,7 +104,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ElevatedButton(
-          style: AppStyle.button.copyWith(
+          style: AppStyle.primaryButton.copyWith(
             backgroundColor: const WidgetStatePropertyAll(AppColor.primary),
           ),
           onPressed: () async {
@@ -156,7 +156,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                     child: Text(
                       state.errorMessage,
                       style: const TextStyle(
-                        color: AppColor.emphasisColor,
+                        color: AppColor.emphasis,
                       ),
                     ),
                   ),
