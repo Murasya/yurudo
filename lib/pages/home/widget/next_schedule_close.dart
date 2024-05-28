@@ -6,8 +6,8 @@ import 'package:routine_app/utils/contextEx.dart';
 
 class NextScheduleClose extends ConsumerWidget {
   const NextScheduleClose({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,8 +42,7 @@ class NextScheduleClose extends ConsumerWidget {
             width: double.infinity,
             child: ElevatedButton(
               style: AppStyle.button.copyWith(
-                textStyle:
-                    MaterialStatePropertyAll(context.textTheme.bodyLarge),
+                textStyle: WidgetStatePropertyAll(context.textTheme.bodyLarge),
               ),
               onPressed: () {
                 Navigator.pop(context, true);
@@ -56,15 +55,15 @@ class NextScheduleClose extends ConsumerWidget {
             width: double.infinity,
             child: ElevatedButton(
               style: AppStyle.button.copyWith(
-                textStyle: MaterialStatePropertyAll(
+                textStyle: WidgetStatePropertyAll(
                   context.textTheme.bodyMedium!.copyWith(
                     fontSize: 16,
                   ),
                 ),
                 backgroundColor:
-                    const MaterialStatePropertyAll(AppColor.buttonSecondary),
+                    const WidgetStatePropertyAll(AppColor.buttonSecondary),
                 foregroundColor:
-                    const MaterialStatePropertyAll(AppColor.fontColor2),
+                    const WidgetStatePropertyAll(AppColor.fontColor2),
               ),
               onPressed: () {
                 Navigator.pop(context, false);

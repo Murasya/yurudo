@@ -15,8 +15,8 @@ class CategoryDialog extends ConsumerStatefulWidget {
   const CategoryDialog({
     required this.defaultValue,
     required this.onConfirm,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState createState() => _CategoryDialogState();
@@ -149,8 +149,8 @@ class CategoryTextField extends ConsumerWidget {
   const CategoryTextField({
     this.category,
     this.onTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Category? category;
   final VoidCallback? onTap;

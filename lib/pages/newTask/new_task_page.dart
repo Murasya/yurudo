@@ -8,8 +8,8 @@ import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/design/app_text_field.dart';
 import 'package:routine_app/pages/newTask/new_task_page_state.dart';
 import 'package:routine_app/pages/widget/dateDialog/date_dialog.dart';
-import 'package:routine_app/pages/widget/span_dialog.dart';
-import 'package:routine_app/pages/widget/time_dialog.dart';
+import 'package:routine_app/pages/widget/spanDialog/span_dialog.dart';
+import 'package:routine_app/pages/widget/timeDialog/time_dialog.dart';
 import 'package:routine_app/router.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
@@ -21,7 +21,7 @@ import '../../services/notification_service.dart';
 import '../widget/categoryDialog/category_dialog.dart';
 
 class NewTaskPage extends ConsumerStatefulWidget {
-  const NewTaskPage({Key? key}) : super(key: key);
+  const NewTaskPage({super.key});
 
   @override
   ConsumerState<NewTaskPage> createState() => _NewTaskPageState();
@@ -105,7 +105,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ElevatedButton(
           style: AppStyle.button.copyWith(
-            backgroundColor: const MaterialStatePropertyAll(AppColor.primary),
+            backgroundColor: const WidgetStatePropertyAll(AppColor.primary),
           ),
           onPressed: () async {
             FocusManager.instance.primaryFocus?.unfocus();
@@ -185,25 +185,17 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                             readonly: true,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              SpanDialog(
-                                onConfirm: (picker, value) {
-                                  var ans = picker.getSelectedValues();
-                                  int span;
-                                  switch (value[1]) {
-                                    case 1:
-                                      span = ans[0] * 7;
-                                      break;
-                                    case 2:
-                                      span = ans[0] * 30;
-                                      break;
-                                    default:
-                                      span = ans[0];
-                                      break;
-                                  }
-                                  _spanController.text = span.toSpanString();
-                                  ref.read(provider.notifier).setSpan(span);
-                                },
-                              ).showDialog(context);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return SpanDialog(
+                                        onConfirm: (number, spanType) {
+                                      int span = number * spanType.term;
+                                      _spanController.text =
+                                          span.toSpanString();
+                                      ref.read(provider.notifier).setSpan(span);
+                                    });
+                                  });
                             },
                           ),
                           const SizedBox(height: 38),
@@ -234,14 +226,14 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                             readonly: true,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              TimeDialog(
-                                onConfirm: (picker, value) {
-                                  var ans = picker.getSelectedValues();
-                                  int time = ans[0];
-                                  _timeController.text = time.toTimeString();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => TimeDialog(
+                                        onConfirm: (time) {
+                                          _timeController.text = time.toTimeString();
                                   ref.read(provider.notifier).setTime(time);
                                 },
-                              ).showDialog(context);
+                                      ));
                             },
                           ),
                           const SizedBox(height: 38),

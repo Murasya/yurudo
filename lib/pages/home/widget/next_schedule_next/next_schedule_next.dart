@@ -21,8 +21,8 @@ class NextScheduleNext extends ConsumerStatefulWidget {
 
   const NextScheduleNext({
     required this.args,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState createState() => _NextScheduleNextState();
@@ -147,10 +147,10 @@ class _NextScheduleNextState extends ConsumerState<NextScheduleNext> {
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(
                     style: AppStyle.button.copyWith(
-                      backgroundColor: const MaterialStatePropertyAll(
-                          AppColor.secondaryColor),
+                      backgroundColor:
+                          const WidgetStatePropertyAll(AppColor.secondaryColor),
                       foregroundColor:
-                          const MaterialStatePropertyAll(AppColor.fontColor2),
+                          const WidgetStatePropertyAll(AppColor.fontColor2),
                     ),
                     onPressed: () {
                       Navigator.pop(context);

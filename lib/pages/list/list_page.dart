@@ -16,8 +16,8 @@ import '../../utils/int_ex.dart';
 
 class ListPage extends ConsumerStatefulWidget {
   const ListPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState createState() => _ListPageState();
@@ -109,9 +109,9 @@ class _ListPageState extends ConsumerState<ListPage> {
                   ? buttonStyle
                   : buttonStyle.copyWith(
                       backgroundColor:
-                          const MaterialStatePropertyAll(AppColor.fontColor2),
+                          const WidgetStatePropertyAll(AppColor.fontColor2),
                       foregroundColor:
-                          const MaterialStatePropertyAll(Colors.white),
+                          const WidgetStatePropertyAll(Colors.white),
                     ),
               onPressed: () {
                 showDialog(
@@ -336,9 +336,7 @@ class _ListPageState extends ConsumerState<ListPage> {
 }
 
 class _FilterItem extends ConsumerWidget {
-  const _FilterItem({
-    Key? key,
-  }) : super(key: key);
+  const _FilterItem();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

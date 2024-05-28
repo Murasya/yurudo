@@ -13,12 +13,12 @@ bool isContainDay(List<DateTime> list, DateTime d) {
 
 class TimeWidget extends StatelessWidget {
   const TimeWidget({
-    Key? key,
+    super.key,
     required this.todo,
     required this.today,
     required this.pageDate,
     required this.term,
-  }) : super(key: key);
+  });
 
   final Todo todo;
   final DateTime today;

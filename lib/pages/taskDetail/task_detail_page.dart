@@ -6,8 +6,8 @@ import 'package:routine_app/design/app_style.dart';
 import 'package:routine_app/design/app_text_field.dart';
 import 'package:routine_app/pages/taskDetail/task_detail_page_state.dart';
 import 'package:routine_app/pages/widget/dateDialog/date_dialog.dart';
-import 'package:routine_app/pages/widget/span_dialog.dart';
-import 'package:routine_app/pages/widget/time_dialog.dart';
+import 'package:routine_app/pages/widget/spanDialog/span_dialog.dart';
+import 'package:routine_app/pages/widget/timeDialog/time_dialog.dart';
 import 'package:routine_app/utils/contextEx.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
@@ -32,8 +32,8 @@ class TaskDetailPage extends ConsumerStatefulWidget {
 
   const TaskDetailPage({
     required this.args,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<TaskDetailPage> createState() => _TaskDetailPageState();
@@ -142,25 +142,19 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                             controller: _spanController,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              SpanDialog(
-                                onConfirm: (picker, value) {
-                                  var ans = picker.getSelectedValues();
-                                  int span;
-                                  switch (value[1]) {
-                                    case 1:
-                                      span = ans[0] * 7;
-                                      break;
-                                    case 2:
-                                      span = ans[0] * 30;
-                                      break;
-                                    default:
-                                      span = ans[0];
-                                      break;
-                                  }
-                                  _spanController.text = span.toSpanString();
-                                  ref.read(provider.notifier).setSpan(span);
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return SpanDialog(
+                                    onConfirm: (number, spanType) {
+                                      int span = number * spanType.term;
+                                      _spanController.text =
+                                          span.toSpanString();
+                                      ref.read(provider.notifier).setSpan(span);
+                                    },
+                                  );
                                 },
-                              ).showDialog(context);
+                              );
                             },
                           ),
                           const SizedBox(height: 30),
@@ -190,14 +184,15 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                             controller: _timeController,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              TimeDialog(
-                                onConfirm: (picker, value) {
-                                  var ans = picker.getSelectedValues();
-                                  int time = ans[0];
-                                  ref.read(provider.notifier).setTime(time);
-                                  _timeController.text = time.toTimeString();
-                                },
-                              ).showDialog(context);
+                              showDialog(
+                                context: context,
+                                builder: (context) => TimeDialog(
+                                  onConfirm: (value) {
+                                    ref.read(provider.notifier).setTime(value);
+                                    _timeController.text = value.toTimeString();
+                                  },
+                                ),
+                              );
                             },
                           ),
                           const SizedBox(height: 30),
@@ -293,13 +288,13 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
       child: ElevatedButton(
         style: AppStyle.button.copyWith(
           backgroundColor: (isChanged)
-              ? const MaterialStatePropertyAll(AppColor.primary)
-              : const MaterialStatePropertyAll(AppColor.disableColor),
-          foregroundColor: const MaterialStatePropertyAll(Colors.white),
+              ? const WidgetStatePropertyAll(AppColor.primary)
+              : const WidgetStatePropertyAll(AppColor.disableColor),
+          foregroundColor: const WidgetStatePropertyAll(Colors.white),
         ),
         onPressed: (isChanged)
             ? () {
-          FocusManager.instance.primaryFocus?.unfocus();
+                FocusManager.instance.primaryFocus?.unfocus();
                 if (state.remind) NotificationService().requestPermissions();
                 Navigator.pop(context);
                 ref.read(todoProvider.notifier).update(widget.args.todo, state);
@@ -321,8 +316,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
       child: ElevatedButton(
         style: AppStyle.button.copyWith(
           backgroundColor:
-              const MaterialStatePropertyAll(AppColor.secondaryColor),
-          foregroundColor: const MaterialStatePropertyAll(AppColor.fontColor2),
+              const WidgetStatePropertyAll(AppColor.secondaryColor),
+          foregroundColor: const WidgetStatePropertyAll(AppColor.fontColor2),
         ),
         onPressed: () {
           FocusManager.instance.primaryFocus?.unfocus();
@@ -353,10 +348,10 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: AppStyle.button.copyWith(
-                        backgroundColor: const MaterialStatePropertyAll(
+                        backgroundColor: const WidgetStatePropertyAll(
                             AppColor.emphasisColor),
-                        textStyle: MaterialStatePropertyAll(
-                            context.textTheme.bodyLarge),
+                        textStyle:
+                            WidgetStatePropertyAll(context.textTheme.bodyLarge),
                       ),
                       onPressed: () {
                         ref
@@ -378,11 +373,11 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: AppStyle.button.copyWith(
-                        backgroundColor: const MaterialStatePropertyAll(
+                        backgroundColor: const WidgetStatePropertyAll(
                             AppColor.secondaryColor),
                         foregroundColor:
-                            const MaterialStatePropertyAll(AppColor.fontColor2),
-                        textStyle: MaterialStatePropertyAll(
+                            const WidgetStatePropertyAll(AppColor.fontColor2),
+                        textStyle: WidgetStatePropertyAll(
                           context.textTheme.bodyMedium!.copyWith(
                             fontSize: 16,
                           ),

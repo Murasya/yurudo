@@ -21,8 +21,8 @@ class NextSchedule extends ConsumerStatefulWidget {
 
   const NextSchedule({
     required this.args,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState createState() => _NextScheduleState();

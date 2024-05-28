@@ -31,8 +31,8 @@ bool isContainDay(List<DateTime> list, DateTime d) {
 class PageWidgetWeek extends ConsumerStatefulWidget {
   const PageWidgetWeek({
     required this.index,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final int index;
 

@@ -11,8 +11,8 @@ import '../../design/app_color.dart';
 
 class FeedbackPage extends ConsumerStatefulWidget {
   const FeedbackPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState createState() => _FeedbackPageState();
@@ -55,7 +55,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
                 child: ElevatedButton(
                   style: AppStyle.button.copyWith(
                     backgroundColor:
-                        const MaterialStatePropertyAll(AppColor.primary),
+                        const WidgetStatePropertyAll(AppColor.primary),
                   ),
                   onPressed: () {
                     _sendEmail(context);
@@ -261,7 +261,7 @@ ${_contentController.text}
                   child: ElevatedButton(
                     style: AppStyle.button.copyWith(
                       backgroundColor:
-                          const MaterialStatePropertyAll(AppColor.primary),
+                          const WidgetStatePropertyAll(AppColor.primary),
                     ),
                     onPressed: () {
                       Navigator.pushNamedAndRemoveUntil(

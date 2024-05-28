@@ -16,8 +16,8 @@ import '../../../viewModel/category_provider.dart';
 class PageWidgetDay extends ConsumerStatefulWidget {
   const PageWidgetDay({
     required this.index,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final int index;
 

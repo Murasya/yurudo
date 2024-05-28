@@ -4,7 +4,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:routine_app/databases/todo_database.dart';
@@ -38,7 +37,6 @@ void main() async {
     await TodoDatabase().clearPreExpectedDate();
     AppShared.shared.updateLastLoginDate();
   }
-  FlutterAppBadger.removeBadge();
 
   runApp(
     const ProviderScope(child: MyApp()),
@@ -46,7 +44,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

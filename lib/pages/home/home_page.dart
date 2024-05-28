@@ -23,8 +23,8 @@ import '../widget/dialog_common.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<HomePage> createState() => _HomePageState();

@@ -12,12 +12,11 @@ part of 'sign_in_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SignInState {
   bool get isLoading => throw _privateConstructorUsedError;
-
   User? get user => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +29,6 @@ abstract class $SignInStateCopyWith<$Res> {
   factory $SignInStateCopyWith(
           SignInState value, $Res Function(SignInState) then) =
       _$SignInStateCopyWithImpl<$Res, SignInState>;
-
   @useResult
   $Res call({bool isLoading, User? user});
 }
@@ -42,7 +40,6 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -71,7 +68,6 @@ abstract class _$$SignInStateImplCopyWith<$Res>
   factory _$$SignInStateImplCopyWith(
           _$SignInStateImpl value, $Res Function(_$SignInStateImpl) then) =
       __$$SignInStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({bool isLoading, User? user});
@@ -122,7 +118,7 @@ class _$SignInStateImpl implements _SignInState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SignInStateImpl &&
@@ -147,10 +143,8 @@ abstract class _SignInState implements SignInState {
 
   @override
   bool get isLoading;
-
   @override
   User? get user;
-
   @override
   @JsonKey(ignore: true)
   _$$SignInStateImplCopyWith<_$SignInStateImpl> get copyWith =>
