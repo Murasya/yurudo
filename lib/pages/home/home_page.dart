@@ -81,45 +81,50 @@ class _HomePageState extends ConsumerState<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Ink(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(8),
-                      onTap: () => _pageController.previousPage(
+                  Expanded(
+                    child: Ink(
+                      padding: const EdgeInsets.only(left: 16, right: 8),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        onTap: () => _pageController.previousPage(
                           duration: const Duration(milliseconds: 500),
-                          curve: Curves.ease),
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 12),
-                          if (state.displayTerm == TermType.day)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 4),
-                              child: Text(
-                                dateFormat.format(state.pageDate
-                                    .subtract(const Duration(days: 1))),
-                                style: GoogleFonts.harmattan(
-                                  color: AppColor.fontColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
+                          curve: Curves.ease,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const SizedBox(width: 12),
+                            if (state.displayTerm == TermType.day)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: Text(
+                                  dateFormat.format(state.pageDate
+                                      .subtract(const Duration(days: 1))),
+                                  style: GoogleFonts.harmattan(
+                                    color: AppColor.fontColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  ),
                                 ),
                               ),
-                            ),
-                          if (state.displayTerm != TermType.day)
-                            Text(
-                              '前の${state.displayTerm.displayName}',
-                              style: const TextStyle(
-                                color: AppColor.fontColor,
-                                fontSize: 14,
+                            if (state.displayTerm != TermType.day)
+                              Text(
+                                '前の${state.displayTerm.displayName}',
+                                style: const TextStyle(
+                                  color: AppColor.fontColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(16, 12, 12, 12),
+                              child: SvgPicture.asset(
+                                AppAssets.triangle,
+                                width: 14,
                               ),
                             ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(16, 12, 12, 12),
-                            child: SvgPicture.asset(
-                              AppAssets.triangle,
-                              width: 14,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -130,95 +135,95 @@ class _HomePageState extends ConsumerState<HomePage> {
                       borderRadius: BorderRadius.circular(20),
                       color: AppColor.primary,
                     ),
-                    child: Transform.translate(
-                      offset: const Offset(0, -2),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          if (state.displayTerm == TermType.day) ...[
-                            Text(
-                              dateFormat.format(state.pageDate),
-                              style: GoogleFonts.harmattan(
-                                color: AppColor.backgroundColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 28,
-                              ),
-                            ),
-                            Text(
-                              '(${DateFormat.E('ja').format(state.pageDate)})',
-                              style: const TextStyle(
-                                color: AppColor.backgroundColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                          if (state.displayTerm == TermType.week) ...[
-                            Text(
-                              '${DateFormat('M/d').format(state.pageDate)}~$month${weekEnd.day}',
-                              style: GoogleFonts.harmattan(
-                                color: AppColor.backgroundColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 28,
-                              ),
-                            ),
-                          ],
-                          // if (state.displayTerm == TermType.month) ...[
-                          //   Text(
-                          //     DateFormat('y/M').format(state.pageDate),
-                          //     style: GoogleFonts.harmattan(
-                          //       color: AppColor.backgroundColor,
-                          //       fontSize: 24,
-                          //     ),
-                          //   ),
-                          // ],
-                        ],
-                      ),
-                    ),
-                  ),
-                  Ink(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(8),
-                      onTap: () => _pageController.nextPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.ease),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(12, 16, 12, 12),
-                            child: Transform.rotate(
-                              angle: pi,
-                              child: SvgPicture.asset(
-                                AppAssets.triangle,
-                                width: 14,
-                              ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        if (state.displayTerm == TermType.day) ...[
+                          Text(
+                            dateFormat.format(state.pageDate),
+                            style: GoogleFonts.harmattan(
+                              color: AppColor.backgroundColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28,
                             ),
                           ),
-                          if (state.displayTerm == TermType.day)
+                          Text(
+                            '(${DateFormat.E('ja').format(state.pageDate)})',
+                            style: const TextStyle(
+                              color: AppColor.backgroundColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                        if (state.displayTerm == TermType.week) ...[
+                          Text(
+                            '${DateFormat('M/d').format(state.pageDate)}~$month${weekEnd.day}',
+                            style: GoogleFonts.harmattan(
+                              color: AppColor.backgroundColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28,
+                            ),
+                          ),
+                        ],
+                        // if (state.displayTerm == TermType.month) ...[
+                        //   Text(
+                        //     DateFormat('y/M').format(state.pageDate),
+                        //     style: GoogleFonts.harmattan(
+                        //       color: AppColor.backgroundColor,
+                        //       fontSize: 24,
+                        //     ),
+                        //   ),
+                        // ],
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Ink(
+                      padding: const EdgeInsets.only(left: 8, right: 16),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        onTap: () => _pageController.nextPage(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.ease),
+                        child: Row(
+                          children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 4.0),
-                              child: Text(
-                                dateFormat.format(state.pageDate
-                                    .add(const Duration(days: 1))),
-                                style: GoogleFonts.harmattan(
-                                  color: AppColor.fontColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
+                              padding:
+                                  const EdgeInsets.fromLTRB(12, 16, 12, 12),
+                              child: Transform.rotate(
+                                angle: pi,
+                                child: SvgPicture.asset(
+                                  AppAssets.triangle,
+                                  width: 14,
                                 ),
                               ),
                             ),
-                          if (state.displayTerm != TermType.day)
-                            Text(
-                              '次の${state.displayTerm.displayName}',
-                              style: const TextStyle(
-                                color: AppColor.fontColor,
-                                fontSize: 14,
+                            if (state.displayTerm == TermType.day)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 4.0),
+                                child: Text(
+                                  dateFormat.format(state.pageDate
+                                      .add(const Duration(days: 1))),
+                                  style: GoogleFonts.harmattan(
+                                    color: AppColor.fontColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  ),
+                                ),
                               ),
-                            ),
-                          const SizedBox(width: 12),
-                        ],
+                            if (state.displayTerm != TermType.day)
+                              Text(
+                                '次の${state.displayTerm.displayName}',
+                                style: const TextStyle(
+                                  color: AppColor.fontColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            const SizedBox(width: 12),
+                          ],
+                        ),
                       ),
                     ),
                   ),
