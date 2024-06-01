@@ -1,6 +1,10 @@
 extension Date on DateTime {
   DateTime addMonth(int m) {
-    return DateTime(year, month + m, day);
+    DateTime date = DateTime(year, month + m, day);
+    if (date.day != day) {
+      date = DateTime(year, month + m + 1, 0);
+    }
+    return date;
   }
 
   bool isSameDay(DateTime day) {
