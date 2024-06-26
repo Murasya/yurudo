@@ -4,14 +4,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'span_dialog_state.freezed.dart';
 
 enum SpanType {
-  day("日", 1),
-  week("週", 7),
-  month("か月", 30);
+  day("日", 1, 6),
+  week("週", 7, 5),
+  month("か月", 30, 12);
 
   final String label;
   final int term;
+  final int limit;
 
-  const SpanType(this.label, this.term);
+  const SpanType(this.label, this.term, this.limit);
 }
 
 final spanDialogStateProvider =
@@ -26,6 +27,9 @@ class SpanDialogStateNotifier extends StateNotifier<SpanDialogState> {
   }
 
   void onChangeSpanType(SpanType spanType) {
+    if (state.span > spanType.limit) {
+      state = state.copyWith(span: spanType.limit);
+    }
     state = state.copyWith(spanType: spanType);
   }
 }

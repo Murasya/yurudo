@@ -15,6 +15,8 @@ class SpanDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(spanDialogStateProvider);
     var notifier = ref.read(spanDialogStateProvider.notifier);
+    List<int> spanTime =
+        List.generate(state.spanType.limit, (index) => index + 1);
 
     return AlertDialog(
       title: Text(
@@ -29,7 +31,7 @@ class SpanDialog extends ConsumerWidget {
             child: DropdownButton<int>(
               value: state.span,
               isExpanded: true,
-              items: [1, 2, 3, 4, 5, 6]
+              items: spanTime
                   .map((value) => DropdownMenuItem(
                         value: value,
                         child: Text(value.toString()),
