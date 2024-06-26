@@ -42,7 +42,8 @@ class SignInNotifier extends StateNotifier<SignInState> {
     state = state.copyWith(isLoading: true);
     try {
       final storageRef = FirebaseStorage.instance.ref();
-      final dbRef = storageRef.child('${state.user!.uid}.db');
+      final dbRef =
+          storageRef.child('backupDB/${state.user!.uid}/yurudo_database.db');
 
       File file = File(await TodoDatabase.databasePath);
 
@@ -62,7 +63,8 @@ class SignInNotifier extends StateNotifier<SignInState> {
     state = state.copyWith(isLoading: true);
     try {
       final storageRef = FirebaseStorage.instance.ref();
-      final dbRef = storageRef.child('${state.user!.uid}.db');
+      final dbRef =
+          storageRef.child('backupDB/${state.user!.uid}/yurudo_database.db');
 
       File file = File(await TodoDatabase.databasePath);
 
