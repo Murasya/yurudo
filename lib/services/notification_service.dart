@@ -12,7 +12,8 @@ import 'package:timezone/timezone.dart' as tz;
 import '../model/todo.dart';
 
 class NotificationService {
-  late final FlutterLocalNotificationsPlugin _flnp;
+  final FlutterLocalNotificationsPlugin _flnp =
+      FlutterLocalNotificationsPlugin();
   static const int notificationTime = 9;
 
   static final NotificationService _instance = NotificationService._internal();
@@ -22,24 +23,10 @@ class NotificationService {
   }
 
   NotificationService._internal() {
-    _flnp = FlutterLocalNotificationsPlugin();
     initializeNotification();
   }
 
   Future<void> initializeNotification() async {
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_notification');
-    final DarwinInitializationSettings initializationSettingsIOS =
-        DarwinInitializationSettings(
-            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    final InitializationSettings initializationSettings =
-        InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsIOS,
-    );
-
-    await _flnp.initialize(initializationSettings);
-
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Asia/Tokyo'));
 
@@ -47,6 +34,10 @@ class NotificationService {
   }
 
   Future<void> requestPermissions() async {
+    _flnp.initialize(const InitializationSettings(
+      android: AndroidInitializationSettings('ic_notification'),
+      iOS: DarwinInitializationSettings(),
+    ));
     await _flnp
         .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin>()
