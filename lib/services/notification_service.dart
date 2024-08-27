@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/utils/date.dart';
@@ -11,22 +12,14 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../model/todo.dart';
 
+final notificationServiceProvider = Provider((ref) => NotificationService());
+
 class NotificationService {
   final FlutterLocalNotificationsPlugin _flnp =
       FlutterLocalNotificationsPlugin();
   static const int notificationTime = 9;
 
-  static final NotificationService _instance = NotificationService._internal();
-
-  factory NotificationService() {
-    return _instance;
-  }
-
-  NotificationService._internal() {
-    initializeNotification();
-  }
-
-  Future<void> initializeNotification() async {
+  NotificationService() {
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Asia/Tokyo'));
 

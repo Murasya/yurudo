@@ -290,7 +290,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
         onPressed: (isChanged)
             ? () {
                 FocusManager.instance.primaryFocus?.unfocus();
-                if (state.remind) NotificationService().requestPermissions();
+                if (state.remind)
+                  ref.watch(notificationServiceProvider).requestPermissions();
                 Navigator.pop(context);
                 ref.read(todoProvider.notifier).update(widget.args.todo, state);
                 context.showSnackBar(

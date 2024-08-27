@@ -32,7 +32,6 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
-  NotificationService ns = NotificationService();
   final provider = newTaskPageStateProvider;
   final dateFormat = DateFormat('y年M月d日');
   late final AdService ad;
@@ -60,7 +59,6 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   @override
   void initState() {
     super.initState();
-    ns.initializeNotification();
     ad = AdService();
     ad.adLoad(onFinish: () {
       Navigator.popUntil(
@@ -121,7 +119,8 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                   .setHasError(true, '実施予定日は今日以降しか選択できません');
               return;
             }
-            if (state.remind) NotificationService().requestPermissions();
+            if (state.remind)
+              ref.watch(notificationServiceProvider).requestPermissions();
             await ref.read(todoProvider.notifier).create(
               name: state.name,
               span: state.span!,

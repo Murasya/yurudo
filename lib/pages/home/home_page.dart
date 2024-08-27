@@ -61,7 +61,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(provider);
     final todoList = ref.watch(todoProvider);
-    NotificationService().setNotifications(todoList);
+    ref.watch(notificationServiceProvider).setNotifications(todoList);
 
     if (!AppShared.shared.lastLoginDate.isSameDay(DateTime.now())) {
       WidgetsBinding.instance

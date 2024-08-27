@@ -1,5 +1,11 @@
 # routine_app
 
+Android deploygate
+
+```shell
+./dev-build.sh android 1
+```
+
 Android Releaseビルド
 ``` shell
 fvm flutter build appbundle --flavor prod --dart-define-from-file=flavor/prod.json
