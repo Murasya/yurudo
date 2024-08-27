@@ -1,0 +1,3 @@
+FLUTTER_FLAVOR=prod
+PRODUCT_BUNDLE_IDENTIFIER=io.github.murasya.routine.routineApp
+DISPLAY_NAME=ゆるDO
