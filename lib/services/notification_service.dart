@@ -5,6 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:routine_app/utils/date.dart';
 import 'package:routine_app/utils/int_ex.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -96,6 +97,7 @@ class NotificationService {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
+    Logger().i('registerMessage: $id, $message, $scheduledDate');
   }
 
   Future<void> _cancelNotification() async {
@@ -137,15 +139,15 @@ class NotificationService {
     var list = await _flnp.getActiveNotifications();
     // listを一覧表示
     for (var item in list) {
-      debugPrint('id: ${item.id}');
-      debugPrint('title: ${item.title}');
-      debugPrint('body: ${item.body}');
-      debugPrint('payload: ${item.payload}');
+      Logger().i('id: ${item.id}');
+      Logger().i('title: ${item.title}');
+      Logger().i('body: ${item.body}');
+      Logger().i('payload: ${item.payload}');
     }
   }
 
   void onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload) {
-    debugPrint('id ----- $id');
+    Logger().i('id ----- $id');
   }
 }
