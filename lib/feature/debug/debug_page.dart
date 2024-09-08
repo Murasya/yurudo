@@ -38,8 +38,9 @@ class DebugPage extends ConsumerWidget {
           ListTile(
             title: const Text('実施が遅れているゆるDOを作る'),
             onTap: () {
+              DateTime yesterday = DateTime.now().add(const Duration(days: -1));
               ref.read(todoProvider.notifier).create(
-                    name: '実施が遅れているゆるDO',
+                    name: '期限${yesterday.month}月${yesterday.day}日',
                     span: 1,
                     firstDay: DateTime.now().add(const Duration(days: -1)),
                     remind: true,
@@ -51,6 +52,32 @@ class DebugPage extends ConsumerWidget {
                   content: Text('実施が遅れているゆるDOを作りました'),
                 ),
               );
+            },
+          ),
+          ListTile(
+            title: const Text('期限を決めてゆるDOを作る'),
+            onTap: () {
+              showDatePicker(
+                context: context,
+                firstDate: DateTime.now().subtract(const Duration(days: 365)),
+                lastDate: DateTime.now().add(const Duration(days: 365)),
+                locale: const Locale('ja'),
+              ).then((value) {
+                if (value == null) return;
+                ref.read(todoProvider.notifier).create(
+                      name: '期限${value.month}月${value.day}日',
+                      span: 1,
+                      firstDay: value,
+                      remind: true,
+                      categoryId: 0,
+                      time: 5,
+                    );
+                context.showSnackBar(
+                  SnackBar(
+                    content: Text('期限${value.month}月${value.day}日でゆるDOを作りました'),
+                  ),
+                );
+              });
             },
           ),
           ListTile(

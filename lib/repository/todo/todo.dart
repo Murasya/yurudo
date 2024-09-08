@@ -199,6 +199,23 @@ class Todo {
     }
   }
 
+  /// 遅延期間短い順にソート
+  static int compareByExpectedDate(Todo a, Todo b) {
+    if (a.expectedDate == null) {
+      if (b.expectedDate == null) {
+        return 0;
+      } else {
+        return 1;
+      }
+    } else {
+      if (b.expectedDate == null) {
+        return -1;
+      } else {
+        return a.expectedDate!.compareTo(b.expectedDate!);
+      }
+    }
+  }
+
   bool isBeforeDay(DateTime date) {
     return expectedDate != null && expectedDate!.isBeforeDay(date);
   }
