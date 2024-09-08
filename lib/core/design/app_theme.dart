@@ -22,7 +22,6 @@ class AppTheme {
     snackBarTheme: const SnackBarThemeData(
       behavior: SnackBarBehavior.floating,
     ),
-    fontFamily: 'NotoSansJP',
     textTheme: const TextTheme(),
   );
 }

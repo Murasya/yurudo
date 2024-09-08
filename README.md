@@ -3,18 +3,18 @@
 Android deploygate
 
 ```shell
-./dev-build.sh android 1
+./dev-build.sh both 1
 ```
 
 Android Releaseビルド
 ``` shell
-fvm flutter build appbundle --flavor prod --dart-define-from-file=flavor/prod.json
+fvm flutter build appbundle --flavor prod
 ```
 
 iOS Developmentビルド
 
 ``` shell
-fvm flutter build ios --flavor dev --dart-define-from-file=flavor/dev.json
+fvm flutter build ios --flavor dev
 ```
 
 freezed生成

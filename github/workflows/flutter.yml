@@ -1,0 +1,51 @@
+name: Flutter CI/CD Pipeline
+
+# ワークフローをトリガーするイベントを定義
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# ワークフロー内のジョブを定義
+jobs:
+  build:
+    # ジョブが実行される仮想環境を指定
+    runs-on: ubuntu-latest
+
+    # ジョブ内のステップを定義
+    steps:
+      - name: Checkout repository
+        # リポジトリをチェックアウトするアクションを使用
+        uses: actions/checkout@v2
+
+      - name: Set up Flutter
+        # Flutterをセットアップするアクションを使用
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.2'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build APK
+        # リリース用のAPKをビルドするコマンドを実行
+        run: flutter build appbundle --flavor dev
+
+      - name: Upload App Bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-bundle
+          path: build/app/outputs/bundle/devRelease/app-dev-release.aab
+
+      - name: Deploy
+        run: |
+          curl \
+            -H "Authorization: token ${{secrets.DEPLOY_GATE_API_KEY}}" \
+            -F "file=@app/build/app/outputs/bundle/devRelease/app-dev-release.aab" \
+            -v "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps"
