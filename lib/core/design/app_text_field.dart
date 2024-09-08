@@ -58,6 +58,10 @@ class AppTextField extends StatelessWidget {
           enableInteractiveSelection: !readonly,
           decoration: InputDecoration(
               hintText: placeholder,
+              hintStyle: const TextStyle(
+                fontSize: 14,
+                color: AppColor.disableColor,
+              ),
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 4),
               border: const UnderlineInputBorder(
