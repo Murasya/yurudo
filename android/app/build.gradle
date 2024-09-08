@@ -1,17 +1,9 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
     id "com.google.gms.google-services"
-    id "com.google.firebase.crashlytics"
-}
-
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        localProperties.load(reader)
-    }
 }
 
 def keystoreProperties = new Properties()
@@ -20,62 +12,42 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
-
 android {
-    namespace "io.github.murasya.routine.routine_app"
-    compileSdkVersion 34
-    ndkVersion "26.1.10909125"
-    flavorDimensions "default"
+    namespace = "io.github.murasya.routine.routine_app"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
 
-    compileOptions {
-        // Flag to enable support for the new language APIs
-        coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
+    flavorDimensions += "default"
 
     productFlavors {
         dev {
-            dimension "default"
+            dimension = "default"
+            applicationIdSuffix = ".dev"
             resValue "string", "app_name", "ゆるDO_dev"
-            applicationIdSuffix ".dev"
-        }
-        stg {
-            dimension "default"
-            resValue "string", "app_name", "ゆるDO_stg"
-            applicationIdSuffix ".stg"
         }
         prod {
-            dimension "default"
+            dimension = "default"
             resValue "string", "app_name", "ゆるDO"
-            applicationIdSuffix ""
         }
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
         multiDexEnabled true
-        applicationId "io.github.murasya.routine.routine_app"
-        minSdkVersion 23
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        applicationId = "io.github.murasya.routine.routine_app"
+        minSdk = 23
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
     }
 
     signingConfigs {
@@ -89,19 +61,17 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            signingConfig = signingConfigs.release
         }
     }
 }
 
 flutter {
-    source '../..'
+    source = "../.."
 }
 
 dependencies {
-    implementation 'androidx.window:window:1.2.0'
-    implementation 'androidx.window:window-java:1.2.0'
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.3'
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation 'androidx.window:window:1.0.0'
+    implementation 'androidx.window:window-java:1.0.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }

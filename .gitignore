@@ -9,9 +9,8 @@
 .history
 .svn/
 migrate_working_dir/
-assets/env/.env
+assets/env/prod.json
 dev-build.sh
-flavor/prod.json
 
 # IntelliJ related
 *.iml
@@ -30,14 +29,10 @@ flavor/prod.json
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.packages
 .pub-cache/
 .pub/
 /build/
 .fvm/flutter_sdk
-
-# Web related
-lib/generated_plugin_registrant.dart
 
 # Symbolication related
 app.*.symbols
@@ -56,6 +51,7 @@ app.*.map.json
 # Firebase
 /lib/firebase_options.dart
 /android/app/google-services.json
+/ios/config
 /ios/firebase_app_id_file.json
 /ios/Runner/GoogleService-Info.plist
 /ios/prod/GoogleService-Info.plist

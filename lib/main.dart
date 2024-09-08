@@ -6,13 +6,14 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:routine_app/databases/todo_database.dart';
-import 'package:routine_app/design/app_theme.dart';
-import 'package:routine_app/router.dart';
-import 'package:routine_app/services/analytics_service.dart';
-import 'package:routine_app/services/app_shared.dart';
-import 'package:routine_app/services/notification_service.dart';
-import 'package:routine_app/utils/date.dart';
+import 'package:routine_app/repository/todo/todo_database.dart';
+import 'package:routine_app/core/services/analytics_service.dart';
+import 'package:routine_app/core/services/app_shared.dart';
+import 'package:routine_app/core/services/notification_service.dart';
+import 'package:routine_app/core/utils/date.dart';
+
+import 'core/design/app_theme.dart';
+import 'core/navigation/router.dart';
 
 import 'firebase_options.dart';
 
