@@ -5,21 +5,30 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 # ワークフロー内のジョブを定義
 jobs:
   build:
     # ジョブが実行される仮想環境を指定
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     # ジョブ内のステップを定義
     steps:
       - name: Checkout repository
         # リポジトリをチェックアウトするアクションを使用
         uses: actions/checkout@v2
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_13.0.app/Contents/Developer
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: setup cache
+        uses: actions/cache@v1
+        with:
+          path: /Users/runner/hostedtoolcache/flutter
+          key: ${{runner.OS}}-flutter-install-cache
 
       - name: Set up Flutter
         # Flutterをセットアップするアクションを使用
@@ -30,10 +39,32 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Run tests
-        run: flutter test
+      - name: Import Provisioning Profile
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          touch ~/Library/MobileDevice/Provisioning\ Profiles/decoded.mobileprovision
+          echo -n '${{ secrets.PROVISIONING_PROFILE }}' | base64 -d -o ~/Library/MobileDevice/Provisioning\ Profiles/decoded.mobileprovision
 
-      - name: Build APK
+      - name: Import Code-Signing Certificates
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+          p12-password: ${{ secrets.CERTIFICATE_PASSWORD }}
+
+      - name: Import Export Options
+        run: echo -n '${{ secrets.EXPORT_OPTIONS }}' >> ExportOptions.plist
+
+      - name: Build iOS
+        run: flutter build ipa --flavor dev --export-options-plist=ExportOptions.plist
+
+      - name: Distribute iOS app
+        run: |
+          curl \
+            -H "Authorization: token ${{secrets.DEPLOY_GATE_API_KEY}}" \
+            -F "file=@app/build/ios/ipa/routine_app.ipa" \
+            "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps"
+
+      - name: Build AAB
         # リリース用のAPKをビルドするコマンドを実行
         run: flutter build appbundle --flavor dev
 
