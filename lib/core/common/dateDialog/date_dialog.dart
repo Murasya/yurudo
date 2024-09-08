@@ -8,17 +8,20 @@ import 'date_dialog_state.dart';
 class DateDialog extends ConsumerWidget {
   final void Function(DateTime) onConfirm;
   final void Function() onCancel;
+  final DateTime? initialDate;
 
   const DateDialog({
     super.key,
+    this.initialDate,
     required this.onConfirm,
     required this.onCancel,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var state = ref.watch(dateDialogStateProvider);
-    var notifier = ref.read(dateDialogStateProvider.notifier);
+    final provider = dateDialogStateProvider(initialDate);
+    final state = ref.watch(provider);
+    final notifier = ref.read(provider.notifier);
 
     return SimpleDialog(
       title: Text(
@@ -30,7 +33,7 @@ class DateDialog extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: calendar(
-            initialDate: state.selectDate,
+            selectedDate: state.selectDate,
             onNextMonth: notifier.onNextMonth,
             onPreviousMonth: notifier.onPreviousMonth,
             onChangeDate: notifier.onChangeDate,

@@ -5,15 +5,16 @@ import 'package:routine_app/core/utils/date.dart';
 
 part 'date_dialog_state.freezed.dart';
 
-final dateDialogStateProvider =
-    StateNotifierProvider.autoDispose<DateDialogStateNotifier, DateDialogState>(
-  (ref) => DateDialogStateNotifier(),
+final dateDialogStateProvider = StateNotifierProvider.autoDispose
+    .family<DateDialogStateNotifier, DateDialogState, DateTime?>(
+  (ref, initialDate) => DateDialogStateNotifier(initialDate),
 );
 
 class DateDialogStateNotifier extends StateNotifier<DateDialogState> {
-  DateDialogStateNotifier()
-      : super(DateDialogState(
-          selectDate: DateTime.now(),
+  DateDialogStateNotifier(
+    initialDate,
+  ) : super(DateDialogState(
+          selectDate: initialDate ?? DateTime.now(),
         ));
 
   void onChangeDate(DateTime date) {

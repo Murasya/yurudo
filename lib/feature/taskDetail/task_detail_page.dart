@@ -202,15 +202,11 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                             readonly: true,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              final orgTodo = ref
-                                  .read(todoProvider.notifier)
-                                  .getTodoFromId(widget.args.todo.id);
-                              if (state.nextDay
-                                      .isSameDay(orgTodo.expectedDate) &&
-                                  !widget.args.isCompleted) {
+                              if (!widget.args.isCompleted) {
                                 showDialog(
                                   context: context,
                                   builder: (context) => DateDialog(
+                                    initialDate: state.nextDay,
                                     onConfirm: (DateTime date) {
                                       ref
                                           .read(provider.notifier)

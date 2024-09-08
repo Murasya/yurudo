@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:path/path.dart';
 import 'package:routine_app/core/utils/date.dart';
-import 'package:routine_app/core/utils/contextEx.dart';
 
 import '../../design/app_color.dart';
 
 Widget calendar({
-  required DateTime initialDate,
+  required DateTime selectedDate,
   required void Function() onNextMonth,
   required void Function() onPreviousMonth,
   required void Function(DateTime) onChangeDate,
 }) {
   const list = ['月', '火', '水', '木', '金', '土', '日'];
-  var selectDate = initialDate;
 
   Widget dayWidget(int week, int weekDay) {
-    int intDay = (week * 7 + weekDay - selectDate.firstDayOfMonth.weekday + 1);
-    if (intDay <= 0 || intDay > selectDate.lastDayOfMonth) {
+    int intDay = (week * 7 + weekDay - selectedDate.firstDayOfMonth.weekday + 1);
+    if (intDay <= 0 || intDay > selectedDate.lastDayOfMonth) {
       return Expanded(child: Container());
     }
-    DateTime day = DateTime(selectDate.year, selectDate.month, intDay);
-    bool isSelectDay = selectDate.isSameDay(day);
+    DateTime day = DateTime(selectedDate.year, selectedDate.month, intDay);
+    bool isSelectDay = selectedDate.isSameDay(day);
 
     return Expanded(
       child: InkWell(
@@ -57,7 +54,7 @@ Widget calendar({
             onPressed: onPreviousMonth,
           ),
           Text(
-            DateFormat('y年M月').format(selectDate),
+            DateFormat('y年M月').format(selectedDate),
           ),
           IconButton(
             icon: const Icon(Icons.chevron_right),
@@ -84,7 +81,7 @@ Widget calendar({
       const SizedBox(height: 20),
       Column(
         children: [
-          for (int week = 0; week < selectDate.weekInMonth; week++)
+          for (int week = 0; week < selectedDate.weekInMonth; week++)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
