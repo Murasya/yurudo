@@ -51,12 +51,42 @@ class AppTextField extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        TextField(
-          onTap: onTap,
-          onChanged: onChanged,
-          controller: controller,
-          enableInteractiveSelection: !readonly,
-          decoration: InputDecoration(
+
+        if (readonly)
+          InkWell(
+            onTap: onTap,
+            child: TextField(
+              onTap: onTap,
+              onChanged: onChanged,
+              controller: controller,
+              enableInteractiveSelection: !readonly,
+              decoration: InputDecoration(
+                hintText: placeholder,
+                hintStyle: const TextStyle(
+                  fontSize: 14,
+                  color: AppColor.disableColor,
+                ),
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(vertical: 4),
+                border: InputBorder.none,
+              ),
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColor.fontColor,
+              ),
+              maxLines: maxLines,
+              readOnly: readonly,
+              focusNode: readonly ? DisableFocusNode() : null,
+            ),
+          ),
+
+        if (!readonly)
+          TextField(
+            onTap: onTap,
+            onChanged: onChanged,
+            controller: controller,
+            enableInteractiveSelection: !readonly,
+            decoration: InputDecoration(
               hintText: placeholder,
               hintStyle: const TextStyle(
                 fontSize: 14,
@@ -64,17 +94,22 @@ class AppTextField extends StatelessWidget {
               ),
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 4),
-              border: const UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColor.fontColor),
-              )),
-          style: const TextStyle(
-            fontSize: 14,
-            color: AppColor.fontColor,
+              border: InputBorder.none,
+            ),
+            style: const TextStyle(
+              fontSize: 14,
+              color: AppColor.fontColor,
+            ),
+            maxLines: maxLines,
+            readOnly: readonly,
+            focusNode: readonly ? DisableFocusNode() : null,
           ),
-          maxLines: maxLines,
-          readOnly: readonly,
-          focusNode: readonly ? DisableFocusNode() : null,
-        ),
+
+        const Divider(
+          thickness: 0.5,
+          height: 0.5,
+          color: AppColor.fontColor,
+        )
       ],
     );
   }

@@ -87,6 +87,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                             decoration: const InputDecoration(
                               hintText: '好きな分類名をつけられます',
                               hintStyle: TextStyle(
+                                color: AppColor.disableColor,
                                 fontSize: 14,
                               ),
                               isDense: true,
@@ -103,6 +104,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                       ],
                     ),
                     const Divider(
+                      thickness: 0.5,
                       color: Color(0xFF40402F),
                     )
                   ],
@@ -162,37 +164,40 @@ class CategoryTextField extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('分類'),
-        const SizedBox(height: 12),
-        GestureDetector(
+        const SizedBox(height: 4),
+        InkWell(
           onTap: onTap,
-          child: Row(
-            children: [
-              if (category != null)
-                Transform.translate(
-                  offset: const Offset(0, 1),
-                  child: Container(
-                    width: 8,
-                    height: 14,
-                    margin: const EdgeInsets.only(right: 8),
-                    decoration: BoxDecoration(
-                      color: category!.color,
-                      borderRadius: BorderRadius.circular(4),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              children: [
+                if (category != null)
+                  Transform.translate(
+                    offset: const Offset(0, 1),
+                    child: Container(
+                      width: 8,
+                      height: 14,
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: BoxDecoration(
+                        color: category!.color,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
                     ),
                   ),
+                Expanded(
+                  child: Text(
+                    category?.name ?? 'なし',
+                    style: context.textTheme.bodySmall,
+                  ),
                 ),
-              Expanded(
-                child: Text(
-                  category?.name ?? 'なし',
-                  style: context.textTheme.bodySmall,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         const Divider(
           color: AppColor.fontColor,
-          height: 12.0,
-          thickness: 1.0,
+          height: 0.5,
+          thickness: 0.5,
         ),
       ],
     );
