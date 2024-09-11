@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routine_app/core/design/app_color.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
 
 class AppTextField extends StatelessWidget {
   final String label;
@@ -38,11 +39,11 @@ class AppTextField extends StatelessWidget {
               ),
             ),
             if (isRequired)
-              const Padding(
-                padding: EdgeInsets.only(left: 8.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  '※必須',
-                  style: TextStyle(
+                  context.l10n.required,
+                  style: const TextStyle(
                     color: AppColor.emphasis,
                     fontSize: 12,
                   ),

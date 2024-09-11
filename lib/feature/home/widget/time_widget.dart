@@ -41,16 +41,16 @@ class TimeWidget extends StatelessWidget {
       }
       if (today.inWeek(date)) {
         num = '~1';
-        suf = '週間';
+        suf = context.l10n.weekly;
       } else if (date.isMonthBefore(today)) {
         num = '1';
-        suf = 'か月超';
+        suf = context.l10n.monthlyOver;
       } else if (date.isBeforeDay(today.add(const Duration(days: -13)))) {
         num = '~1';
-        suf = 'か月';
+        suf = context.l10n.monthly;
       } else {
         num = '~2';
-        suf = '週間';
+        suf = context.l10n.weekly;
       }
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +77,7 @@ class TimeWidget extends StatelessWidget {
             (todo.time == null) ? '- ' : '${todo.time}',
             style: context.textTheme.bodyLarge,
           ),
-          Text('分', style: context.textTheme.bodySmall),
+          Text(context.l10n.minute, style: context.textTheme.bodySmall),
         ],
       );
     } else {

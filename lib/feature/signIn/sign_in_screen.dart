@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:routine_app/feature/signIn/vo/sign_in_state.dart';
-import 'package:routine_app/core/utils/contextEx.dart';
 import 'package:routine_app/core/design/app_color.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
+import 'package:routine_app/feature/signIn/vo/sign_in_state.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
 import '../../repository/todo/todo_provider.dart';
@@ -27,10 +27,10 @@ class SignInScreen extends ConsumerWidget {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(8.0),
-              child: const Text(
-                'バックアップを行うにはログインが必要です',
+              child: Text(
+                context.l10n.loginForBackup,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -56,26 +56,26 @@ class SignInScreen extends ConsumerWidget {
         return ListView(
           children: [
             ListTile(
-              title: const Text('データのバックアップ'),
+              title: Text(context.l10n.backupData),
               onTap: () {
                 notifier.onTapBackup().then(
                       (isSuccess) => isSuccess
                           ? context.showSnackBar(
-                              const SnackBar(
-                                content: Text('バックアップに成功しました'),
+                              SnackBar(
+                                content: Text(context.l10n.backupSuccess),
                               ),
                             )
                           : context.showSnackBar(
-                              const SnackBar(
-                                content: Text('バックアップに失敗しました'),
+                              SnackBar(
+                                content: Text(context.l10n.backupFailed),
                               ),
                             ),
                     );
               },
             ),
             ListTile(
-              title: const Text('データの復元'),
-              subtitle: const Text('※今のデータは消え、バックアップデータに上書きされます'),
+              title: Text(context.l10n.restoreData),
+              subtitle: Text(context.l10n.restoreInfo),
               onTap: () {
                 notifier
                     .onTapRestore(
@@ -84,25 +84,25 @@ class SignInScreen extends ConsumerWidget {
                     .then(
                       (isSuccess) => isSuccess
                           ? context.showSnackBar(
-                              const SnackBar(
-                                content: Text('復元に成功しました'),
+                              SnackBar(
+                                content: Text(context.l10n.restoreSuccess),
                               ),
                             )
                           : context.showSnackBar(
-                              const SnackBar(
-                                content: Text('復元に失敗しました'),
+                              SnackBar(
+                                content: Text(context.l10n.restoreFailed),
                               ),
                             ),
                     );
               },
             ),
             ListTile(
-              title: const Text('ログアウト'),
+              title: Text(context.l10n.logout),
               onTap: () {
                 notifier.onTapSignOut().then(
                       (value) => context.showSnackBar(
-                        const SnackBar(
-                          content: Text('ログアウトしました'),
+                        SnackBar(
+                          content: Text(context.l10n.logoutSuccess),
                         ),
                       ),
                     );
@@ -116,7 +116,7 @@ class SignInScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'バックアップ',
+          context.l10n.backup,
           style: context.textTheme.titleMedium,
         ),
         backgroundColor: AppColor.secondaryColor,

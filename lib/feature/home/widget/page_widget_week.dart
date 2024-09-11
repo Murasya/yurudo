@@ -3,9 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:routine_app/core/design/app_assets.dart';
 import 'package:routine_app/core/design/app_color.dart';
-import 'package:routine_app/feature/home/widget/time_widget.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
 import 'package:routine_app/core/utils/date.dart';
 import 'package:routine_app/core/utils/int_ex.dart';
+import 'package:routine_app/feature/home/widget/time_widget.dart';
 
 import '../../../core/navigation/router.dart';
 import '../../../repository/category/category_provider.dart';
@@ -93,7 +94,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetWeek> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'この週のゆるDOと実施予定日',
+              context.l10n.weekYurudo,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             ListView.builder(

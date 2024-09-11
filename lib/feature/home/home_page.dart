@@ -3,19 +3,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:routine_app/feature/home/widget/page_widget_day.dart';
-import 'package:routine_app/feature/home/widget/page_widget_week.dart';
-import 'package:routine_app/core/utils/contextEx.dart';
-import 'package:routine_app/core/utils/date.dart';
 import 'package:routine_app/core/design/app_assets.dart';
 import 'package:routine_app/core/design/app_color.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
+import 'package:routine_app/core/utils/date.dart';
+import 'package:routine_app/feature/home/widget/page_widget_day.dart';
+import 'package:routine_app/feature/home/widget/page_widget_week.dart';
+
 import '../../core/common/dialog_common.dart';
 import '../../core/navigation/router.dart';
-import '../../repository/todo/todo_provider.dart';
 import '../../core/services/app_shared.dart';
 import '../../core/services/notification_service.dart';
+import '../../repository/todo/todo_provider.dart';
 import 'home_page_state.dart';
 import 'widget/my_drawer.dart';
 
@@ -38,8 +38,8 @@ class _HomePageState extends ConsumerState<HomePage> {
     showDialog(
       context: context,
       builder: (_) => DialogCommon(
-        title: "日付更新",
-        content: const Text('日付が変わったためリロードします。'),
+        title: context.l10n.updateDate,
+        content: Text(context.l10n.reload),
         onPressed: () {
           AppShared.shared.updateLastLoginDate();
           ref.watch(todoProvider.notifier).clearPreExpectedDate();
@@ -51,7 +51,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   void initState() {
-    initializeDateFormatting('ja');
     super.initState();
   }
 
@@ -59,7 +58,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(provider);
     final todoList = ref.watch(todoProvider);
-    ref.watch(notificationServiceProvider).setNotifications(todoList);
+    ref.watch(notificationServiceProvider).setNotifications(todoList, context);
 
     if (!AppShared.shared.lastLoginDate.isSameDay(DateTime.now())) {
       WidgetsBinding.instance
@@ -105,7 +104,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                             if (state.displayTerm != TermType.day)
                               Text(
-                                '前の${state.displayTerm.displayName}',
+                                context.l10n.previousWeek,
                                 style: const TextStyle(
                                   color: AppColor.fontColor,
                                   fontSize: 14,
@@ -145,7 +144,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ),
                           ),
                           Text(
-                            '(${DateFormat.E('ja').format(state.pageDate)})',
+                            '(${context.l10n.dayOfWeek(state.pageDate)})',
                             style: const TextStyle(
                               color: AppColor.backgroundColor,
                               fontSize: 14,
@@ -154,7 +153,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ],
                         if (state.displayTerm == TermType.week) ...[
                           Text(
-                            '${DateFormat('M/d').format(state.pageDate)}~$month${weekEnd.day}',
+                            '${dateFormat.format(state.pageDate)}~$month${weekEnd.day}',
                             style: context.textTheme.titleLarge!.copyWith(
                               color: AppColor.backgroundColor,
                             ),
@@ -206,7 +205,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                             if (state.displayTerm != TermType.day)
                               Text(
-                                '次の${state.displayTerm.displayName}',
+                                context.l10n.nextWeek,
                                 style: const TextStyle(
                                   color: AppColor.fontColor,
                                   fontSize: 14,
@@ -271,7 +270,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
               const SizedBox(width: 16),
               Text(
-                '新しいゆるDOを作成',
+                context.l10n.createNewYurudo,
                 style: context.textTheme.bodyLarge!.copyWith(
                   color: Colors.white,
                 ),
@@ -337,7 +336,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         },
         child: Center(
           child: Text(
-            term.displayName,
+            context.l10n.term(term.value),
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,

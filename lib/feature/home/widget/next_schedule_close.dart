@@ -28,13 +28,13 @@ class NextScheduleClose extends ConsumerWidget {
             ],
           ),
           Text(
-            '次の実施予定日を設定せずに\n終わりますか？',
+            context.l10n.closeWithoutNext,
             textAlign: TextAlign.center,
             style: context.textTheme.bodyMedium!.copyWith(fontSize: 16),
           ),
           const SizedBox(height: 20),
           Text(
-            '設定せずに終わると、同じゆるDOを再度実施したいとき、改めて新規で作成する必要があります。',
+            context.l10n.closeWithoutNextInfo,
             style: context.textTheme.bodySmall,
           ),
           const SizedBox(height: 32),
@@ -47,7 +47,7 @@ class NextScheduleClose extends ConsumerWidget {
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('終わる'),
+              child: Text(context.l10n.finish),
             ),
           ),
           const SizedBox(height: 12),
@@ -68,7 +68,7 @@ class NextScheduleClose extends ConsumerWidget {
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('戻る'),
+              child: Text(context.l10n.back),
             ),
           ),
         ],

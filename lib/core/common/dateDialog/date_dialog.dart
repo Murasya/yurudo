@@ -25,7 +25,7 @@ class DateDialog extends ConsumerWidget {
 
     return SimpleDialog(
       title: Text(
-        '実施予定日を設定してください',
+        context.l10n.setExpectedDate,
         textAlign: TextAlign.center,
         style: context.textTheme.bodyMedium!.copyWith(fontSize: 16),
       ),
@@ -44,16 +44,16 @@ class DateDialog extends ConsumerWidget {
           children: [
             TextButton(
               onPressed: onCancel,
-              child: const Text(
-                'キャンセル',
-                style: TextStyle(fontSize: 16),
+              child: Text(
+                context.l10n.cancel,
+                style: const TextStyle(fontSize: 16),
               ),
             ),
             TextButton(
               onPressed: () => onConfirm(state.selectDate),
-              child: const Text(
-                '決定',
-                style: TextStyle(fontSize: 16),
+              child: Text(
+                context.l10n.decide,
+                style: const TextStyle(fontSize: 16),
               ),
             ),
             const SizedBox(width: 8),

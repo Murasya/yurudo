@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:routine_app/core/design/app_color.dart';
-import 'package:routine_app/core/design/app_style.dart';
-import 'package:routine_app/core/design/app_text_field.dart';
-import 'package:routine_app/feature/taskDetail/task_detail_page_state.dart';
-import 'package:routine_app/core/utils/contextEx.dart';
-import 'package:routine_app/core/utils/date.dart';
-import 'package:routine_app/core/utils/int_ex.dart';
 import 'package:routine_app/core/common/dateDialog/date_dialog.dart';
 import 'package:routine_app/core/common/spanDialog/span_dialog.dart';
 import 'package:routine_app/core/common/timeDialog/time_dialog.dart';
+import 'package:routine_app/core/design/app_color.dart';
+import 'package:routine_app/core/design/app_style.dart';
+import 'package:routine_app/core/design/app_text_field.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
+import 'package:routine_app/core/utils/date.dart';
+import 'package:routine_app/core/utils/int_ex.dart';
+import 'package:routine_app/feature/taskDetail/task_detail_page_state.dart';
 
 import '../../core/common/categoryDialog/category_dialog.dart';
+import '../../core/services/notification_service.dart';
 import '../../repository/todo/todo.dart';
 import '../../repository/todo/todo_provider.dart';
-import '../../core/services/notification_service.dart';
 
 final isChangedProvider = Provider.autoDispose.family<bool, Todo>((ref, todo) {
   final state = ref.watch(taskDetailPageStateProvider(todo));
@@ -94,9 +94,9 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
           icon: const Icon(Icons.chevron_left),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'ゆるDOの詳細',
-          style: TextStyle(
+        title: Text(
+          context.l10n.detail,
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -122,7 +122,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
             child: Column(
               children: [
                 AppTextField(
-                  label: 'タイトル',
+                  label: context.l10n.labelTitle,
                   controller: _titleController,
                   onChanged: (value) {
                     ref.read(provider.notifier).setName(value);
@@ -137,7 +137,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                       child: Column(
                         children: [
                           AppTextField(
-                            label: 'スパン',
+                            label: context.l10n.span,
                             readonly: true,
                             controller: _spanController,
                             onTap: () {
@@ -179,7 +179,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                           ),
                           const SizedBox(height: 30),
                           AppTextField(
-                            label: '必要時間',
+                            label: context.l10n.requireTime,
                             readonly: true,
                             controller: _timeController,
                             onTap: () {
@@ -197,7 +197,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                           ),
                           const SizedBox(height: 30),
                           AppTextField(
-                            label: '実施予定日',
+                            label: context.l10n.expectedDate,
                             controller: _nextDayController,
                             readonly: true,
                             onTap: () {
@@ -219,8 +219,12 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                                   ),
                                 );
                               } else {
-                                context.showSnackBar(const SnackBar(
-                                    content: Text('この実施予定日は変更できません')));
+                                context.showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        context.l10n.cantChangeExpectedDate),
+                                  ),
+                                );
                               }
                             },
                           ),
@@ -253,9 +257,9 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                             ),
                             Transform.translate(
                               offset: const Offset(-7, 0),
-                              child: const Text(
-                                'リマインドする',
-                                style: TextStyle(
+                              child: Text(
+                                context.l10n.remind,
+                                style: const TextStyle(
                                   fontSize: 14,
                                 ),
                               ),
@@ -292,13 +296,13 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                 Navigator.pop(context);
                 ref.read(todoProvider.notifier).update(widget.args.todo, state);
                 context.showSnackBar(
-                  const SnackBar(
-                    content: Text('変更しました'),
+                  SnackBar(
+                    content: Text(context.l10n.changed),
                   ),
                 );
               }
             : null,
-        child: const Text('変更を保存する'),
+        child: Text(context.l10n.saveChange),
       ),
     );
   }
@@ -330,7 +334,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                     ],
                   ),
                   Text(
-                    '${widget.args.todo.name}\nを本当に削除しますか？',
+                    context.l10n.checkDelete(widget.args.todo.name),
                     textAlign: TextAlign.center,
                     style: context.textTheme.bodyMedium!.copyWith(
                       fontSize: 16,
@@ -353,12 +357,12 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                         Navigator.pop(context);
                         Navigator.pop(context);
                         context.showSnackBar(
-                          const SnackBar(
-                            content: Text('削除しました'),
+                          SnackBar(
+                            content: Text(context.l10n.deleted),
                           ),
                         );
                       },
-                      child: const Text('削除する'),
+                      child: Text(context.l10n.delete),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -379,7 +383,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: const Text('削除しない'),
+                      child: Text(context.l10n.notDelete),
                     ),
                   ),
                 ],
@@ -387,7 +391,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
             ),
           );
         },
-        child: const Text('削除する'),
+        child: Text(context.l10n.delete),
       ),
     );
   }

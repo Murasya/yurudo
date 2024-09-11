@@ -27,7 +27,7 @@ class DebugPage extends ConsumerWidget {
           ListTile(
             title: const Text('1分後に通知を送る'),
             onTap: () {
-              ref.watch(notificationServiceProvider).testNotification();
+              ref.watch(notificationServiceProvider).testNotification(context);
               context.showSnackBar(
                 const SnackBar(
                   content: Text('通知をセットしました'),

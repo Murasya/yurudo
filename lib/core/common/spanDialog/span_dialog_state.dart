@@ -4,15 +4,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'span_dialog_state.freezed.dart';
 
 enum SpanType {
-  day("日", 1, 6),
-  week("週", 7, 5),
-  month("か月", 30, 12);
+  day("day", 1, 6),
+  week("week", 7, 5),
+  month("month", 30, 12);
 
-  final String label;
+  final String value;
   final int term;
   final int limit;
 
-  const SpanType(this.label, this.term, this.limit);
+  const SpanType(this.value, this.term, this.limit);
 }
 
 final spanDialogStateProvider =

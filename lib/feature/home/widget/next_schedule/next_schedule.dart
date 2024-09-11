@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/core/design/app_assets.dart';
-import 'package:routine_app/core/design/app_style.dart';
 import 'package:routine_app/core/design/app_color.dart';
+import 'package:routine_app/core/design/app_style.dart';
 import 'package:routine_app/core/utils/contextEx.dart';
 import 'package:routine_app/core/utils/date.dart';
 
@@ -103,7 +103,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                     ],
                   ),
                   Text(
-                    'ゆるDOを1つ達成しました！',
+                    context.l10n.completeYurudo,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
@@ -111,7 +111,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    '次の実施予定日を設定してください',
+                    context.l10n.setNextYurudo,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 6),
@@ -125,14 +125,14 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                       );
                     },
                     child: Text(
-                      '達成日を今日以外に変更する',
+                      context.l10n.setNextNotToday,
                       style: context.textTheme.bodyMedium!.copyWith(
                         color: AppColor.fontColor3,
                         decoration: TextDecoration.underline,
                       ),
                     ),
                   ),
-                  calendar(),
+                  calendar(context),
                   if (ref.watch(provider).hasError)
                     Text(
                       ref.watch(provider).errorMessage,
@@ -152,7 +152,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                             .isAfterDay(widget.args.completeDay)) {
                           ref
                               .read(provider.notifier)
-                              .setError(true, msg: '達成日以降の日付しか選べません');
+                              .setError(true, msg: context.l10n.afterCompleteDay);
                           return;
                         }
                         ref.read(todoProvider.notifier).complete(
@@ -181,14 +181,14 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
               ),
             ),
             onPressed: () => Navigator.pop(context),
-            child: const Text('チェックを元に戻す'),
+            child: Text(context.l10n.undoCheck),
           ),
         ),
       ],
     );
   }
 
-  Widget calendar() {
+  Widget calendar(BuildContext context) {
     const list = ['月', '火', '水', '木', '金', '土', '日'];
     final state = ref.watch(provider);
     return Column(

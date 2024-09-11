@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:routine_app/core/design/app_assets.dart';
 import 'package:routine_app/core/design/app_color.dart';
-import 'package:routine_app/feature/home/widget/time_widget.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
 import 'package:routine_app/core/utils/int_ex.dart';
+import 'package:routine_app/feature/home/widget/time_widget.dart';
 
 import '../../../core/navigation/router.dart';
 import '../../../repository/category/category_provider.dart';
@@ -72,7 +73,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'この日のゆるDOと所要時間',
+              context.l10n.todayYurudo,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             ListView.builder(
@@ -90,7 +91,7 @@ class _PageWidgetState extends ConsumerState<PageWidgetDay> {
             if (pastTodoList.isNotEmpty) ...[
               const SizedBox(height: 38),
               Text(
-                '実施が遅れているゆるDOと遅延期間',
+                context.l10n.pastYurudo,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               ListView.builder(

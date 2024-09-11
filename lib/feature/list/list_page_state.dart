@@ -11,16 +11,16 @@ final listPageStateProvider =
 });
 
 enum SortType {
-  addDayAsc('追加日 (新→古)', true),
-  addDayDesc('追加日 (古→新)', false),
-  spanAsc('スパン (短→長)', true),
-  spanDesc('スパン (長→短)', false),
-  timeAsc('必要時間 (短→長)', true),
-  timeDesc('必要時間 (長→短)', false);
+  addDayAsc('addDayAsc', true),
+  addDayDesc('addDayDesc', false),
+  spanAsc('spanAsc', true),
+  spanDesc('spanDesc', false),
+  timeAsc('timeAsc', true),
+  timeDesc('timeDesc', false);
 
-  const SortType(this.title, this.isAsc);
+  const SortType(this.value, this.isAsc);
 
-  final String title;
+  final String value;
   final bool isAsc;
 }
 

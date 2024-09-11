@@ -3,8 +3,8 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:routine_app/core/design/app_assets.dart';
-import 'package:routine_app/core/design/app_style.dart';
 import 'package:routine_app/core/design/app_color.dart';
+import 'package:routine_app/core/design/app_style.dart';
 import 'package:routine_app/core/utils/contextEx.dart';
 
 import '../../core/navigation/router.dart';
@@ -27,9 +27,9 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'フィードバック / お問い合わせ',
-          style: TextStyle(
+        title: Text(
+          context.l10n.feedback,
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -47,8 +47,8 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
           padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
           child: Column(
             children: [
-              contentWidget(),
-              mailWidget(),
+              contentWidget(context),
+              mailWidget(context),
               SizedBox(
                 width: double.infinity,
                 height: 40,
@@ -60,7 +60,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
                   onPressed: () {
                     _sendEmail(context);
                   },
-                  child: const Text('送信'),
+                  child: Text(context.l10n.submit),
                 ),
               ),
             ],
@@ -70,23 +70,23 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
     );
   }
 
-  Widget contentWidget() {
+  Widget contentWidget(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Row(
           children: [
             Text(
-              '内容',
-              style: TextStyle(
+              context.l10n.content,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: AppColor.fontColor,
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
-              '※必須',
-              style: TextStyle(
+              context.l10n.required,
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
                 color: AppColor.emphasis,
@@ -107,7 +107,7 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
               color: AppColor.fontColor,
             ),
             decoration: InputDecoration(
-                hintText: '入力してください\n\n\n\n\n\n',
+                hintText: '${context.l10n.pleaseInput}\n\n\n\n\n\n',
                 contentPadding: const EdgeInsets.all(12),
                 isDense: true,
                 border: OutlineInputBorder(
@@ -119,23 +119,23 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
     );
   }
 
-  Widget mailWidget() {
+  Widget mailWidget(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Row(
           children: [
             Text(
-              'メールアドレス',
-              style: TextStyle(
+              context.l10n.mailAddress,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: AppColor.fontColor,
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
-              '※返信をご希望の場合はご入力ください',
-              style: TextStyle(
+              context.l10n.mailAddressInfo,
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
                 color: AppColor.emphasis,
@@ -153,8 +153,8 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
           style: const TextStyle(
             fontSize: 14,
           ),
-          decoration: const InputDecoration(
-            hintText: '入力してください',
+          decoration: InputDecoration(
+            hintText: context.l10n.pleaseInput,
           ),
         ),
         if (errorMessage.isNotEmpty)
@@ -178,13 +178,13 @@ class _FeedbackPageState extends ConsumerState<FeedbackPage> {
         .hasMatch(_emailController.text);
     if (_emailController.text.isNotEmpty && !emailValid) {
       setState(() {
-        errorMessage = 'メールアドレスが不正です';
+        errorMessage = context.l10n.mailAddressInvalid;
       });
       return;
     }
     final Email email = Email(
       body: '''
-このまま送信してください。
+${context.l10n.submitAsIs}
 
 ${_contentController.text}
 
@@ -228,10 +228,10 @@ ${_contentController.text}
                     ),
                   ],
                 ),
-                const Text(
-                  'フィードバック/お問い合わせを\n送信しました',
+                Text(
+                  context.l10n.sendFeedback,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: AppColor.fontColor,
@@ -270,7 +270,7 @@ ${_contentController.text}
                         (_) => false,
                       );
                     },
-                    child: const Text('閉じる'),
+                    child: Text(context.l10n.close),
                   ),
                 ),
               ],

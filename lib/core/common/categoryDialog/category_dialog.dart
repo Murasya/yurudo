@@ -52,7 +52,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
     final state = ref.watch(provider);
 
     return DialogCommon(
-      title: '分類を選択してください',
+      title: context.l10n.selectCategory,
       onPressed: () {
         if (state.selectButtonNum != null) {
           widget.onConfirm(ref.read(categoryProvider)[state.selectButtonNum]);
@@ -84,14 +84,14 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                           // width: MediaQuery.of(context).size.width - 200,
                           child: TextField(
                             controller: nameController[i],
-                            decoration: const InputDecoration(
-                              hintText: '好きな分類名をつけられます',
-                              hintStyle: TextStyle(
+                            decoration: InputDecoration(
+                              hintText: context.l10n.giveName,
+                              hintStyle: const TextStyle(
                                 color: AppColor.disableColor,
                                 fontSize: 14,
                               ),
                               isDense: true,
-                              contentPadding: EdgeInsets.symmetric(vertical: 0),
+                              contentPadding: const EdgeInsets.symmetric(vertical: 0),
                               border: InputBorder.none,
                             ),
                             onChanged: (value) {
@@ -131,7 +131,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                   }
                 },
                 child: Text(
-                  '選択',
+                  context.l10n.selectLabel,
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -163,7 +163,7 @@ class CategoryTextField extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('分類'),
+        Text(context.l10n.category),
         const SizedBox(height: 4),
         InkWell(
           onTap: onTap,
@@ -186,7 +186,7 @@ class CategoryTextField extends ConsumerWidget {
                   ),
                 Expanded(
                   child: Text(
-                    category?.name ?? 'なし',
+                    category?.name ?? context.l10n.nothing,
                     style: context.textTheme.bodySmall,
                   ),
                 ),

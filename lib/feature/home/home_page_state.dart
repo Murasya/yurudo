@@ -7,13 +7,13 @@ part 'home_page_state.freezed.dart';
 const initialPage = 100;
 
 enum TermType {
-  day('日', 1),
-  week('週', 7);
-  //month('月', 30);
+  day('day', 1),
+  week('week', 7);
+  //month('month', 30);
 
-  const TermType(this.displayName, this.term);
+  const TermType(this.value, this.term);
 
-  final String displayName;
+  final String value;
   final int term;
 }
 

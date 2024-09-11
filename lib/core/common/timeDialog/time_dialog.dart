@@ -19,7 +19,7 @@ class TimeDialog extends ConsumerWidget {
 
     return AlertDialog(
       title: Text(
-        'スパンを設定してください',
+        context.l10n.setTime,
         textAlign: TextAlign.center,
         style: context.textTheme.bodyMedium!.copyWith(fontSize: 16),
       ),
@@ -44,7 +44,7 @@ class TimeDialog extends ConsumerWidget {
             ),
           ),
           const SizedBox(width: 12),
-          const Text("分"),
+          Text(context.l10n.minute),
         ],
       ),
       actions: [
@@ -52,8 +52,8 @@ class TimeDialog extends ConsumerWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text(
-            'キャンセル',
+          child: Text(
+            context.l10n.cancel,
           ),
         ),
         TextButton(

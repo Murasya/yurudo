@@ -20,7 +20,7 @@ class SpanDialog extends ConsumerWidget {
 
     return AlertDialog(
       title: Text(
-        'スパンを設定してください',
+        context.l10n.setSpan,
         textAlign: TextAlign.center,
         style: context.textTheme.bodyMedium!.copyWith(fontSize: 16),
       ),
@@ -52,7 +52,7 @@ class SpanDialog extends ConsumerWidget {
               items: SpanType.values
                   .map((value) => DropdownMenuItem(
                         value: value,
-                        child: Text(value.label),
+                        child: Text(context.l10n.spanType(value.value)),
                       ))
                   .toList(),
               onChanged: (value) {
@@ -63,7 +63,7 @@ class SpanDialog extends ConsumerWidget {
             ),
           ),
           const SizedBox(width: 12),
-          const Text("に1回"),
+          Text(context.l10n.atOnce),
         ],
       ),
       actions: [
@@ -71,7 +71,7 @@ class SpanDialog extends ConsumerWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text('キャンセル'),
+          child: Text(context.l10n.cancel),
         ),
         TextButton(
           onPressed: () {

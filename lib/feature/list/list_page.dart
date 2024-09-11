@@ -6,10 +6,10 @@ import 'package:routine_app/core/design/app_color.dart';
 import 'package:routine_app/core/utils/contextEx.dart';
 
 import '../../core/navigation/router.dart';
+import '../../core/utils/int_ex.dart';
 import '../../repository/category/category_provider.dart';
 import '../../repository/todo/todo.dart';
 import '../../repository/todo/todo_provider.dart';
-import '../../core/utils/int_ex.dart';
 import '../home/widget/my_drawer.dart';
 import '../taskDetail/task_detail_page_state.dart';
 import 'list_page_state.dart';
@@ -99,7 +99,7 @@ class _ListPageState extends ConsumerState<ListPage> {
                 children: [
                   SvgPicture.asset(AppAssets.sort),
                   const SizedBox(width: 8),
-                  const Text('並び替え'),
+                  Text(context.l10n.sort),
                 ],
               ),
             ),
@@ -138,7 +138,7 @@ class _ListPageState extends ConsumerState<ListPage> {
                         : Colors.white,
                   ),
                   const SizedBox(width: 8),
-                  const Text('絞り込み'),
+                  Text(context.l10n.filter),
                 ],
               ),
             ),
@@ -166,7 +166,7 @@ class _ListPageState extends ConsumerState<ListPage> {
               ),
               const SizedBox(width: 16),
               Text(
-                '新しいゆるDOを作成',
+                context.l10n.createNewYurudo,
                 style: context.textTheme.bodyLarge!.copyWith(
                   color: Colors.white,
                 ),
@@ -320,7 +320,7 @@ class _ListPageState extends ConsumerState<ListPage> {
       value: sortType,
       groupValue: ref.watch(listPageStateProvider).sortType,
       title: Text(
-        sortType.title,
+        context.l10n.sortType(sortType.value),
         style: TextStyle(
           fontWeight: ref.watch(listPageStateProvider).sortType == sortType
               ? FontWeight.w500

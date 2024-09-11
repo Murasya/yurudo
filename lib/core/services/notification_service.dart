@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
 import 'package:routine_app/core/utils/date.dart';
 import 'package:routine_app/core/utils/int_ex.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -51,6 +52,7 @@ class NotificationService {
     int id = 0,
     required DateTime day,
     required String message,
+    required BuildContext context,
     DateTime? dateTime, // test用
   }) async {
     tz.TZDateTime scheduledDate = tz.TZDateTime(
@@ -80,17 +82,17 @@ class NotificationService {
 
     _flnp.zonedSchedule(
       id,
-      '${dateFormat.format(day)}のゆるDOを確認しましょう',
+      context.l10n.checkYurudo(dateFormat.format(day)),
       message,
       scheduledDate,
-      const NotificationDetails(
+      NotificationDetails(
         android: AndroidNotificationDetails(
           'daily notification',
-          '今日のゆるDO',
-          channelDescription: "毎日のゆるDOを通知します",
+          context.l10n.todayYurudoLabel,
+          channelDescription: context.l10n.notifyDailyYurudo,
           icon: 'ic_notification',
         ),
-        iOS: DarwinNotificationDetails(
+        iOS: const DarwinNotificationDetails(
           badgeNumber: 1,
         ),
       ),
@@ -106,19 +108,20 @@ class NotificationService {
   }
 
   @Deprecated('test用')
-  Future<void> testNotification() async {
+  Future<void> testNotification(BuildContext context) async {
     var time = DateTime.now().add(const Duration(minutes: 1));
     registerMessage(
       id: 1000,
       day: time,
       message: 'test message',
+      context: context,
       dateTime: time,
     );
     debugPrint("test notification time$time");
   }
 
   /// 1週間分の通知をセットする
-  Future<void> setNotifications(List<Todo> todos) async {
+  Future<void> setNotifications(List<Todo> todos, BuildContext context) async {
     await _cancelNotification();
 
     final today = DateTime.now();
@@ -135,7 +138,7 @@ class NotificationService {
         message +=
             '${tomorrowTodo[j].name} [${tomorrowTodo[j].time.toTimeString()}]\n';
       }
-      registerMessage(id: i, day: tomorrow, message: message);
+      registerMessage(id: i, day: tomorrow, message: message, context: context);
     }
     var list = await _flnp.getActiveNotifications();
     // listを一覧表示

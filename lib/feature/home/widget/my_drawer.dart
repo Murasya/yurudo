@@ -27,7 +27,7 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                   drawerMain(
-                    text: 'ホーム',
+                    text: context.l10n.home,
                     onTap: () {
                       Navigator.pushNamedAndRemoveUntil(
                         context,
@@ -37,7 +37,7 @@ class MyDrawer extends StatelessWidget {
                     },
                   ),
                   drawerMain(
-                    text: 'ゆるDO一覧',
+                    text: context.l10n.yurudoList,
                     onTap: () {
                       Navigator.pushNamedAndRemoveUntil(
                         context,
@@ -47,7 +47,7 @@ class MyDrawer extends StatelessWidget {
                     },
                   ),
                   drawerMain(
-                    text: 'バックアップ',
+                    text: context.l10n.backup,
                     onTap: () {
                       Navigator.pushNamed(
                         context,
@@ -72,17 +72,17 @@ class MyDrawer extends StatelessWidget {
             //   text: 'アプリの使い方',
             // ),
             drawerItem(
-              text: 'フィードバック / お問い合わせ',
+              text: context.l10n.feedback,
               onTap: () => Navigator.pushNamed(context, AppRouter.feedback),
             ),
             drawerItem(
-              text: '利用規約',
+              text: context.l10n.termsOfUse,
               hasIcon: true,
               onTap: () => launchUrlString(
                   "https://docs.google.com/document/d/1cUHk1Fe2MVvRZY0MNzgKhJCMityXPQiZ8lwAEgZoDWs/edit?usp=sharing"),
             ),
             drawerItem(
-              text: 'プライバシーポリシー',
+              text: context.l10n.privacyPolicy,
               hasIcon: true,
               onTap: () => launchUrlString(
                   "https://docs.google.com/document/d/15JC1IkhR7aRr59sCZ5BACsxsVu15Pd2umM8VIwZqWRE/edit?usp=sharing"),

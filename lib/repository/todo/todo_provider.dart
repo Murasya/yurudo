@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import '../../feature/taskDetail/task_detail_page_state.dart';
-import 'todo.dart';
-import 'todo_database.dart';
 import 'package:routine_app/core/utils/contextEx.dart';
 import 'package:routine_app/core/utils/date.dart';
 
 import '../../feature/home/widget/next_schedule/next_schedule.dart';
 import '../../feature/home/widget/next_schedule/next_schedule_state.dart';
+import '../../feature/taskDetail/task_detail_page_state.dart';
+import 'todo.dart';
+import 'todo_database.dart';
 
 final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
   return TodoNotifier(TodoDatabase());
@@ -181,22 +181,25 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     if (pageIndex > 0) {
       if (todo.isBeforeDay(today)) {
         context.showSnackBar(
-          const SnackBar(content: Text('実施が遅れているゆるDOからタスクを実施してください')),
+          SnackBar(content: Text(context.l10n.doPastYurudo)),
         );
       } else if (todo.expectedDate.isSameDay(today)) {
         context.showSnackBar(
-          const SnackBar(content: Text('本日のゆるDOからタスクを実施してください')),
+          SnackBar(content: Text(context.l10n.doTodayYurudo)),
         );
       } else if (todo.isContainComplete(today)) {
         context.showSnackBar(
-          const SnackBar(content: Text('1日に同一タスクは2度実施できません')),
+          SnackBar(content: Text(context.l10n.cantSameYurudo)),
         );
       } else if (!todo.expectedDate
           .isSameDay(today.add(Duration(days: pageIndex)))) {
         context.showSnackBar(
           SnackBar(
-              content: Text(
-                  '直近の同一タスク(${dateFormat.format(todo.expectedDate!)})から実施してください')),
+            content: Text(
+              context.l10n
+                  .doRecentYurudo(dateFormat.format(todo.expectedDate!)),
+            ),
+          ),
         );
       } else {
         showDialog(
@@ -212,7 +215,10 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       return;
     } else if (pageIndex < 0) {
       context.showSnackBar(
-          const SnackBar(content: Text('過去のタスクを実施しなかったことにはできません')));
+        SnackBar(
+          content: Text(context.l10n.cantPretendPerformYurudo),
+        ),
+      );
       return;
     } else if (!todo.isContainComplete(today)) {
       debugPrint('complete!');
@@ -242,16 +248,16 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }) {
     if (pageIndex < 0) {
       context.showSnackBar(
-          const SnackBar(content: Text('過去のタスクを実施しなかったことにはできません')));
+          SnackBar(content: Text(context.l10n.cantPretendPerformYurudo)));
       return;
     } else if (todo.expectedDate.isAfterDay(today)) {
       if (_getTodayTodo(today).any((t) => t.id == todo.id)) {
         context.showSnackBar(
-          const SnackBar(content: Text('本日のゆるDOからタスクを実施してください')),
+          SnackBar(content: Text(context.l10n.doTodayYurudo)),
         );
       } else if (todo.isContainComplete(today)) {
         context.showSnackBar(
-          const SnackBar(content: Text('1日に同一タスクは2度実施できません')),
+          SnackBar(content: Text(context.l10n.cantSameYurudo)),
         );
       } else {
         showDialog(

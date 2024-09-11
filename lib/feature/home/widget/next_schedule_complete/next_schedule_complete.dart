@@ -5,8 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/core/design/app_assets.dart';
-import 'package:routine_app/core/design/app_style.dart';
 import 'package:routine_app/core/design/app_color.dart';
+import 'package:routine_app/core/design/app_style.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
 import 'package:routine_app/core/utils/date.dart';
 
 import '../next_schedule/next_schedule_state.dart';
@@ -85,7 +86,7 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'タスクの達成日を選択してください',
+                  context.l10n.selectCompleteDay,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 calendar(),
@@ -108,7 +109,7 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                           .isAfterDay(DateTime.now())) {
                         ref
                             .read(provider.notifier)
-                            .setError(true, msg: '明日以降は選択できません');
+                            .setError(true, msg: context.l10n.cantSelectTomorrow);
                         return;
                       }
                       if (widget.args.todo.completeDate.isNotEmpty) {
@@ -119,7 +120,7 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                         if (ref.read(provider).selectDay.isBeforeDay(
                             lastCompleteDate.add(const Duration(days: 1)))) {
                           ref.read(provider.notifier).setError(true,
-                              msg: '前回の実施日以降しか選択できません（前回の実施日$lastCompDateStr）');
+                              msg: context.l10n.cantSelectAfter(lastCompDateStr));
                           return;
                         }
                       }
@@ -134,7 +135,7 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                         ),
                       );
                     },
-                    child: const Text('次へ'),
+                    child: Text(context.l10n.next),
                   ),
                 ),
                 Container(
@@ -150,7 +151,7 @@ class _NextScheduleCompleteState extends ConsumerState<NextScheduleComplete> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('戻る'),
+                    child: Text(context.l10n.back),
                   ),
                 ),
               ],

@@ -3,20 +3,21 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:routine_app/core/design/app_color.dart';
-import 'package:routine_app/core/design/app_style.dart';
-import 'package:routine_app/core/design/app_text_field.dart';
-import 'package:routine_app/core/navigation/router.dart';
-import 'package:routine_app/core/utils/contextEx.dart';
-import 'package:routine_app/core/utils/date.dart';
-import 'package:routine_app/core/utils/int_ex.dart';
 import 'package:routine_app/core/common/categoryDialog/category_dialog.dart';
 import 'package:routine_app/core/common/dateDialog/date_dialog.dart';
 import 'package:routine_app/core/common/spanDialog/span_dialog.dart';
 import 'package:routine_app/core/common/timeDialog/time_dialog.dart';
-import 'package:routine_app/repository/todo/todo_provider.dart';
-import 'package:routine_app/core/services/notification_service.dart';
+import 'package:routine_app/core/design/app_color.dart';
+import 'package:routine_app/core/design/app_style.dart';
+import 'package:routine_app/core/design/app_text_field.dart';
+import 'package:routine_app/core/navigation/router.dart';
 import 'package:routine_app/core/services/ad_service.dart';
+import 'package:routine_app/core/services/notification_service.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
+import 'package:routine_app/core/utils/date.dart';
+import 'package:routine_app/core/utils/int_ex.dart';
+import 'package:routine_app/repository/todo/todo_provider.dart';
+
 import 'new_task_page_state.dart';
 
 class NewTaskPage extends ConsumerStatefulWidget {
@@ -91,9 +92,9 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
       appBar: AppBar(
         backgroundColor: AppColor.secondaryColor,
         foregroundColor: AppColor.fontColor,
-        title: const Text(
-          '新しいゆるDOを作成',
-          style: TextStyle(fontSize: 14),
+        title: Text(
+          context.l10n.createNewYurudo,
+          style: const TextStyle(fontSize: 14),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -109,13 +110,13 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
             if (state.name.isEmpty ||
                 state.span == null ||
                 state.firstDay == null) {
-              ref.read(provider.notifier).setHasError(true, '必須項目が入力されていません');
+              ref.read(provider.notifier).setHasError(true, context.l10n.noRequired);
               return;
             }
             if (state.firstDay!.isBeforeDay(DateTime.now())) {
               ref
                   .read(provider.notifier)
-                  .setHasError(true, '実施予定日は今日以降しか選択できません');
+                  .setHasError(true, context.l10n.cantSelectAfterToday);
               return;
             }
             if (state.remind) {
@@ -134,7 +135,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
             Navigator.pop(context);
           },
           child: Text(
-            '作成',
+            context.l10n.create,
             style: context.textTheme.bodyLarge!.copyWith(
               color: Colors.white,
             ),
@@ -160,8 +161,8 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                     ),
                   ),
                 AppTextField(
-                  label: 'タイトル',
-                  placeholder: "例）${titleList[titleNum]}",
+                  label: context.l10n.labelTitle,
+                  placeholder: "${context.l10n.example}）${titleList[titleNum]}",
                   isRequired: true,
                   onChanged: (value) {
                     ref.read(provider.notifier).setName(value);
@@ -177,8 +178,8 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                       child: Column(
                         children: [
                           AppTextField(
-                            label: 'スパン',
-                            placeholder: '選択してください',
+                            label: context.l10n.span,
+                            placeholder: context.l10n.select,
                             isRequired: true,
                             controller: _spanController,
                             readonly: true,
@@ -219,8 +220,8 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                           ),
                           const SizedBox(height: 38),
                           AppTextField(
-                            label: '必要時間',
-                            placeholder: '選択してください',
+                            label: context.l10n.requireTime,
+                            placeholder: context.l10n.select,
                             controller: _timeController,
                             readonly: true,
                             onTap: () {
@@ -237,8 +238,8 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                           ),
                           const SizedBox(height: 38),
                           AppTextField(
-                            label: '最初の実施予定日',
-                            placeholder: '選択してください',
+                            label: context.l10n.firstExpectedDate,
+                            placeholder: context.l10n.select,
                             isRequired: true,
                             controller: _dateController,
                             readonly: true,
@@ -289,9 +290,9 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                               ),
                               Transform.translate(
                                 offset: const Offset(-7, 0),
-                                child: const Text(
-                                  'リマインドする',
-                                  style: TextStyle(
+                                child: Text(
+                                  context.l10n.remind,
+                                  style: const TextStyle(
                                     fontSize: 14,
                                   ),
                                 ),
