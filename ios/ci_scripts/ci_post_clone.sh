@@ -26,7 +26,7 @@ cd ..
 
 # make secret files
 echo ${env_file} > assets/env/dev.json
-mkdir ios/config/${flavor}
+mkdir -p ios/config/${flavor}
 echo ${firebase_app_id_file} > ios/config/${flavor}/firebase_app_id_file.json
 echo ${GoogleService_Info} > ios/config/${flavor}/GoogleService-Info.plist
 echo ${firebase_options} > lib/firebase_options.dart

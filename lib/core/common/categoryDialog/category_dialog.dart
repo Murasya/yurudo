@@ -81,7 +81,6 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                           width: 8,
                         ),
                         Expanded(
-                          // width: MediaQuery.of(context).size.width - 200,
                           child: TextField(
                             controller: nameController[i],
                             decoration: InputDecoration(
@@ -90,7 +89,6 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                                 color: AppColor.disableColor,
                                 fontSize: 14,
                               ),
-                              isDense: true,
                               contentPadding: const EdgeInsets.symmetric(vertical: 0),
                               border: InputBorder.none,
                             ),
