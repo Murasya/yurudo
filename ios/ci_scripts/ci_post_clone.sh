@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # Fail this script if any subcommand fails.
 set -e
