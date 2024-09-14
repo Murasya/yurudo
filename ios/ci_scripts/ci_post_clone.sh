@@ -22,6 +22,7 @@ brew install cocoapods
 
 # Install CocoaPods dependencies.
 cd ios && pod install # run `pod install` in the `ios` directory.
+cd ..
 
 # make secret files
 echo ${env_file} > assets/env/dev.json
