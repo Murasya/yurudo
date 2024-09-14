@@ -28,7 +28,8 @@ cd ..
 echo ${env_file} > assets/env/dev.json
 echo ${firebase_app_id_file} > ios/firebase_app_id_file.json
 echo ${GoogleService_Info} > ios/Runner/GoogleService-Info.plist
+echo ${firebase_options} > lib/firebase_options.dart
 
-flutter build ios --config-only --flavor dev
+flutter build ios --config-only --flavor ${flavor}
 
 exit 0
