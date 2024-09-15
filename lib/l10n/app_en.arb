@@ -1,9 +1,9 @@
 {
-  "title": "ゆるDO",
-  "updateDate": "日付更新",
-  "reload": "日付が変わったためリロードします。",
-  "previousWeek": "前の週",
-  "nextWeek": "次の週",
+  "title": "Yuru-DO",
+  "updateDate": "Update Date",
+  "reload": "Reloading due to a date change",
+  "previousWeek": "Previous Week",
+  "nextWeek": "Next Week",
   "dayOfWeek": "{date}",
   "@dayOfWeek": {
     "description": "day of week",
@@ -14,7 +14,7 @@
       }
     }
   },
-  "term": "{term, select, day{日} week{週} other{日}}",
+  "term": "{term, select, day{Day} week{Week} other{Day}}",
   "@term": {
     "description": "term",
     "placeholders": {
@@ -23,49 +23,52 @@
       }
     }
   },
-  "createNewYurudo": "新しいゆるDOを作成",
-  "todayYurudo": "この日のゆるDOと所要時間",
-  "pastYurudo": "実施が遅れているゆるDOと遅延期間",
+  "createNewYurudo": "Create New Yuru-DO",
+  "todayYurudo": "Today's Yuru-DO and Required Time",
+  "pastYurudo": "Delayed Yuru-DO and Delay Period",
 
-  "feedback": "フィードバック / お問い合わせ",
-  "submit": "送信",
-  "content": "内容",
-  "required": "※必須",
-  "pleaseInput": "入力してください",
-  "mailAddress": "メールアドレス",
-  "mailAddressInfo": "※返信をご希望の場合はご入力ください",
-  "mailAddressInvalid": "メールアドレスが不正です",
-  "submitAsIs": "このまま送信してください。",
-  "sendFeedback": "フィードバック/お問い合わせを\n送信しました",
-  "close": "閉じる",
+  "feedback": "Feedback / Contact Us",
+  "submit": "Submit",
+  "content": "Content",
+  "required": "*Required",
+  "pleaseInput": "Please enter",
+  "mailAddress": "Email Address",
+  "mailAddressInfo": "*Enter if you want a reply",
+  "mailAddressInvalid": "Invalid email address",
+  "submitAsIs": "Please submit without any changes",
+  "sendFeedback": "Feedback/Contact Us has been\nsubmitted",
+  "close": "Close",
 
-  "home": "ホーム",
-  "yurudoList": "ゆるDO一覧",
-  "backup": "バックアップ",
-  "termsOfUse": "利用規約",
-  "privacyPolicy": "プライバシーポリシー",
+  "home": "Home",
+  "yurudoList": "Yuru-DO List",
+  "backup": "Backup",
+  "termsOfUse": "Terms of Use",
+  "privacyPolicy": "Privacy Policy",
 
-  "closeWithoutNext": "次の実施予定日を設定せずに\n終わりますか？",
-  "closeWithoutNextInfo": "設定せずに終わると、同じゆるDOを再度実施したいとき、改めて新規で作成する必要があります。",
-  "finish": "終わる",
-  "back": "戻る",
+  "closeWithoutNext": "End without setting the next planned execution date?",
+  "closeWithoutNextInfo": "If you do not set it, you will need to create a new Yuru-DO when you want to do the same task again.",
+  "finish": "Finish",
+  "back": "Back",
 
-  "weekYurudo": "この週のゆるDOと実施予定日",
 
-  "weekly": "週間",
-  "monthlyOver": "か月超",
-  "monthly": "か月",
-  "minute": "分",
+  "weekYurudo": "This Week's Yuru-DO and Planned Execution Date",
 
-  "completeYurudo": "ゆるDOを1つ達成しました！",
-  "setNextYurudo": "次の実施予定日を設定してください",
-  "setNextNotToday": "達成日を今日以外に変更する",
-  "afterCompleteDay": "達成日以降の日付しか選べません",
-  "undoCheck": "チェックを元に戻す",
+  "weekly": "Weekly",
+  "monthlyOver": "Months Over",
+  "monthly": "Months",
+  "minute": "Minutes",
 
-  "selectCompleteDay": "タスクの達成日を選択してください",
-  "cantSelectTomorrow": "明日以降は選択できません",
-  "cantSelectAfter": "前回の実施日以降しか選択できません（前回の実施日{date}）",
+
+  "completeYurudo": "ou have completed one Yuru-DO!",
+  "setNextYurudo": "Set the next planned execution date",
+  "setNextNotToday": "Change the completion date to a day other than today",
+  "afterCompleteDay": "You can only select a date after the completion date",
+  "undoCheck": "Undo the check",
+
+
+  "selectCompleteDay": "Select the task completion date",
+  "cantSelectTomorrow": "You cannot select tomorrow or later",
+  "cantSelectAfter": "You can only select after the last execution date（Last execution date{date}）",
   "@cantSelectAfter": {
     "description": "previous date",
     "placeholders": {
@@ -74,12 +77,12 @@
       }
     }
   },
-  "next": "次へ",
+  "next": "Next",
 
-  "sort": "並び替え",
-  "filter": "絞り込み",
+  "sort": "Sort",
+  "filter": "Filter",
 
-  "sortType": "{type, select, addDayAsc{追加日 (新→古)} addDayDesc{追加日 (古→新)} spanAsc{スパン (短→長)} spanDesc{スパン (長→短)} timeAsc{必要時間 (短→長)} timeDesc{必要時間 (長→短)} other{エラー}}",
+  "sortType": "{type, select, addDayAsc{Add Date (New→Old)} addDayDesc{Add Date (Old→New)} spanAsc{Span (Short→Long)} spanDesc{Span (Long→Short)} timeAsc{Required Time (Short→Long)} timeDesc{Required Time (Long→Short)} other{Error}}",
   "@sortType": {
     "description": "sort type",
     "placeholders": {
@@ -89,34 +92,34 @@
     }
   },
 
-  "noRequired": "必須項目が入力されていません",
-  "cantSelectAfterToday": "実施予定日は今日以降しか選択できません",
-  "create": "作成",
-  "labelTitle": "タイトル",
-  "example": "例",
-  "span": "スパン",
-  "select": "選択してください",
-  "requireTime": "必要時間",
-  "firstExpectedDate": "最初の実施予定日",
-  "remind": "リマインドする",
+  "noRequired": "Required fields have not been entered",
+  "cantSelectAfterToday": "The planned execution date can only be today or later",
+  "create": "Create",
+  "labelTitle": "Title",
+  "example": "Example",
+  "span": "Span",
+  "select": "Please select",
+  "requireTime": "Required Time",
+  "firstExpectedDate": "First Planned Execution Date",
+  "remind": "Set Reminder",
 
-  "loginForBackup": "バックアップを行うにはログインが必要です",
-  "backupData": "データのバックアップ",
-  "backupSuccess": "バックアップに成功しました",
-  "backupFailed": "バックアップに失敗しました",
-  "restoreData": "データの復元",
-  "restoreInfo": "※今のデータは消え、バックアップデータに上書きされます",
-  "restoreSuccess": "復元に成功しました",
-  "restoreFailed": "復元に失敗しました",
-  "logout": "ログアウト",
-  "logoutSuccess": "ログアウトしました",
+  "loginForBackup": "Login is required to perform backup",
+  "backupData": "Backup Data",
+  "backupSuccess": "Backup was successful",
+  "backupFailed": "Backup failed",
+  "restoreData": "Restore Data",
+  "restoreInfo": "*Current data will be overwritten with the backup data",
+  "restoreSuccess": "Restore was successful",
+  "restoreFailed": "Restore failed",
+  "logout": "Logout",
+  "logoutSuccess": "Logged out successfully",
 
-  "detail": "ゆるDOの詳細",
-  "expectedDate": "実施予定日",
-  "cantChangeExpectedDate": "この実施予定日は変更できません",
-  "changed": "変更しました",
-  "saveChange": "変更を保存する",
-  "checkDelete": "{name}\nを本当に削除しますか？",
+  "detail": "Yuru-DO Details",
+  "expectedDate": "Planned Execution Date",
+  "cantChangeExpectedDate": "This planned execution date cannot be changed",
+  "changed": "Changed",
+  "saveChange": "Save Changes",
+  "checkDelete": "Are you sure you want to delete\n{name}?",
   "@checkDelete": {
     "description": "check delete",
     "placeholders": {
@@ -125,14 +128,14 @@
       }
     }
   },
-  "deleted": "削除しました",
-  "delete": "削除する",
-  "notDelete": "削除しない",
+  "deleted": "Deleted",
+  "delete": "Delete",
+  "notDelete": "Do not delete",
 
-  "doPastYurudo": "実施が遅れているゆるDOからタスクを実施してください",
-  "doTodayYurudo": "本日のゆるDOからタスクを実施してください",
-  "cantSameYurudo": "1日に同一タスクは2度実施できません",
-  "doRecentYurudo": "直近の同一タスク({date})から実施してください",
+  "doPastYurudo": "Please perform tasks from delayed Yuru-DO",
+  "doTodayYurudo": "Please perform tasks from today's Yuru-DO",
+  "cantSameYurudo": "You cannot perform the same task twice in one day",
+  "doRecentYurudo": "Please perform from the most recent same task ({date})",
   "@doRecentYurudo": {
     "placeholders": {
       "date": {
@@ -140,22 +143,23 @@
       }
     }
   },
-  "cantPretendPerformYurudo": "過去のタスクを実施しなかったことにはできません",
+  "cantPretendPerformYurudo": "You cannot pretend not to have performed a past task",
 
-  "selectCategory": "分類を選択してください",
-  "giveName": "好きな分類名をつけられます",
-  "selectLabel": "選択",
-  "category": "分類",
-  "nothing": "なし",
 
-  "setExpectedDate": "実施予定日を設定してください",
-  "cancel": "キャンセル",
-  "decide": "決定",
+  "selectCategory": "Please select a category",
+  "giveName": "You can give your favorite category name",
+  "selectLabel": "Select",
+  "category": "Category",
+  "nothing": "None",
 
-  "setSpan": "スパンを設定してください",
-  "atOnce": "に1回",
+  "setExpectedDate": "Please set the planned execution date",
+  "cancel": "Cancel",
+  "decide": "Choose",
 
-  "spanType": "{type, select, day{日} week{週} month{か月} other{エラー}}",
+  "setSpan": "Please set the span",
+  "atOnce": "Once in",
+
+  "spanType": "{type, select, day{Day} week{Week} month{Month} other{Error}}",
   "@spanType": {
     "placeholders": {
       "type": {
@@ -164,9 +168,9 @@
     }
   },
 
-  "setTime": "必要時間を設定してください",
+  "setTime": "Please set the required time",
 
-  "checkYurudo": "{date}のゆるDOを確認しましょう",
+  "checkYurudo": "Let's check Yuru-DO on {date}",
   "@checkYurudo": {
     "placeholders": {
       "date": {
@@ -174,6 +178,6 @@
       }
     }
   },
-  "todayYurudoLabel": "今日のゆるDO",
-  "notifyDailyYurudo": "毎日のゆるDOを通知します"
+  "todayYurudoLabel": "Today's Yuru-DO",
+  "notifyDailyYurudo": "Notify about daily Yuru-DO"
 }
