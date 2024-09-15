@@ -273,7 +273,7 @@ class _ListPageState extends ConsumerState<ListPage> {
                 bottom: 7,
                 right: 10,
                 child: Text(
-                  '${todo.span.toSpanString()} / ${todo.time.toTimeString()}',
+                  '${todo.span.toSpanString(context)} / ${todo.time.toTimeString(context)}',
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 12,

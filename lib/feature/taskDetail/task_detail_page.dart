@@ -53,8 +53,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     provider = taskDetailPageStateProvider(widget.args.todo);
     final TaskDetailPageState state = ref.read(provider);
     _titleController = TextEditingController(text: state.title);
-    _spanController = TextEditingController(text: state.span.toSpanString());
-    _timeController = TextEditingController(text: state.time.toTimeString());
+    _spanController = TextEditingController(text: "");
+    _timeController = TextEditingController(text: "");
 
     // 次回実施日が昨日以前だった場合は今日にする
     if (state.nextDay != null) {
@@ -84,6 +84,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
   Widget build(BuildContext context) {
     final TaskDetailPageState state = ref.watch(provider);
     final deviceWidth = MediaQuery.of(context).size.width;
+    _spanController.text = state.span.toSpanString(context);
+    _timeController.text = state.time.toTimeString(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -149,7 +151,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                                     onConfirm: (number, spanType) {
                                       int span = number * spanType.term;
                                       _spanController.text =
-                                          span.toSpanString();
+                                          span.toSpanString(context);
                                       ref.read(provider.notifier).setSpan(span);
                                     },
                                   );
@@ -189,7 +191,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                                 builder: (context) => TimeDialog(
                                   onConfirm: (value) {
                                     ref.read(provider.notifier).setTime(value);
-                                    _timeController.text = value.toTimeString();
+                                    _timeController.text = value.toTimeString(context);
                                   },
                                 ),
                               );

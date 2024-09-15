@@ -136,7 +136,7 @@ class NotificationService {
       String message = '';
       for (var j = 0; j < min(3, tomorrowTodo.length); j++) {
         message +=
-            '${tomorrowTodo[j].name} [${tomorrowTodo[j].time.toTimeString()}]\n';
+            '${tomorrowTodo[j].name} [${tomorrowTodo[j].time.toTimeString(context)}]\n';
       }
       registerMessage(id: i, day: tomorrow, message: message, context: context);
     }

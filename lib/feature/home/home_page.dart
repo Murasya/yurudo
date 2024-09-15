@@ -103,11 +103,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     )),
                               ),
                             if (state.displayTerm != TermType.day)
-                              Text(
-                                context.l10n.previousWeek,
-                                style: const TextStyle(
-                                  color: AppColor.fontColor,
-                                  fontSize: 14,
+                              Expanded(
+                                child: Text(
+                                  context.l10n.previousWeek,
+                                  textAlign: TextAlign.end,
+                                  style: const TextStyle(
+                                    color: AppColor.fontColor,
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
                             Padding(
@@ -204,11 +207,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
                               ),
                             if (state.displayTerm != TermType.day)
-                              Text(
-                                context.l10n.nextWeek,
-                                style: const TextStyle(
-                                  color: AppColor.fontColor,
-                                  fontSize: 14,
+                              Expanded(
+                                child: Text(
+                                  context.l10n.nextWeek,
+                                  style: const TextStyle(
+                                    color: AppColor.fontColor,
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
                             const SizedBox(width: 12),

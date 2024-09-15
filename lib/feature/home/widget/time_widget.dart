@@ -52,20 +52,21 @@ class TimeWidget extends StatelessWidget {
         num = '~2';
         suf = context.l10n.weekly;
       }
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.baseline,
-        textBaseline: TextBaseline.alphabetic,
-        children: [
-          Text(
-            num,
-            style: context.textTheme.bodyLarge.emphasis,
+      return Center(
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: num,
+                style: context.textTheme.bodyLarge.emphasis,
+              ),
+              TextSpan(
+                text: suf,
+                style: context.textTheme.bodySmall.emphasis,
+              ),
+            ],
           ),
-          Text(
-            suf,
-            style: context.textTheme.bodySmall.emphasis,
-          ),
-        ],
+        ),
       );
     } else if (term == TermType.day) {
       return Row(

@@ -192,7 +192,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                                         onConfirm: (number, spanType) {
                                       int span = number * spanType.term;
                                       _spanController.text =
-                                          span.toSpanString();
+                                          span.toSpanString(context);
                                       ref.read(provider.notifier).setSpan(span);
                                     });
                                   });
@@ -230,7 +230,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                                   context: context,
                                   builder: (context) => TimeDialog(
                                         onConfirm: (time) {
-                                          _timeController.text = time.toTimeString();
+                                          _timeController.text = time.toTimeString(context);
                                   ref.read(provider.notifier).setTime(time);
                                 },
                                       ));

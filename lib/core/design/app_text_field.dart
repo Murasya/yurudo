@@ -29,24 +29,24 @@ class AppTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
+        Wrap(
           children: [
-            Text(
-              label,
-              style: const TextStyle(
-                color: AppColor.fontColor,
-                fontSize: 14,
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Text(
+                label,
+                style: const TextStyle(
+                  color: AppColor.fontColor,
+                  fontSize: 14,
+                ),
               ),
             ),
             if (isRequired)
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  context.l10n.required,
-                  style: const TextStyle(
-                    color: AppColor.emphasis,
-                    fontSize: 12,
-                  ),
+              Text(
+                context.l10n.required,
+                style: const TextStyle(
+                  color: AppColor.emphasis,
+                  fontSize: 12,
                 ),
               )
           ],

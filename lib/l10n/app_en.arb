@@ -59,7 +59,7 @@
   "minute": "Minutes",
 
 
-  "completeYurudo": "ou have completed one Yuru-DO!",
+  "completeYurudo": "You have completed one Yuru-DO!",
   "setNextYurudo": "Set the next planned execution date",
   "setNextNotToday": "Change the completion date to a day other than today",
   "afterCompleteDay": "You can only select a date after the completion date",
@@ -158,6 +158,33 @@
 
   "setSpan": "Please set the span",
   "atOnce": "Once in",
+  "onceEveryDay": "{date, plural, =1 {Once a day} other {Once every {date} days}}",
+  "@onceEveryDay": {
+    "description": "スパンのN日に1回の表示",
+    "placeholders": {
+      "date": {
+        "description": "N日の部分"
+      }
+    }
+  },
+  "onceEveryWeek": "{date, plural, =1 {Once a week} other {Once every {date} weeks}}",
+  "@onceEveryWeek": {
+    "description": "スパンのN週に1回の表示",
+    "placeholders": {
+      "date": {
+        "description": "N週の部分"
+      }
+    }
+  },
+  "onceEveryMonth": "{date, plural, =1 {Once a month} other {Once every {date} months}}",
+  "@onceEveryMonth": {
+    "description": "スパンのヶ月に1回の表示",
+    "placeholders": {
+      "date": {
+        "description": "Nヶ月の部分"
+      }
+    }
+  },
 
   "spanType": "{type, select, day{Day} week{Week} month{Month} other{Error}}",
   "@spanType": {
