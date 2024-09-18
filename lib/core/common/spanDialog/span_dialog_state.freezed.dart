@@ -22,7 +22,9 @@ mixin _$SpanDialogState {
   /// 選んでいるスパンの種類
   SpanType get spanType => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SpanDialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SpanDialogStateCopyWith<SpanDialogState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -32,7 +34,6 @@ abstract class $SpanDialogStateCopyWith<$Res> {
   factory $SpanDialogStateCopyWith(
           SpanDialogState value, $Res Function(SpanDialogState) then) =
       _$SpanDialogStateCopyWithImpl<$Res, SpanDialogState>;
-
   @useResult
   $Res call({int span, SpanType spanType});
 }
@@ -44,10 +45,11 @@ class _$SpanDialogStateCopyWithImpl<$Res, $Val extends SpanDialogState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SpanDialogState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -73,7 +75,6 @@ abstract class _$$SpanDialogStateImplCopyWith<$Res>
   factory _$$SpanDialogStateImplCopyWith(_$SpanDialogStateImpl value,
           $Res Function(_$SpanDialogStateImpl) then) =
       __$$SpanDialogStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({int span, SpanType spanType});
@@ -87,6 +88,8 @@ class __$$SpanDialogStateImplCopyWithImpl<$Res>
       _$SpanDialogStateImpl _value, $Res Function(_$SpanDialogStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SpanDialogState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -139,7 +142,9 @@ class _$SpanDialogStateImpl implements _SpanDialogState {
   @override
   int get hashCode => Object.hash(runtimeType, span, spanType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SpanDialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SpanDialogStateImplCopyWith<_$SpanDialogStateImpl> get copyWith =>
@@ -151,18 +156,18 @@ abstract class _SpanDialogState implements SpanDialogState {
   const factory _SpanDialogState({final int span, final SpanType spanType}) =
       _$SpanDialogStateImpl;
 
-  @override
-
   /// 選んでいる日にち
+  @override
   int get span;
 
-  @override
-
   /// 選んでいるスパンの種類
+  @override
   SpanType get spanType;
 
+  /// Create a copy of SpanDialogState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SpanDialogStateImplCopyWith<_$SpanDialogStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

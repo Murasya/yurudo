@@ -25,7 +25,9 @@ mixin _$NewTaskPageState {
   dynamic get hasError => throw _privateConstructorUsedError;
   dynamic get errorMessage => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NewTaskPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NewTaskPageStateCopyWith<NewTaskPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -59,6 +61,8 @@ class _$NewTaskPageStateCopyWithImpl<$Res, $Val extends NewTaskPageState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of NewTaskPageState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -107,6 +111,8 @@ class _$NewTaskPageStateCopyWithImpl<$Res, $Val extends NewTaskPageState>
     ) as $Val);
   }
 
+  /// Create a copy of NewTaskPageState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CategoryCopyWith<$Res>? get category {
@@ -150,6 +156,8 @@ class __$$NewTaskPageStateImplCopyWithImpl<$Res>
       $Res Function(_$NewTaskPageStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of NewTaskPageState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -263,7 +271,9 @@ class _$NewTaskPageStateImpl implements _NewTaskPageState {
       const DeepCollectionEquality().hash(hasError),
       const DeepCollectionEquality().hash(errorMessage));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NewTaskPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NewTaskPageStateImplCopyWith<_$NewTaskPageStateImpl> get copyWith =>
@@ -298,8 +308,11 @@ abstract class _NewTaskPageState implements NewTaskPageState {
   dynamic get hasError;
   @override
   dynamic get errorMessage;
+
+  /// Create a copy of NewTaskPageState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NewTaskPageStateImplCopyWith<_$NewTaskPageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

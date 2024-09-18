@@ -13,10 +13,15 @@ final nextScheduleStateProvider = StateNotifierProvider.autoDispose
 
 class NextScheduleStateNotifier extends StateNotifier<NextScheduleState> {
   NextScheduleStateNotifier(NextScheduleArgs args)
-      : super(NextScheduleState(
-    displayMonth: args.completeDay,
-          selectDay: args.completeDay.add(Duration(days: args.todo.span)),
-        ));
+      : super(
+          NextScheduleState(
+            displayMonth: args.completeDay,
+            selectDay: args.completeDay.add(
+              Duration(days: args.todo.span),
+            ),
+            completeDay: DateTime.now(),
+          ),
+        );
 
   void changeMonth({bool isBefore = false}) {
     int num = 1;
@@ -32,6 +37,12 @@ class NextScheduleStateNotifier extends StateNotifier<NextScheduleState> {
   void changeDate(DateTime date) {
     state = state.copyWith(
       selectDay: date,
+    );
+  }
+
+  void setCompleteDay(DateTime date) {
+    state = state.copyWith(
+      completeDay: date,
     );
   }
 
@@ -56,6 +67,7 @@ class NextScheduleState with _$NextScheduleState {
   const factory NextScheduleState({
     required DateTime displayMonth,
     required DateTime selectDay,
+    required DateTime completeDay,
     @Default(false) bool hasError,
     @Default('') String errorMessage,
   }) = _NextScheduleState;

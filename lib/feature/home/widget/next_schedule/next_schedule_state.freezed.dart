@@ -19,7 +19,9 @@ mixin _$NextScheduleArgs {
   Todo get todo => throw _privateConstructorUsedError;
   DateTime get completeDay => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NextScheduleArgs
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NextScheduleArgsCopyWith<NextScheduleArgs> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$NextScheduleArgsCopyWithImpl<$Res, $Val extends NextScheduleArgs>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of NextScheduleArgs
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +85,8 @@ class __$$NextScheduleArgsImplCopyWithImpl<$Res>
       $Res Function(_$NextScheduleArgsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of NextScheduleArgs
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -128,7 +134,9 @@ class _$NextScheduleArgsImpl implements _NextScheduleArgs {
   @override
   int get hashCode => Object.hash(runtimeType, todo, completeDay);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NextScheduleArgs
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NextScheduleArgsImplCopyWith<_$NextScheduleArgsImpl> get copyWith =>
@@ -145,8 +153,11 @@ abstract class _NextScheduleArgs implements NextScheduleArgs {
   Todo get todo;
   @override
   DateTime get completeDay;
+
+  /// Create a copy of NextScheduleArgs
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NextScheduleArgsImplCopyWith<_$NextScheduleArgsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -155,10 +166,13 @@ abstract class _NextScheduleArgs implements NextScheduleArgs {
 mixin _$NextScheduleState {
   DateTime get displayMonth => throw _privateConstructorUsedError;
   DateTime get selectDay => throw _privateConstructorUsedError;
+  DateTime get completeDay => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NextScheduleState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NextScheduleStateCopyWith<NextScheduleState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -172,6 +186,7 @@ abstract class $NextScheduleStateCopyWith<$Res> {
   $Res call(
       {DateTime displayMonth,
       DateTime selectDay,
+      DateTime completeDay,
       bool hasError,
       String errorMessage});
 }
@@ -186,11 +201,14 @@ class _$NextScheduleStateCopyWithImpl<$Res, $Val extends NextScheduleState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of NextScheduleState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? displayMonth = null,
     Object? selectDay = null,
+    Object? completeDay = null,
     Object? hasError = null,
     Object? errorMessage = null,
   }) {
@@ -202,6 +220,10 @@ class _$NextScheduleStateCopyWithImpl<$Res, $Val extends NextScheduleState>
       selectDay: null == selectDay
           ? _value.selectDay
           : selectDay // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      completeDay: null == completeDay
+          ? _value.completeDay
+          : completeDay // ignore: cast_nullable_to_non_nullable
               as DateTime,
       hasError: null == hasError
           ? _value.hasError
@@ -226,6 +248,7 @@ abstract class _$$NextScheduleStateImplCopyWith<$Res>
   $Res call(
       {DateTime displayMonth,
       DateTime selectDay,
+      DateTime completeDay,
       bool hasError,
       String errorMessage});
 }
@@ -238,11 +261,14 @@ class __$$NextScheduleStateImplCopyWithImpl<$Res>
       $Res Function(_$NextScheduleStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of NextScheduleState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? displayMonth = null,
     Object? selectDay = null,
+    Object? completeDay = null,
     Object? hasError = null,
     Object? errorMessage = null,
   }) {
@@ -254,6 +280,10 @@ class __$$NextScheduleStateImplCopyWithImpl<$Res>
       selectDay: null == selectDay
           ? _value.selectDay
           : selectDay // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      completeDay: null == completeDay
+          ? _value.completeDay
+          : completeDay // ignore: cast_nullable_to_non_nullable
               as DateTime,
       hasError: null == hasError
           ? _value.hasError
@@ -273,6 +303,7 @@ class _$NextScheduleStateImpl implements _NextScheduleState {
   const _$NextScheduleStateImpl(
       {required this.displayMonth,
       required this.selectDay,
+      required this.completeDay,
       this.hasError = false,
       this.errorMessage = ''});
 
@@ -280,6 +311,8 @@ class _$NextScheduleStateImpl implements _NextScheduleState {
   final DateTime displayMonth;
   @override
   final DateTime selectDay;
+  @override
+  final DateTime completeDay;
   @override
   @JsonKey()
   final bool hasError;
@@ -289,7 +322,7 @@ class _$NextScheduleStateImpl implements _NextScheduleState {
 
   @override
   String toString() {
-    return 'NextScheduleState(displayMonth: $displayMonth, selectDay: $selectDay, hasError: $hasError, errorMessage: $errorMessage)';
+    return 'NextScheduleState(displayMonth: $displayMonth, selectDay: $selectDay, completeDay: $completeDay, hasError: $hasError, errorMessage: $errorMessage)';
   }
 
   @override
@@ -301,6 +334,8 @@ class _$NextScheduleStateImpl implements _NextScheduleState {
                 other.displayMonth == displayMonth) &&
             (identical(other.selectDay, selectDay) ||
                 other.selectDay == selectDay) &&
+            (identical(other.completeDay, completeDay) ||
+                other.completeDay == completeDay) &&
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -308,10 +343,12 @@ class _$NextScheduleStateImpl implements _NextScheduleState {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, displayMonth, selectDay, hasError, errorMessage);
+  int get hashCode => Object.hash(runtimeType, displayMonth, selectDay,
+      completeDay, hasError, errorMessage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NextScheduleState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NextScheduleStateImplCopyWith<_$NextScheduleStateImpl> get copyWith =>
@@ -323,6 +360,7 @@ abstract class _NextScheduleState implements NextScheduleState {
   const factory _NextScheduleState(
       {required final DateTime displayMonth,
       required final DateTime selectDay,
+      required final DateTime completeDay,
       final bool hasError,
       final String errorMessage}) = _$NextScheduleStateImpl;
 
@@ -331,11 +369,16 @@ abstract class _NextScheduleState implements NextScheduleState {
   @override
   DateTime get selectDay;
   @override
+  DateTime get completeDay;
+  @override
   bool get hasError;
   @override
   String get errorMessage;
+
+  /// Create a copy of NextScheduleState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NextScheduleStateImplCopyWith<_$NextScheduleStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

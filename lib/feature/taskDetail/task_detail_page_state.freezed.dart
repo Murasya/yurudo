@@ -23,7 +23,9 @@ mixin _$TaskDetailPageState {
   int? get time => throw _privateConstructorUsedError;
   DateTime? get nextDay => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TaskDetailPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TaskDetailPageStateCopyWith<TaskDetailPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +57,8 @@ class _$TaskDetailPageStateCopyWithImpl<$Res, $Val extends TaskDetailPageState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TaskDetailPageState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -93,6 +97,8 @@ class _$TaskDetailPageStateCopyWithImpl<$Res, $Val extends TaskDetailPageState>
     ) as $Val);
   }
 
+  /// Create a copy of TaskDetailPageState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $CategoryCopyWith<$Res>? get category {
@@ -134,6 +140,8 @@ class __$$TaskDetailPageStateImplCopyWithImpl<$Res>
       $Res Function(_$TaskDetailPageStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TaskDetailPageState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -220,7 +228,9 @@ class _$TaskDetailPageStateImpl implements _TaskDetailPageState {
   int get hashCode =>
       Object.hash(runtimeType, title, span, remind, category, time, nextDay);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TaskDetailPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TaskDetailPageStateImplCopyWith<_$TaskDetailPageStateImpl> get copyWith =>
@@ -249,8 +259,11 @@ abstract class _TaskDetailPageState implements TaskDetailPageState {
   int? get time;
   @override
   DateTime? get nextDay;
+
+  /// Create a copy of TaskDetailPageState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskDetailPageStateImplCopyWith<_$TaskDetailPageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -260,7 +273,9 @@ mixin _$TaskDetailPageArgs {
   Todo get todo => throw _privateConstructorUsedError;
   bool get isCompleted => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TaskDetailPageArgs
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TaskDetailPageArgsCopyWith<TaskDetailPageArgs> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -284,6 +299,8 @@ class _$TaskDetailPageArgsCopyWithImpl<$Res, $Val extends TaskDetailPageArgs>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TaskDetailPageArgs
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -322,6 +339,8 @@ class __$$TaskDetailPageArgsImplCopyWithImpl<$Res>
       $Res Function(_$TaskDetailPageArgsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TaskDetailPageArgs
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -370,7 +389,9 @@ class _$TaskDetailPageArgsImpl implements _TaskDetailPageArgs {
   @override
   int get hashCode => Object.hash(runtimeType, todo, isCompleted);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TaskDetailPageArgs
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TaskDetailPageArgsImplCopyWith<_$TaskDetailPageArgsImpl> get copyWith =>
@@ -387,8 +408,11 @@ abstract class _TaskDetailPageArgs implements TaskDetailPageArgs {
   Todo get todo;
   @override
   bool get isCompleted;
+
+  /// Create a copy of TaskDetailPageArgs
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskDetailPageArgsImplCopyWith<_$TaskDetailPageArgsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

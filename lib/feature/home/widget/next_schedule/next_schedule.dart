@@ -3,16 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:routine_app/core/design/app_assets.dart';
 import 'package:routine_app/core/design/app_color.dart';
 import 'package:routine_app/core/design/app_style.dart';
 import 'package:routine_app/core/utils/contextEx.dart';
 import 'package:routine_app/core/utils/date.dart';
+import 'package:routine_app/feature/home/widget/select_day_widget.dart';
 
 import '../../../../repository/todo/todo_provider.dart';
 import '../next_schedule_close.dart';
-import '../next_schedule_complete/next_schedule_complete.dart';
 import 'next_schedule_state.dart';
 
 class NextSchedule extends ConsumerStatefulWidget {
@@ -40,6 +39,8 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(provider);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -115,24 +116,51 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 6),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => NextScheduleComplete(
-                          args: widget.args,
-                        ),
-                      );
-                    },
-                    child: Text(
-                      context.l10n.setNextNotToday,
-                      style: context.textTheme.bodyMedium!.copyWith(
-                        color: AppColor.fontColor3,
-                        decoration: TextDecoration.underline,
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      dividerColor: Colors.transparent,
+                      dividerTheme: const DividerThemeData(
+                        space: 0,
                       ),
                     ),
+                    child: ExpansionTile(
+                      tilePadding: const EdgeInsets.all(0),
+                      title: Text(
+                        context.l10n.setNextNotToday,
+                        style: context.textTheme.bodyMedium!.copyWith(
+                          color: AppColor.fontColor3,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: SelectDayWidget(
+                            label: context.l10n.selectCompleteDay,
+                            selectDate: state.completeDay,
+                            firstDate: DateTime.now()
+                                .subtract(const Duration(days: 366)),
+                            lastDate: DateTime.now(),
+                            onSelectDate: (value) {
+                              ref.read(provider.notifier).setCompleteDay(value);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  calendar(context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: SelectDayWidget(
+                      label: context.l10n.expectedDate,
+                      selectDate: state.selectDay,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(const Duration(days: 366)),
+                      onSelectDate: (value) {
+                        ref.read(provider.notifier).changeDate(value);
+                      },
+                    ),
+                  ),
                   if (ref.watch(provider).hasError)
                     Text(
                       ref.watch(provider).errorMessage,
@@ -150,14 +178,15 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                             .read(provider)
                             .selectDay
                             .isAfterDay(widget.args.completeDay)) {
-                          ref
-                              .read(provider.notifier)
-                              .setError(true, msg: context.l10n.afterCompleteDay);
+                          ref.read(provider.notifier).setError(
+                                true,
+                                msg: context.l10n.afterCompleteDay,
+                              );
                           return;
                         }
                         ref.read(todoProvider.notifier).complete(
                               todo: widget.args.todo,
-                              completeDay: widget.args.completeDay,
+                              completeDay: state.completeDay,
                               nextDay: ref.read(provider).selectDay,
                             );
                         Navigator.pop(context);
@@ -185,98 +214,6 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget calendar(BuildContext context) {
-    const list = ['月', '火', '水', '木', '金', '土', '日'];
-    final state = ref.watch(provider);
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () =>
-                  ref.read(provider.notifier).changeMonth(isBefore: true),
-            ),
-            Text(
-              DateFormat('y年M月').format(state.displayMonth),
-            ),
-            IconButton(
-              icon: const Icon(Icons.chevron_right),
-              onPressed: () => ref.read(provider.notifier).changeMonth(),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            for (String day in list)
-              Text(
-                day,
-                style: const TextStyle(
-                  color: AppColor.disableColor,
-                  fontSize: 15,
-                ),
-              ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Column(
-          children: [
-            for (int week = 0; week < state.displayMonth.weekInMonth; week++)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  for (int day = 1; day <= 7; day++) _dayWidget(week, day),
-                ],
-              ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _dayWidget(int week, int weekDay) {
-    final state = ref.watch(provider);
-    int intDay =
-        (week * 7 + weekDay - state.displayMonth.firstDayOfMonth.weekday + 1);
-    if (intDay <= 0 || intDay > state.displayMonth.lastDayOfMonth) {
-      return Container(
-        width: 20,
-      );
-    }
-    DateTime day =
-        DateTime(state.displayMonth.year, state.displayMonth.month, intDay);
-    Color backColor = state.selectDay.isSameDay(day)
-        ? AppColor.primary
-        : widget.args.completeDay.isSameDay(day)
-            ? AppColor.secondaryColor
-            : Colors.transparent;
-
-    return GestureDetector(
-      onTap: () {
-        ref.read(provider.notifier).changeDate(day);
-      },
-      child: Container(
-        width: 21,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: backColor,
-        ),
-        child: Text(
-          intDay.toString(),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: (state.selectDay.isSameDay(day))
-                ? Colors.white
-                : AppColor.fontColor,
-            fontSize: 16,
-          ),
-        ),
-      ),
     );
   }
 }

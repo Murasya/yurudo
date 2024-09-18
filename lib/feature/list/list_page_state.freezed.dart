@@ -19,7 +19,9 @@ mixin _$ListPageState {
   SortType get sortType => throw _privateConstructorUsedError;
   List<int> get filterType => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ListPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ListPageStateCopyWith<ListPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$ListPageStateCopyWithImpl<$Res, $Val extends ListPageState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ListPageState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +85,8 @@ class __$$ListPageStateImplCopyWithImpl<$Res>
       _$ListPageStateImpl _value, $Res Function(_$ListPageStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ListPageState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -140,7 +146,9 @@ class _$ListPageStateImpl implements _ListPageState {
   int get hashCode => Object.hash(
       runtimeType, sortType, const DeepCollectionEquality().hash(_filterType));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ListPageState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ListPageStateImplCopyWith<_$ListPageStateImpl> get copyWith =>
@@ -156,8 +164,11 @@ abstract class _ListPageState implements ListPageState {
   SortType get sortType;
   @override
   List<int> get filterType;
+
+  /// Create a copy of ListPageState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ListPageStateImplCopyWith<_$ListPageStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

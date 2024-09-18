@@ -19,7 +19,9 @@ mixin _$CategoryDialogState {
   /// 選んでいるボタンの数字
   int? get selectButtonNum => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryDialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CategoryDialogStateCopyWith<CategoryDialogState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$CategoryDialogStateCopyWithImpl<$Res, $Val extends CategoryDialogState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CategoryDialogState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -76,6 +80,8 @@ class __$$CategoryDialogStateImplCopyWithImpl<$Res>
       $Res Function(_$CategoryDialogStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CategoryDialogState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -117,7 +123,9 @@ class _$CategoryDialogStateImpl implements _CategoryDialogState {
   @override
   int get hashCode => Object.hash(runtimeType, selectButtonNum);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CategoryDialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CategoryDialogStateImplCopyWith<_$CategoryDialogStateImpl> get copyWith =>
@@ -129,12 +137,14 @@ abstract class _CategoryDialogState implements CategoryDialogState {
   const factory _CategoryDialogState({final int? selectButtonNum}) =
       _$CategoryDialogStateImpl;
 
-  @override
-
   /// 選んでいるボタンの数字
-  int? get selectButtonNum;
   @override
-  @JsonKey(ignore: true)
+  int? get selectButtonNum;
+
+  /// Create a copy of CategoryDialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CategoryDialogStateImplCopyWith<_$CategoryDialogStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

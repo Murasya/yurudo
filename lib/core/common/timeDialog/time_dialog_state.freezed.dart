@@ -19,7 +19,9 @@ mixin _$TimeDialogState {
   /// 選んでいる時間
   int get time => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TimeDialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TimeDialogStateCopyWith<TimeDialogState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -29,7 +31,6 @@ abstract class $TimeDialogStateCopyWith<$Res> {
   factory $TimeDialogStateCopyWith(
           TimeDialogState value, $Res Function(TimeDialogState) then) =
       _$TimeDialogStateCopyWithImpl<$Res, TimeDialogState>;
-
   @useResult
   $Res call({int time});
 }
@@ -41,10 +42,11 @@ class _$TimeDialogStateCopyWithImpl<$Res, $Val extends TimeDialogState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TimeDialogState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -65,7 +67,6 @@ abstract class _$$TimeDialogStateImplCopyWith<$Res>
   factory _$$TimeDialogStateImplCopyWith(_$TimeDialogStateImpl value,
           $Res Function(_$TimeDialogStateImpl) then) =
       __$$TimeDialogStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({int time});
@@ -79,6 +80,8 @@ class __$$TimeDialogStateImplCopyWithImpl<$Res>
       _$TimeDialogStateImpl _value, $Res Function(_$TimeDialogStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TimeDialogState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -119,7 +122,9 @@ class _$TimeDialogStateImpl implements _TimeDialogState {
   @override
   int get hashCode => Object.hash(runtimeType, time);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TimeDialogState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TimeDialogStateImplCopyWith<_$TimeDialogStateImpl> get copyWith =>
@@ -130,13 +135,14 @@ class _$TimeDialogStateImpl implements _TimeDialogState {
 abstract class _TimeDialogState implements TimeDialogState {
   const factory _TimeDialogState({final int time}) = _$TimeDialogStateImpl;
 
-  @override
-
   /// 選んでいる時間
+  @override
   int get time;
 
+  /// Create a copy of TimeDialogState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TimeDialogStateImplCopyWith<_$TimeDialogStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

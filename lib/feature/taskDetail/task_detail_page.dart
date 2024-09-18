@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:routine_app/core/common/dateDialog/date_dialog.dart';
 import 'package:routine_app/core/common/spanDialog/span_dialog.dart';
 import 'package:routine_app/core/common/timeDialog/time_dialog.dart';
 import 'package:routine_app/core/design/app_color.dart';
@@ -191,7 +190,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                                 builder: (context) => TimeDialog(
                                   onConfirm: (value) {
                                     ref.read(provider.notifier).setTime(value);
-                                    _timeController.text = value.toTimeString(context);
+                                    _timeController.text =
+                                        value.toTimeString(context);
                                   },
                                 ),
                               );
@@ -203,23 +203,29 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                             controller: _nextDayController,
                             readonly: true,
                             onTap: () {
+                              final today = DateTime.now();
                               FocusManager.instance.primaryFocus?.unfocus();
+                              final initialDate =
+                                  state.nextDay.isBeforeDay(today)
+                                      ? today
+                                      : state.nextDay;
                               if (!widget.args.isCompleted) {
-                                showDialog(
+                                showDatePicker(
                                   context: context,
-                                  builder: (context) => DateDialog(
-                                    initialDate: state.nextDay,
-                                    onConfirm: (DateTime date) {
-                                      ref
-                                          .read(provider.notifier)
-                                          .setNextDay(date);
-                                      _nextDayController.text =
-                                          dateFormat.format(date);
-                                      Navigator.pop(context);
-                                    },
-                                    onCancel: () => Navigator.pop(context),
-                                  ),
-                                );
+                                  helpText: context.l10n.setExpectedDate,
+                                  initialDate: initialDate,
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime.now()
+                                      .add(const Duration(days: 366)),
+                                ).then((date) {
+                                  if (date != null) {
+                                    ref
+                                        .read(provider.notifier)
+                                        .setNextDay(date);
+                                    _nextDayController.text =
+                                        dateFormat.format(date);
+                                  }
+                                });
                               } else {
                                 context.showSnackBar(
                                   SnackBar(

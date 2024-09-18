@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:routine_app/core/common/categoryDialog/category_dialog.dart';
-import 'package:routine_app/core/common/dateDialog/date_dialog.dart';
 import 'package:routine_app/core/common/spanDialog/span_dialog.dart';
 import 'package:routine_app/core/common/timeDialog/time_dialog.dart';
 import 'package:routine_app/core/design/app_color.dart';
@@ -245,18 +244,19 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                             readonly: true,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              showDialog(
+                              showDatePicker(
                                 context: context,
-                                builder: (context) => DateDialog(
-                                  onConfirm: (DateTime date) {
-                                    ref.read(provider.notifier).setDate(date);
-                                    _dateController.text =
-                                        dateFormat.format(date);
-                                    Navigator.pop(context);
-                                  },
-                                  onCancel: () => Navigator.pop(context),
-                                ),
-                              );
+                                helpText: context.l10n.setExpectedDate,
+                                initialDate: state.firstDay ?? DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime.now()
+                                    .add(const Duration(days: 366)),
+                              ).then((date) {
+                                if (date != null) {
+                                  ref.read(provider.notifier).setDate(date);
+                                  _dateController.text = dateFormat.format(date);
+                                }
+                              });
                             },
                           ),
                         ],
