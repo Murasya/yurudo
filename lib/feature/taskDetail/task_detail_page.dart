@@ -361,7 +361,7 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
                       onPressed: () {
                         ref
                             .read(todoProvider.notifier)
-                            .delete(widget.args.todo.id!);
+                            .delete(widget.args.todo);
                         Navigator.pop(context);
                         Navigator.pop(context);
                         context.showSnackBar(

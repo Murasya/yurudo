@@ -1,6 +1,5 @@
 import 'dart:io';
 
-// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -61,15 +60,6 @@ class TodoDatabase {
   Future<void> clearPreExpectedDate() async {
     final Database db = await database;
     db.rawUpdate("UPDATE $tableName SET preExpectedDate = NULL");
-  }
-
-  Future<void> delete(int id) async {
-    final Database db = await database;
-    db.delete(
-      tableName,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
   }
 
   Future<Todo> insert(Todo todo) async {

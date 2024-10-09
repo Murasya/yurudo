@@ -29,7 +29,7 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  final dateFormat = DateFormat('M/d');
+  final dateFormat = DateFormat.Md();
   final provider = homePageStateProvider;
   final _pageController = PageController(initialPage: 100);
 

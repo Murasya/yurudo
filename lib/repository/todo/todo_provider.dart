@@ -83,11 +83,16 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     ];
   }
 
-  Future<void> delete(int id) async {
-    _database.delete(id);
+  Future<void> delete(Todo todo) async {
+    final newTodo = todo.copyWith(
+        preExpectedDate: () => null,
+        expectedDate: () => null,
+        updatedAt: DateTime.now()
+    );
+    _database.update(newTodo);
     state = [
       for (var s in state)
-        if (s.id != id) s
+        if (s.id == todo.id) newTodo else s
     ];
   }
 
