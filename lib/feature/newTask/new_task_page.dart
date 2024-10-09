@@ -32,28 +32,10 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final provider = newTaskPageStateProvider;
-  final dateFormat = DateFormat('y年M月d日');
+  final dateFormat = DateFormat.yMd();
   late final AdService ad;
-
-  static const List<String> titleList = [
-    "お風呂で明日やることを考える(1日に1回)",
-    "【腹筋重視】筋トレをする(2日に1回)",
-    "【必ず】彼氏の誕生日のプランを少し考える(3日に1回)",
-    "最低でも20ページ分は〇〇の本を読む(3日に1回)",
-    "お風呂掃除をする(5日に1回)",
-    "金魚鉢の水換えをする(1週に1回)",
-    "【掃除機はマスト】部屋の掃除をする(2週に1回)",
-    "コンタクトレンズの交換(2週に1回)",
-    "行って見たいお店をインスタで探す(3週に1回)",
-    "家族と電話する(1か月に1回)",
-    "洗剤の残量確認(1か月に1回)",
-    "将来のためにやること検討(1か月に1回)",
-    "【国内】行って見たい旅行先を考える(2か月に1回)",
-    "温泉に行きたいかどうかを考えてみる(3か月に1回)",
-    "サブスクを本当に必要かどうか見直す(4か月に1回)",
-    "クローゼットの防虫剤を交換する(6か月に1回)",
-  ];
-  final titleNum = Random().nextInt(titleList.length);
+  late final List<String> titleList;
+  late final titleNum = Random().nextInt(titleList.length);
 
   @override
   void initState() {
@@ -70,6 +52,25 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    titleList = [
+      context.l10n.titleExample1,
+      context.l10n.titleExample2,
+      context.l10n.titleExample3,
+      context.l10n.titleExample4,
+      context.l10n.titleExample5,
+      context.l10n.titleExample6,
+      context.l10n.titleExample7,
+      context.l10n.titleExample8,
+      context.l10n.titleExample9,
+      context.l10n.titleExample10,
+      context.l10n.titleExample11,
+      context.l10n.titleExample12,
+      context.l10n.titleExample13,
+      context.l10n.titleExample14,
+      context.l10n.titleExample15,
+      context.l10n.titleExample16,
+    ];
   }
 
   @override
