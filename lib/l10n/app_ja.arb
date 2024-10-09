@@ -184,5 +184,22 @@
   "alertDialog_ok": "OK",
   "backup_confirm": "確認",
   "backup_message": "本当にバックアップしてよろしいですか？",
-  "restore_message": "本当に復元してよろしいですか？"
+  "restore_message": "本当に復元してよろしいですか？",
+
+  "titleExample1": "お風呂で明日やることを考える(1日に1回)",
+  "titleExample2": "【腹筋重視】筋トレをする(2日に1回)",
+  "titleExample3": "【必ず】彼氏の誕生日のプランを少し考える(3日に1回)",
+  "titleExample4": "最低でも20ページ分は〇〇の本を読む(3日に1回)",
+  "titleExample5": "お風呂掃除をする(5日に1回)",
+  "titleExample6": "金魚鉢の水換えをする(1週に1回)",
+  "titleExample7": "【掃除機はマスト】部屋の掃除をする(2週に1回)",
+  "titleExample8": "コンタクトレンズの交換(2週に1回)",
+  "titleExample9": "行って見たいお店をインスタで探す(3週に1回)",
+  "titleExample10": "家族と電話する(1か月に1回)",
+  "titleExample11": "洗剤の残量確認(1か月に1回)",
+  "titleExample12": "将来のためにやること検討(1か月に1回)",
+  "titleExample13": "【国内】行って見たい旅行先を考える(2か月に1回)",
+  "titleExample14": "温泉に行きたいかどうかを考えてみる(3か月に1回)",
+  "titleExample15": "サブスクを本当に必要かどうか見直す(4か月に1回)",
+  "titleExample16": "クローゼットの防虫剤を交換する(6か月に1回)"
 }
