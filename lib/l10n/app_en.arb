@@ -206,5 +206,11 @@
     }
   },
   "todayYurudoLabel": "Today's Yuru-DO",
-  "notifyDailyYurudo": "Notify about daily Yuru-DO"
+  "notifyDailyYurudo": "Notify about daily Yuru-DO",
+
+  "alertDialog_cancel": "Cancel",
+  "alertDialog_ok": "OK",
+  "backup_confirm": "Confirmation",
+  "backup_message": "Are you sure you want to back up？",
+  "restore_message": "Are you sure you want to restore？"
 }

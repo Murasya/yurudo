@@ -178,5 +178,11 @@
     }
   },
   "todayYurudoLabel": "今日のゆるDO",
-  "notifyDailyYurudo": "毎日のゆるDOを通知します"
+  "notifyDailyYurudo": "毎日のゆるDOを通知します",
+
+  "alertDialog_cancel": "キャンセル",
+  "alertDialog_ok": "OK",
+  "backup_confirm": "確認",
+  "backup_message": "本当にバックアップしてよろしいですか？",
+  "restore_message": "本当に復元してよろしいですか？"
 }

@@ -5,6 +5,7 @@ import 'package:routine_app/core/utils/contextEx.dart';
 import 'package:routine_app/feature/signIn/vo/sign_in_state.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
+import '../../core/common/alert_dialog_common.dart';
 import '../../repository/todo/todo_provider.dart';
 
 class SignInScreen extends ConsumerWidget {
@@ -58,42 +59,68 @@ class SignInScreen extends ConsumerWidget {
             ListTile(
               title: Text(context.l10n.backupData),
               onTap: () {
-                notifier.onTapBackup().then(
-                      (isSuccess) => isSuccess
-                          ? context.showSnackBar(
-                              SnackBar(
-                                content: Text(context.l10n.backupSuccess),
-                              ),
-                            )
-                          : context.showSnackBar(
-                              SnackBar(
-                                content: Text(context.l10n.backupFailed),
-                              ),
-                            ),
-                    );
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialogCommon(
+                    title: context.l10n.backup_confirm,
+                    content: Text(context.l10n.backup_message),
+                    onPositiveButton: () {
+                      notifier.onTapBackup().then(
+                            (isSuccess) => isSuccess
+                                ? context.showSnackBar(
+                                    SnackBar(
+                                      content: Text(context.l10n.backupSuccess),
+                                    ),
+                                  )
+                                : context.showSnackBar(
+                                    SnackBar(
+                                      content: Text(context.l10n.backupFailed),
+                                    ),
+                                  ),
+                          );
+                    },
+                    onNegativeButton: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
               },
             ),
             ListTile(
               title: Text(context.l10n.restoreData),
               subtitle: Text(context.l10n.restoreInfo),
               onTap: () {
-                notifier
-                    .onTapRestore(
-                      refresh: () => ref.watch(todoProvider.notifier).getAll(),
-                    )
-                    .then(
-                      (isSuccess) => isSuccess
-                          ? context.showSnackBar(
-                              SnackBar(
-                                content: Text(context.l10n.restoreSuccess),
-                              ),
-                            )
-                          : context.showSnackBar(
-                              SnackBar(
-                                content: Text(context.l10n.restoreFailed),
-                              ),
-                            ),
-                    );
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialogCommon(
+                    title: context.l10n.backup_confirm,
+                    content: Text(context.l10n.restore_message),
+                    onPositiveButton: () {
+                      notifier
+                          .onTapRestore(
+                            refresh: () =>
+                                ref.watch(todoProvider.notifier).getAll(),
+                          )
+                          .then(
+                            (isSuccess) => isSuccess
+                                ? context.showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          Text(context.l10n.restoreSuccess),
+                                    ),
+                                  )
+                                : context.showSnackBar(
+                                    SnackBar(
+                                      content: Text(context.l10n.restoreFailed),
+                                    ),
+                                  ),
+                          );
+                    },
+                    onNegativeButton: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
               },
             ),
             ListTile(
