@@ -125,7 +125,7 @@ class NotificationService {
     await _cancelNotification();
 
     final today = DateTime.now();
-    for (int i = 1; i <= 7; i++) {
+    for (int i = 1; i <= 14; i++) {
       final tomorrow = today.add(Duration(days: i));
       final tomorrowTodo = todos
           .where((todo) =>
