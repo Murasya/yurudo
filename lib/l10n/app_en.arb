@@ -14,7 +14,7 @@
       }
     }
   },
-  "term": "{term, select, day{Day} week{Week} other{Day}}",
+  "term": "{term, select, day{Day} week{Wk} other{Day}}",
   "@term": {
     "description": "term",
     "placeholders": {
@@ -24,8 +24,8 @@
     }
   },
   "createNewYurudo": "Create New Yuru-DO",
-  "todayYurudo": "Today's Yuru-DO and Required Time",
-  "pastYurudo": "Delayed Yuru-DO and Delay Period",
+  "todayYurudo": "Today's Yuru-DO and Estimated Time",
+  "pastYurudo": "Overdue Yuru-DO and Delay Duration",
 
   "feedback": "Feedback / Contact Us",
   "submit": "Submit",
@@ -45,22 +45,22 @@
   "termsOfUse": "Terms of Use",
   "privacyPolicy": "Privacy Policy",
 
-  "closeWithoutNext": "End without setting the next planned execution date?",
+  "closeWithoutNext": "End without setting the next scheduled date?",
   "closeWithoutNextInfo": "If you do not set it, you will need to create a new Yuru-DO when you want to do the same task again.",
   "finish": "Finish",
   "back": "Back",
 
 
-  "weekYurudo": "This Week's Yuru-DO and Planned Execution Date",
+  "weekYurudo": "This Week's Yuru-DO and Scheduled Date",
 
-  "weekly": "Weekly",
-  "monthlyOver": "Months Over",
-  "monthly": "Months",
-  "minute": "Minutes",
+  "weekly": "weekly",
+  "monthlyOver": "months Over",
+  "monthly": "months",
+  "minute": "minutes",
 
 
   "completeYurudo": "You have completed one Yuru-DO!",
-  "setNextYurudo": "Set the next planned execution date",
+  "setNextYurudo": "Set the next scheduled date",
   "setNextNotToday": "Change the completion date to a day other than today",
   "afterCompleteDay": "You can only select a date after the completion date",
   "undoCheck": "Undo the check",
@@ -68,7 +68,7 @@
 
   "selectCompleteDay": "Select the task completion date",
   "cantSelectTomorrow": "You cannot select tomorrow or later",
-  "cantSelectAfter": "You can only select after the last execution date（Last execution date{date}）",
+  "cantSelectAfter": "You can only select after the last scheduled date（Last execution date{date}）",
   "@cantSelectAfter": {
     "description": "previous date",
     "placeholders": {
@@ -82,7 +82,7 @@
   "sort": "Sort",
   "filter": "Filter",
 
-  "sortType": "{type, select, addDayAsc{Add Date (New→Old)} addDayDesc{Add Date (Old→New)} spanAsc{Span (Short→Long)} spanDesc{Span (Long→Short)} timeAsc{Required Time (Short→Long)} timeDesc{Required Time (Long→Short)} other{Error}}",
+  "sortType": "{type, select, addDayAsc{Add Date (New→Old)} addDayDesc{Add Date (Old→New)} spanAsc{Frequency (Short→Long)} spanDesc{Frequency (Long→Short)} timeAsc{Estimated Time (Short→Long)} timeDesc{Estimated Time (Long→Short)} other{Error}}",
   "@sortType": {
     "description": "sort type",
     "placeholders": {
@@ -93,14 +93,14 @@
   },
 
   "noRequired": "Required fields have not been entered",
-  "cantSelectAfterToday": "The planned execution date can only be today or later",
+  "cantSelectAfterToday": "Start date can only be today or later",
   "create": "Create",
   "labelTitle": "Title",
   "example": "Example",
-  "span": "Span",
+  "span": "Frequency",
   "select": "Please select",
-  "requireTime": "Required Time",
-  "firstExpectedDate": "First Planned Execution Date",
+  "requireTime": "Estimated Time",
+  "firstExpectedDate": "Start Date",
   "remind": "Set Reminder",
 
   "loginForBackup": "Login is required to perform backup",
@@ -115,8 +115,8 @@
   "logoutSuccess": "Logged out successfully",
 
   "detail": "Yuru-DO Details",
-  "expectedDate": "Planned Execution Date",
-  "cantChangeExpectedDate": "This planned execution date cannot be changed",
+  "expectedDate": "Scheduled Date",
+  "cantChangeExpectedDate": "This scheduled date cannot be changed",
   "changed": "Changed",
   "saveChange": "Save Changes",
   "checkDelete": "Are you sure you want to delete\n{name}?",
@@ -132,7 +132,7 @@
   "delete": "Delete",
   "notDelete": "Do not delete",
 
-  "doPastYurudo": "Please perform tasks from delayed Yuru-DO",
+  "doPastYurudo": "Please perform tasks from overdue Yuru-DO",
   "doTodayYurudo": "Please perform tasks from today's Yuru-DO",
   "cantSameYurudo": "You cannot perform the same task twice in one day",
   "doRecentYurudo": "Please perform from the most recent same task ({date})",
@@ -147,17 +147,17 @@
 
 
   "selectCategory": "Please select a category",
-  "giveName": "You can give your favorite category name",
+  "giveName": "Create your own category",
   "selectLabel": "Select",
   "category": "Category",
   "nothing": "None",
 
-  "setExpectedDate": "Please set the planned execution date",
+  "setExpectedDate": "Please set the start date",
   "cancel": "Cancel",
   "decide": "Choose",
 
-  "setSpan": "Please set the span",
-  "atOnce": "Once in",
+  "setSpan": "Please set frequency. Once in",
+  "atOnce": "",
   "onceEveryDay": "{date, plural, =1 {Once a day} other {Once every {date} days}}",
   "@onceEveryDay": {
     "description": "スパンのN日に1回の表示",
@@ -195,7 +195,7 @@
     }
   },
 
-  "setTime": "Please set the required time",
+  "setTime": "Please set the estimated time",
 
   "checkYurudo": "Let's check Yuru-DO on {date}",
   "@checkYurudo": {
@@ -214,20 +214,20 @@
   "backup_message": "Are you sure you want to back up？",
   "restore_message": "Are you sure you want to restore？",
 
-  "titleExample1": "お風呂で明日やることを考える(1日に1回)",
-  "titleExample2": "【腹筋重視】筋トレをする(2日に1回)",
-  "titleExample3": "【必ず】彼氏の誕生日のプランを少し考える(3日に1回)",
-  "titleExample4": "最低でも20ページ分は〇〇の本を読む(3日に1回)",
-  "titleExample5": "お風呂掃除をする(5日に1回)",
-  "titleExample6": "金魚鉢の水換えをする(1週に1回)",
-  "titleExample7": "【掃除機はマスト】部屋の掃除をする(2週に1回)",
-  "titleExample8": "コンタクトレンズの交換(2週に1回)",
-  "titleExample9": "行って見たいお店をインスタで探す(3週に1回)",
-  "titleExample10": "家族と電話する(1か月に1回)",
-  "titleExample11": "洗剤の残量確認(1か月に1回)",
-  "titleExample12": "将来のためにやること検討(1か月に1回)",
-  "titleExample13": "【国内】行って見たい旅行先を考える(2か月に1回)",
-  "titleExample14": "温泉に行きたいかどうかを考えてみる(3か月に1回)",
-  "titleExample15": "サブスクを本当に必要かどうか見直す(4か月に1回)",
-  "titleExample16": "クローゼットの防虫剤を交換する(6か月に1回)"
+  "titleExample1": "Think about what to do tomorrow in the bath (once a day)",
+  "titleExample2": "Do a workout (every other day)",
+  "titleExample3": "[Must Do] Plan boyfriend's birthday party (every 3 days)",
+  "titleExample4": "Read at least 20 pages of a book (every 3 days)",
+  "titleExample5": "Clean the bathtub (every 5 days)",
+  "titleExample6": "Change the water in the fish tank (once a week)",
+  "titleExample7": "Clean my room (every 2 weeks)",
+  "titleExample8": "Replace contact lenses (every 2 weeks)",
+  "titleExample9": "Search for restaurants to visit on Instagram (every 3 weeks)",
+  "titleExample10": "Call the family (once a month)",
+  "titleExample11": "Check the remaining detergent (once a month)",
+  "titleExample12": "Consider future plans (once a month)",
+  "titleExample13": "Think about travel destinations to visit (every 2 months)",
+  "titleExample14": "Plan a overseas trip (every 3 months)",
+  "titleExample15": "Review whether you really need your subscriptions (every 4 months)",
+  "titleExample16": "Replace the closet moth repellent (every 6 months)"
 }
