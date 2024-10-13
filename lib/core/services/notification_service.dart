@@ -74,7 +74,7 @@ class NotificationService {
         dateTime.second,
       );
     }
-    DateFormat dateFormat = DateFormat('M/d(E)', 'ja');
+    DateFormat dateFormat = DateFormat('M/d(E)');
 
     if (scheduledDate.isBefore(DateTime.now())) {
       return;
@@ -112,7 +112,7 @@ class NotificationService {
     registerMessage(
       id: 1000,
       day: time,
-      message: 'test message',
+      message: 'test title [${5.toTimeString(context)}]\n',
       context: context,
       dateTime: time,
     );
