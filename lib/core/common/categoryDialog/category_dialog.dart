@@ -89,7 +89,8 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                                 color: AppColor.disableColor,
                                 fontSize: 14,
                               ),
-                              contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(vertical: 2.0),
                               border: InputBorder.none,
                             ),
                             onChanged: (value) {
