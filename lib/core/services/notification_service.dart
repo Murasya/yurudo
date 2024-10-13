@@ -100,7 +100,6 @@ class NotificationService {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
-    Logger().i('registerMessage: $id, $message, $scheduledDate');
   }
 
   Future<void> _cancelNotification() async {
@@ -140,14 +139,7 @@ class NotificationService {
       }
       registerMessage(id: i, day: tomorrow, message: message, context: context);
     }
-    var list = await _flnp.getActiveNotifications();
-    // listを一覧表示
-    for (var item in list) {
-      Logger().i('id: ${item.id}');
-      Logger().i('title: ${item.title}');
-      Logger().i('body: ${item.body}');
-      Logger().i('payload: ${item.payload}');
-    }
+    await _flnp.getActiveNotifications();
   }
 
   void onDidReceiveLocalNotification(

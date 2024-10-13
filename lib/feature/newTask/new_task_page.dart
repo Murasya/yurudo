@@ -106,6 +106,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
             backgroundColor: const WidgetStatePropertyAll(AppColor.primary),
           ),
           onPressed: () async {
+            final state = ref.watch(provider);
             FocusManager.instance.primaryFocus?.unfocus();
             if (state.name.isEmpty ||
                 state.span == null ||
