@@ -28,12 +28,16 @@ class PageWidgetDay extends ConsumerStatefulWidget {
 
 class _PageWidgetState extends ConsumerState<PageWidgetDay> {
   late final DateTime pageDay;
+  bool _isInit = true;
 
   @override
   void didChangeDependencies() {
-    final state = ref.watch(homePageStateProvider);
-    pageDay = state.today.add(Duration(days: widget.index));
     super.didChangeDependencies();
+    if (_isInit) {
+      final state = ref.watch(homePageStateProvider);
+      pageDay = state.today.add(Duration(days: widget.index));
+    }
+    _isInit = false;
   }
 
   int compExp(Todo a, Todo b) {
