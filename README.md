@@ -17,7 +17,7 @@ iOS Developmentビルド
 fvm flutter build ipa --flavor dev
 ```
 ``` shell
-fvm flutter build ipa --flavor prod
+fvm flutter build ipa --flavor prod --export-options-plist="ios/config/prod/ExportOptions.plist"
 ```
 
 freezed生成
