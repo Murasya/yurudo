@@ -35,9 +35,11 @@ jobs:
         env:
           ENV_DEV: ${{ secrets.ENV_DEV }}
           FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+          ANDROID_GOOGLE_SERVICES: ${{ secrets.ANDROID_GOOGLE_SERVICES }}
         run: |
           echo -n "$ENV_DEV" > assets/env/dev.json
           echo -n "$FIREBASE_OPTIONS" > lib/firebase_options.dart
+          echo -n "$ANDROID_GOOGLE_SERVICES" > android/app/google-services.json
 
       - name: Install dependencies
         run: flutter pub get
