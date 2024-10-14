@@ -114,11 +114,14 @@ jobs:
       - name: Archive by xcodebuild
         run: |
          xcodebuild archive \
-           CODE_SIGNING_ALLOWED=NO \
            -workspace ./ios/Runner.xcworkspace \
            -scheme Runner \
            -configuration Release \
            -archivePath ./build/ios/Runner.xcarchive
+           -allowProvisioningUpdates \
+           -authenticationKeyID ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }} \
+           -authenticationKeyIssuerID ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }} \
+           -authenticationKeyPath ios/config/dev/AuthKey.p8
 
       - name: Export by xcodebuild
         run: |
