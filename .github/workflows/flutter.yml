@@ -58,7 +58,7 @@ jobs:
             --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps" \
             -H "Authorization: Bearer ${{secrets.DEPLOY_GATE_API_KEY}}" \
             -X POST \
-            -F "file=build/app/outputs/bundle/devRelease/app-dev-release.aab"
+            -F "file=@build/app/outputs/bundle/devRelease/app-dev-release.aab"
 
 
   ios:
@@ -98,6 +98,7 @@ jobs:
         run: |
           echo -n "$ENV_DEV" > assets/env/dev.json
           echo -n "$FIREBASE_OPTIONS" > lib/firebase_options.dart
+          mkdir -p ios/config/dev
           echo -n "$EXPORT_OPTIONS" > ios/config/dev/ExportOptions.plist
           echo -n "$IOS_FIREBASE_APP_ID_FILE" > ios/config/dev/firebase_app_id_file.json
           echo -n "$IOS_GOOGLE_SERVICE_INFO" > ios/config/dev/GoogleService-Info.plist
@@ -125,4 +126,4 @@ jobs:
             --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps" \
             -H "Authorization: Bearer ${{secrets.DEPLOY_GATE_API_KEY}}" \
             -X POST \
-            -F "file=build/app/outputs/bundle/devRelease/app-dev-release.aab"
+            -F "file=@build/app/outputs/bundle/devRelease/app-dev-release.aab"
