@@ -87,8 +87,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     final newTodo = todo.copyWith(
         preExpectedDate: () => null,
         expectedDate: () => null,
-        updatedAt: DateTime.now()
-    );
+        updatedAt: DateTime.now());
     _database.update(newTodo);
     state = [
       for (var s in state)
@@ -145,8 +144,8 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     List<Todo> list = state
         .where((todo) =>
             todo.expectedDate.isSameDay(date) ||
-                (todo.completeDate.any((d) => d.isSameDay(date)) &&
-            !todo.preExpectedDate.isBeforeDay(date)))
+            (todo.completeDate.any((d) => d.isSameDay(date)) &&
+                !todo.preExpectedDate.isBeforeDay(date)))
         .toList();
     list.sort(Todo.compareByTime);
     return list;
@@ -166,11 +165,15 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
 
   /// 未来のゆるDOを取得
   List<Todo> getFutureTodos(DateTime date) {
+    final today = DateTime.now();
     List<Todo> list = state
         .where((todo) =>
-            todo.expectedDate != null && todo.expectedDate.isSameDay(date) ||
-            todo.expectedDate.isBeforeDay(date) &&
-                todo.expectedDate!.dateDiff(date) % todo.span == 0)
+            todo.expectedDate != null && // 実施予定日が設定されている
+            (todo.expectedDate.isAfterDay(today) ||
+                todo.expectedDate.isSameDay(today)) && // 実施予定日が今日以降
+            (todo.expectedDate.isSameDay(date) ||
+                todo.expectedDate.isBeforeDay(date) &&
+                    todo.expectedDate!.dateDiff(date) % todo.span == 0)) // 当日か、スパン日後
         .toList();
     list.sort(Todo.compareByTime);
     return list;
