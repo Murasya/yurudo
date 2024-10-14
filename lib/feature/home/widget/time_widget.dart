@@ -41,16 +41,16 @@ class TimeWidget extends StatelessWidget {
       }
       if (today.inWeek(date)) {
         num = '~1';
-        suf = context.l10n.weekly;
+        suf = context.l10n.weekly(1);
       } else if (date.isMonthBefore(today)) {
         num = '1';
         suf = context.l10n.monthlyOver;
       } else if (date.isBeforeDay(today.add(const Duration(days: -13)))) {
         num = '~1';
-        suf = context.l10n.monthly;
+        suf = context.l10n.monthly(1);
       } else {
         num = '~2';
-        suf = context.l10n.weekly;
+        suf = context.l10n.weekly(2);
       }
       return Center(
         child: RichText(

@@ -53,9 +53,12 @@
 
   "weekYurudo": "This Week's Yuru-DOs and Scheduled Dates",
 
-  "weekly": "week",
-  "monthlyOver": "month +",
-  "monthly": "months",
+  "weekly": "{date, plural, =1 { week} other { weeks}}",
+  "@weekly": {
+    "description": "N週間"
+  },
+  "monthlyOver": " month +",
+  "monthly": "{date, plural, =1 { month} other { months}}",
   "minute": " minutes",
 
 
