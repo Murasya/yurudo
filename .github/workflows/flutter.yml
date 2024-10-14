@@ -43,7 +43,7 @@ jobs:
           echo -n "$FIREBASE_OPTIONS" > lib/firebase_options.dart
           echo -n "$ANDROID_GOOGLE_SERVICES" > android/app/google-services.json
           echo -n "$ANDROID_KEY_PROPERTIES" > android/key.properties
-          echo ANDROID_KEY_JKS_BASE64 | base64 --decode > android/app/key.jks
+          echo $ANDROID_KEY_JKS_BASE64 | base64 --decode > android/app/key.jks
 
       - name: Install dependencies
         run: flutter pub get
