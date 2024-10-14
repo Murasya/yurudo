@@ -32,8 +32,8 @@ jobs:
 
       - name: Copy Secrets
         run: |
-          echo '${{ secrets.ENV_DEV }}' > assets/env/dev.json
-          echo '${{ secrets.FIREBASE_OPTIONS }}' > lib/firebase_options.dart
+          echo -n '${{ secrets.ENV_DEV }}' > assets/env/dev.json
+          echo -n '${{ secrets.FIREBASE_OPTIONS }}' > lib/firebase_options.dart
 
       - name: Install dependencies
         run: flutter pub get
