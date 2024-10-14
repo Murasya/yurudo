@@ -31,9 +31,13 @@ jobs:
           flutter-version: '3.24.2'
 
       - name: Copy Secrets
+        shell: bash
+        env:
+          ENV_DEV: ${{ secrets.ENV_DEV }}
+          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
         run: |
-          echo -n '${{ secrets.ENV_DEV }}' > assets/env/dev.json
-          echo -n '${{ secrets.FIREBASE_OPTIONS }}' > lib/firebase_options.dart
+          echo -n "$ENV_DEV" > assets/env/dev.json
+          echo -n "$FIREBASE_OPTIONS" > lib/firebase_options.dart
 
       - name: Install dependencies
         run: flutter pub get
