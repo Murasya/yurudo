@@ -74,7 +74,7 @@ class NotificationService {
         dateTime.second,
       );
     }
-    DateFormat dateFormat = DateFormat('M/d(E)');
+    DateFormat dateFormat = DateFormat('M/d(E)', context.locale.languageCode);
 
     if (scheduledDate.isBefore(DateTime.now())) {
       return;
