@@ -142,7 +142,10 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                                 .subtract(const Duration(days: 366)),
                             lastDate: DateTime.now(),
                             onSelectDate: (value) {
-                              ref.read(provider.notifier).setCompleteDay(value);
+                              ref.read(provider.notifier).setCompleteDay(
+                                    value,
+                                    widget.args.todo.span,
+                                  );
                             },
                           ),
                         ),
@@ -177,7 +180,7 @@ class _NextScheduleState extends ConsumerState<NextSchedule> {
                         if (!ref
                             .read(provider)
                             .selectDay
-                            .isAfterDay(widget.args.completeDay)) {
+                            .isAfterDay(ref.read(provider).completeDay)) {
                           ref.read(provider.notifier).setError(
                                 true,
                                 msg: context.l10n.afterCompleteDay,
