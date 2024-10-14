@@ -23,9 +23,9 @@
       }
     }
   },
-  "createNewYurudo": "Create New Yuru-DO",
-  "todayYurudo": "Today's Yuru-DO and Estimated Time",
-  "pastYurudo": "Overdue Yuru-DO and Delay Duration",
+  "createNewYurudo": "Create a New Yuru-DO",
+  "todayYurudo": "Today's Yuru-DOs and Estimated Time",
+  "pastYurudo": "Overdue Yuru-DOs and Delay Duration",
 
   "feedback": "Feedback / Contact Us",
   "submit": "Submit",
@@ -40,7 +40,7 @@
   "close": "Close",
 
   "home": "Home",
-  "yurudoList": "Yuru-DO List",
+  "yurudoList": "Yuru-DOs List",
   "backup": "Backup",
   "termsOfUse": "Terms of Use",
   "privacyPolicy": "Privacy Policy",
@@ -51,7 +51,7 @@
   "back": "Back",
 
 
-  "weekYurudo": "This Week's Yuru-DO and Scheduled Date",
+  "weekYurudo": "This Week's Yuru-DOs and Scheduled Dates",
 
   "weekly": "weekly",
   "monthlyOver": "months Over",
@@ -132,8 +132,8 @@
   "delete": "Delete",
   "notDelete": "Do not delete",
 
-  "doPastYurudo": "Please perform tasks from overdue Yuru-DO",
-  "doTodayYurudo": "Please perform tasks from today's Yuru-DO",
+  "doPastYurudo": "Please perform tasks from overdue Yuru-DOs",
+  "doTodayYurudo": "Please perform tasks from today's Yuru-DOs",
   "cantSameYurudo": "You cannot perform the same task twice in one day",
   "doRecentYurudo": "Please perform from the most recent same task ({date})",
   "@doRecentYurudo": {
@@ -156,7 +156,7 @@
   "cancel": "Cancel",
   "decide": "Choose",
 
-  "setSpan": "Please set frequency. Once in",
+  "setSpan": "Please set frequency \nOnce in",
   "atOnce": "",
   "onceEveryDay": "{date, plural, =1 {Once a day} other {Once every {date} days}}",
   "@onceEveryDay": {
@@ -197,7 +197,7 @@
 
   "setTime": "Please set the estimated time",
 
-  "checkYurudo": "Let's check Yuru-DO on {date}",
+  "checkYurudo": "Let's check Yuru-DOs on {date}",
   "@checkYurudo": {
     "placeholders": {
       "date": {
@@ -205,8 +205,8 @@
       }
     }
   },
-  "todayYurudoLabel": "Today's Yuru-DO",
-  "notifyDailyYurudo": "Notify about daily Yuru-DO",
+  "todayYurudoLabel": "Today's Yuru-DOs",
+  "notifyDailyYurudo": "Notify about daily Yuru-DOs",
 
   "alertDialog_cancel": "Cancel",
   "alertDialog_ok": "OK",
