@@ -55,7 +55,7 @@ jobs:
       - name: Deploy
         run: |
           curl \
-            --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps"
+            --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps" \
             -H "Authorization: Bearer ${{secrets.DEPLOY_GATE_API_KEY}}" \
             -X POST \
-            -F "file=@app/build/app/outputs/bundle/devRelease/app-dev-release.aab" \
+            -F "file=@app/build/app/outputs/bundle/devRelease/app-dev-release.aab"
