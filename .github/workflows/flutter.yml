@@ -1,56 +1,51 @@
-#name: Flutter CI/CD Pipeline
-#
-## ワークフローをトリガーするイベントを定義
-#on:
-#  push:
-#    branches:
-#      - develop
-#
-## ワークフロー内のジョブを定義
-#jobs:
-#  build:
-#    # ジョブが実行される仮想環境を指定
-#    runs-on: macos-latest
-#
-#    # ジョブ内のステップを定義
-#    steps:
-#      - name: Checkout repository
-#        # リポジトリをチェックアウトするアクションを使用
-#        uses: actions/checkout@v2
-#
-#      - name: setup cache
-#        uses: actions/cache@v1
-#        with:
-#          path: /Users/runner/hostedtoolcache/flutter
-#          key: ${{runner.OS}}-flutter-install-cache
-#
-#      - name: Set up Flutter
-#        # Flutterをセットアップするアクションを使用
-#        uses: subosito/flutter-action@v2
-#        with:
-#          flutter-version: '3.24.2'
-#
-#      - name: Copy Secrets
-#        run: |
-#          echo '${{ secrets.ENV_DEV }}' > assets/env/dev.json
-#          echo '${{ secrets.
-#
-#      - name: Install dependencies
-#        run: flutter pub get
-#
-#      - name: Build AAB
-#        # リリース用のAPKをビルドするコマンドを実行
-#        run: flutter build appbundle --flavor dev
-#
-#      - name: Upload App Bundle
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: release-bundle
-#          path: build/app/outputs/bundle/devRelease/app-dev-release.aab
-#
-#      - name: Deploy
-#        run: |
-#          curl \
-#            -H "Authorization: token ${{secrets.DEPLOY_GATE_API_KEY}}" \
-#            -F "file=@app/build/app/outputs/bundle/devRelease/app-dev-release.aab" \
-#            -v "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps"
+name: Flutter CI/CD Pipeline
+
+# ワークフローをトリガーするイベントを定義
+on:
+  push:
+    branches:
+      - 'develop'
+
+# ワークフロー内のジョブを定義
+jobs:
+  build:
+    # ジョブが実行される仮想環境を指定
+    runs-on: macos-latest
+
+    # ジョブ内のステップを定義
+    steps:
+      - name: Checkout repository
+        # リポジトリをチェックアウトするアクションを使用
+        uses: actions/checkout@v2
+
+      - name: setup cache
+        uses: actions/cache@v1
+        with:
+          path: /Users/runner/hostedtoolcache/flutter
+          key: ${{runner.OS}}-flutter-install-cache
+
+      - name: Set up Flutter
+        # Flutterをセットアップするアクションを使用
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.2'
+
+      - name: Copy Secrets
+        run: |
+          echo '${{ secrets.ENV_DEV }}' > assets/env/dev.json
+          echo '${{ secrets.FIREBASE_OPTIONS }}' > lib/firebase_options.dart
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build AAB
+        # リリース用のAPKをビルドするコマンドを実行
+        run: flutter build appbundle --flavor dev
+
+      - name: Deploy
+        run: |
+          curl \
+            --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps"
+            -H "Authorization: Bearer ${{secrets.DEPLOY_GATE_API_KEY}}" \
+            -X POST \
+            -F "file=@app/build/app/outputs/bundle/devRelease/app-dev-release.aab" \
