@@ -7,4 +7,6 @@ extension ContextEx on BuildContext {
       ScaffoldMessenger.of(this).showSnackBar(snackBar);
 
   AppLocalizations get l10n => AppLocalizations.of(this)!;
+
+  Locale get locale => Localizations.localeOf(this);
 }

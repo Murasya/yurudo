@@ -40,9 +40,10 @@ class NextScheduleStateNotifier extends StateNotifier<NextScheduleState> {
     );
   }
 
-  void setCompleteDay(DateTime date) {
+  void setCompleteDay(DateTime date, int span) {
     state = state.copyWith(
       completeDay: date,
+      selectDay: date.add(Duration(days: span))
     );
   }
 

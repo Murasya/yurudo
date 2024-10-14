@@ -45,7 +45,8 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
   late final TextEditingController _nextDayController;
   late final AutoDisposeStateNotifierProvider<TaskDetailPageStateNotifier,
       TaskDetailPageState> provider;
-  final dateFormat = DateFormat('y/M/d');
+  late final DateFormat dateFormat;
+  bool _isInit = true;
 
   @override
   void initState() {
@@ -55,13 +56,6 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     _spanController = TextEditingController(text: "");
     _timeController = TextEditingController(text: "");
 
-    // 次回実施日が昨日以前だった場合は今日にする
-    if (state.nextDay != null) {
-      _nextDayController =
-          TextEditingController(text: dateFormat.format(state.nextDay!));
-    } else {
-      _nextDayController = TextEditingController(text: '');
-    }
     super.initState();
   }
 
@@ -85,6 +79,19 @@ class _TaskDetailPageState extends ConsumerState<TaskDetailPage> {
     final deviceWidth = MediaQuery.of(context).size.width;
     _spanController.text = state.span.toSpanString(context);
     _timeController.text = state.time.toTimeString(context);
+
+    if (_isInit) {
+      dateFormat = DateFormat.yMd(context.locale.languageCode);
+
+      // 次回実施日が昨日以前だった場合は今日にする
+      if (state.nextDay != null) {
+        _nextDayController =
+            TextEditingController(text: dateFormat.format(state.nextDay!));
+      } else {
+        _nextDayController = TextEditingController(text: '');
+      }
+      _isInit = false;
+    }
 
     return Scaffold(
       appBar: AppBar(

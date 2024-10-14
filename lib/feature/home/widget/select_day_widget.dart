@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:routine_app/core/utils/contextEx.dart';
 
 class SelectDayWidget extends StatelessWidget {
   final String label;
@@ -23,7 +24,7 @@ class SelectDayWidget extends StatelessWidget {
       onTap: () {},
       child: TextField(
         controller: TextEditingController(
-          text: DateFormat.yMd().format(selectDate),
+          text: DateFormat.yMd(context.locale.languageCode).format(selectDate),
         ),
         readOnly: true,
         autofocus: true,

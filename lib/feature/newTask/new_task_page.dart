@@ -32,7 +32,6 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final provider = newTaskPageStateProvider;
-  final dateFormat = DateFormat.yMd();
   late final AdService ad;
   late final List<String> titleList;
   late final titleNum = Random().nextInt(titleList.length);
@@ -256,7 +255,7 @@ class _NewTaskPageState extends ConsumerState<NewTaskPage> {
                               ).then((date) {
                                 if (date != null) {
                                   ref.read(provider.notifier).setDate(date);
-                                  _dateController.text = dateFormat.format(date);
+                                  _dateController.text = DateFormat.yMd(context.locale.languageCode).format(date);
                                 }
                               });
                             },
