@@ -8,7 +8,7 @@ on:
 
 # ワークフロー内のジョブを定義
 jobs:
-  build:
+  android:
     # ジョブが実行される仮想環境を指定
     runs-on: macos-latest
 
@@ -58,4 +58,71 @@ jobs:
             --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps" \
             -H "Authorization: Bearer ${{secrets.DEPLOY_GATE_API_KEY}}" \
             -X POST \
-            -F "file=@app/build/app/outputs/bundle/devRelease/app-dev-release.aab"
+            -F "file=build/app/outputs/bundle/devRelease/app-dev-release.aab"
+
+
+  ios:
+    # ジョブが実行される仮想環境を指定
+    runs-on: macos-latest
+
+    # ジョブ内のステップを定義
+    steps:
+      - name: Checkout repository
+        # リポジトリをチェックアウトするアクションを使用
+        uses: actions/checkout@v2
+
+      - name: Select Xcode version 16.0
+        run: sudo xcode-select -s '/Applications/Xcode_16.app/Contents/Developer'
+
+
+      - name: setup cache
+        uses: actions/cache@v1
+        with:
+          path: /Users/runner/hostedtoolcache/flutter
+          key: ${{runner.OS}}-flutter-install-cache
+
+      - name: Set up Flutter
+        # Flutterをセットアップするアクションを使用
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.2'
+
+      - name: Copy Secrets
+        shell: bash
+        env:
+          ENV_DEV: ${{ secrets.ENV_DEV }}
+          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+          EXPORT_OPTIONS: ${{ secrets.EXPORT_OPTIONS }}
+          IOS_FIREBASE_APP_ID_FILE: ${{ secrets.IOS_FIREBASE_APP_ID_FILE }}
+          IOS_GOOGLE_SERVICE_INFO: ${{ secrets.IOS_GOOGLE_SERVICE_INFO }}
+        run: |
+          echo -n "$ENV_DEV" > assets/env/dev.json
+          echo -n "$FIREBASE_OPTIONS" > lib/firebase_options.dart
+          echo -n "$EXPORT_OPTIONS" > ios/config/dev/ExportOptions.plist
+          echo -n "$IOS_FIREBASE_APP_ID_FILE" > ios/config/dev/firebase_app_id_file.json
+          echo -n "$IOS_GOOGLE_SERVICE_INFO" > ios/config/dev/GoogleService-Info.plist
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Import Provisioning Profile
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          touch ~/Library/MobileDevice/Provisioning\ Profiles/decoded.mobileprovision
+          echo -n '${{ secrets.PROVISIONING_PROFILE }}' | base64 -d -o ~/Library/MobileDevice/Provisioning\ Profiles/decoded.mobileprovision
+      - name: Import Code-Signing Certificates
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+          p12-password: ${{ secrets.CERTIFICATE_PASSWORD }}
+
+      - name: Build IPA
+        run: flutter build ipa --flavor dev --export-options-plist="ios/config/dev/ExportOptions.plist"
+
+      - name: Deploy
+        run: |
+          curl \
+            --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps" \
+            -H "Authorization: Bearer ${{secrets.DEPLOY_GATE_API_KEY}}" \
+            -X POST \
+            -F "file=build/app/outputs/bundle/devRelease/app-dev-release.aab"
