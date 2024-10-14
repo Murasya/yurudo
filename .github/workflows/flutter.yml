@@ -8,58 +8,58 @@ on:
 
 # ワークフロー内のジョブを定義
 jobs:
-  android:
-    # ジョブが実行される仮想環境を指定
-    runs-on: macos-latest
-
-    # ジョブ内のステップを定義
-    steps:
-      - name: Checkout repository
-        # リポジトリをチェックアウトするアクションを使用
-        uses: actions/checkout@v2
-
-      - name: setup cache
-        uses: actions/cache@v1
-        with:
-          path: /Users/runner/hostedtoolcache/flutter
-          key: ${{runner.OS}}-flutter-install-cache
-
-      - name: Set up Flutter
-        # Flutterをセットアップするアクションを使用
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.2'
-
-      - name: Copy Secrets
-        shell: bash
-        env:
-          ENV_DEV: ${{ secrets.ENV_DEV }}
-          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
-          ANDROID_GOOGLE_SERVICES: ${{ secrets.ANDROID_GOOGLE_SERVICES }}
-          ANDROID_KEY_PROPERTIES: ${{ secrets.ANDROID_KEY_PROPERTIES }}
-          ANDROID_KEY_JKS_BASE64: ${{ secrets.ANDROID_KEY_JKS_BASE64 }}
-        run: |
-          echo -n "$ENV_DEV" > assets/env/dev.json
-          echo -n "$FIREBASE_OPTIONS" > lib/firebase_options.dart
-          echo -n "$ANDROID_GOOGLE_SERVICES" > android/app/google-services.json
-          echo -n "$ANDROID_KEY_PROPERTIES" > android/key.properties
-          echo $ANDROID_KEY_JKS_BASE64 | base64 --decode > android/app/key.jks
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build AAB
-        # リリース用のAPKをビルドするコマンドを実行
-        run: flutter build appbundle --flavor dev
-
-      - name: Deploy
-        run: |
-          curl \
-            --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps" \
-            -H "Authorization: Bearer ${{secrets.DEPLOY_GATE_API_KEY}}" \
-            -X POST \
-            -F "file=@build/app/outputs/bundle/devRelease/app-dev-release.aab"
-
+#  android:
+#    # ジョブが実行される仮想環境を指定
+#    runs-on: macos-latest
+#
+#    # ジョブ内のステップを定義
+#    steps:
+#      - name: Checkout repository
+#        # リポジトリをチェックアウトするアクションを使用
+#        uses: actions/checkout@v2
+#
+#      - name: setup cache
+#        uses: actions/cache@v1
+#        with:
+#          path: /Users/runner/hostedtoolcache/flutter
+#          key: ${{runner.OS}}-flutter-install-cache
+#
+#      - name: Set up Flutter
+#        # Flutterをセットアップするアクションを使用
+#        uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: '3.24.2'
+#
+#      - name: Copy Secrets
+#        shell: bash
+#        env:
+#          ENV_DEV: ${{ secrets.ENV_DEV }}
+#          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+#          ANDROID_GOOGLE_SERVICES: ${{ secrets.ANDROID_GOOGLE_SERVICES }}
+#          ANDROID_KEY_PROPERTIES: ${{ secrets.ANDROID_KEY_PROPERTIES }}
+#          ANDROID_KEY_JKS_BASE64: ${{ secrets.ANDROID_KEY_JKS_BASE64 }}
+#        run: |
+#          echo -n "$ENV_DEV" > assets/env/dev.json
+#          echo -n "$FIREBASE_OPTIONS" > lib/firebase_options.dart
+#          echo -n "$ANDROID_GOOGLE_SERVICES" > android/app/google-services.json
+#          echo -n "$ANDROID_KEY_PROPERTIES" > android/key.properties
+#          echo $ANDROID_KEY_JKS_BASE64 | base64 --decode > android/app/key.jks
+#
+#      - name: Install dependencies
+#        run: flutter pub get
+#
+#      - name: Build AAB
+#        # リリース用のAPKをビルドするコマンドを実行
+#        run: flutter build appbundle --flavor dev
+#
+#      - name: Deploy
+#        run: |
+#          curl \
+#            --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps" \
+#            -H "Authorization: Bearer ${{secrets.DEPLOY_GATE_API_KEY}}" \
+#            -X POST \
+#            -F "file=@build/app/outputs/bundle/devRelease/app-dev-release.aab" \
+#            --form-string "message=${{ github.event.head_commit.message }}"
 
   ios:
     # ジョブが実行される仮想環境を指定
@@ -126,4 +126,5 @@ jobs:
             --url "https://deploygate.com/api/users/${{secrets.DEPLOY_GATE_USER_NAME}}/apps" \
             -H "Authorization: Bearer ${{secrets.DEPLOY_GATE_API_KEY}}" \
             -X POST \
-            -F "file=@build/app/outputs/bundle/devRelease/app-dev-release.aab"
+            -F "file=@build/ios/ipa/routine_app.ipa" \
+            --form-string "message=${{ github.event.head_commit.message }}"
