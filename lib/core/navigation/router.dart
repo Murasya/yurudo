@@ -5,6 +5,7 @@ import '../../feature/feedback/feedback_page.dart';
 import '../../feature/home/home_page.dart';
 import '../../feature/list/list_page.dart';
 import '../../feature/newTask/new_task_page.dart';
+import '../../feature/onboarding/onboarding_page.dart';
 import '../../feature/signIn/sign_in_fragment.dart';
 import '../../feature/taskDetail/task_detail_page.dart';
 import '../../feature/taskDetail/task_detail_page_state.dart';
@@ -19,6 +20,7 @@ class AppRouter {
   static const feedback = '/feedback';
   static const debug = '/debug';
   static const signIn = '/signIn';
+  static const onboarding = '/onboarding';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     AnalyticsService.logPage(settings.name ?? '');
@@ -67,6 +69,11 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) => const SignInFragment(),
+        );
+      case onboarding:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const OnboardingPage(),
         );
     }
     return null;

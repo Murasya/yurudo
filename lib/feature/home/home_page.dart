@@ -65,6 +65,13 @@ class _HomePageState extends ConsumerState<HomePage> {
           .addPostFrameCallback((_) => _showDialogWhenChangedDate());
     }
 
+    if (!AppShared.shared.shownOnboarding) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushNamed(context, AppRouter.onboarding);
+        AppShared.shared.setShownOnboarding();
+      });
+    }
+
     final DateTime weekEnd = state.pageDate.add(const Duration(days: 6));
     String month =
         (state.pageDate.month != weekEnd.month) ? '${weekEnd.month}/' : '';

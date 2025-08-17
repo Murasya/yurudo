@@ -7,7 +7,7 @@ class AppShared {
 
   static AppShared get shared => _instance!;
   final String lastLoginDateKey = 'lastLoginDate';
-  final String pastTodoIdsKey = 'pastTodoIds';
+  final String shownOnboardingKey = 'shownOnboarding';
 
   const AppShared._(this._prefs);
 
@@ -26,5 +26,11 @@ class AppShared {
 
   void updateLastLoginDate() {
     _prefs.setString(lastLoginDateKey, DateTime.now().toIso8601String());
+  }
+
+  bool get shownOnboarding => _prefs.getBool(shownOnboardingKey) ?? false;
+
+  void setShownOnboarding() {
+    _prefs.setBool(shownOnboardingKey, true);
   }
 }
